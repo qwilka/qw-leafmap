@@ -1,0 +1,104 @@
+
+
+
+https://medium.com/comparethemarket/how-to-reduce-your-bundle-size-by-automatically-getting-your-dependencies-from-a-cdn-96b25d1e228
+https://github.com/mastilver/dynamic-cdn-webpack-plugin
+https://stackoverflow.com/questions/31575809/how-to-use-a-library-from-a-cdn-in-a-webpack-project-in-production
+https://dev.to/obahareth/lessons-learned-from-a-year-of-fighting-with-webpack-andbabel-1knc
+
+
+https://survivejs.com/webpack/developing/getting-started/
+
+https://love2dev.com/blog/using-gruntjs-to-bundle-and-minify-javascript-and-css/
+
+
+
+
+
+new HtmlWebpackPlugin({ template: "./index.html" }),
+module.exports = {
+  entry: path.join(__dirname, 'qwgis/app.js'),
+  mode,
+  output: {
+    path: path.join(__dirname, 'dist/gis/assets'),
+    publicPath: '/gis/assets',
+    filename: 'qwgis.js',
+  },
+
+  <body>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+   <script type="text/plain" src="//cdn.jsdelivr.net/npm/leaflet-easybutton@2.4.0/src/leaflet-easybutton.js"></script>
+   <script type="module" src="//cdn.jsdelivr.net/npm/geodesy@2.2.0/utm.min.js"></script>
+   <script type="text/javascript" src="/gis/assets/qwgis.js"></script>
+  </body>
+</html>
+
+
+https://stackoverflow.com/questions/43198547/webpack-module-not-found-error-cant-resolve-jquery
+
+https://github.com/mastilver/dynamic-cdn-webpack-plugin/issues/62
+
+https://github.com/shirotech/webpack-cdn-plugin/pull/50   Custom injected cdn file location
+https://github.com/shirotech/webpack-cdn-plugin/pull/42  allow module specific CDN URL configurations
+https://github.com/Leaflet/Leaflet.markercluster/issues/441
+https://webpack.js.org/guides/shimming/
+https://webpack.js.org/plugins/provide-plugin/
+https://github.com/Esri/esri-leaflet-webpack-example
+https://blog.johnnyreilly.com/2016/05/the-mysterious-case-of-webpack-angular-and-jquery.html
+https://www.toptal.com/javascript/a-guide-to-managing-webpack-dependencies
+
+
+
+https://medium.com/@mattlag/es6-modules-getting-started-gotchas-2ad154f38e2e
+If you don’t include type="module", you will get an lot of different errors that are incredibly confusing:
+
+
+    new webpack.ProvidePlugin({
+      "window.L": "leaflet"
+    }),
+
+        {
+          name: 'leaflet-easybutton',
+          path: 'src/leaflet-easybutton.js',
+          prodUrl: "//cdn.jsdelivr.net/npm/:name@:version/:path"
+        },
+
+====================================================================
+dist/gis/1/index.html
+delete line added by webpack-cdn-plugin:
+ <script type="text/javascript" src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/geodesy@2.2.0/utm.min.js"></script><script type="text/javascript" src="/gis/assets/qwgis.js"></script></body>
+
+dist/gis/assets/qwgis.js
+eval("module.exports = leaflet;\n\n//# sourceURL=webpack:///external_%22leaflet%22?");
+  «module.exports = leaflet» -> «module.exports = L»
+(production:)
+ «.exports=leaflet» -> «.exports=L»
+
+
+======================================================================
+/***/ "leaflet":
+/*!**************************!*\
+  !*** external "leaflet" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//eval("module.exports = leaflet;\n\n//# sourceURL=webpack:///external_%22leaflet%22?");
+eval("module.exports = L;\n\n//# sourceURL=webpack:///external_%22leaflet%22?");
+
+/***/ }),
+
+/***/ "leaflet-easybutton":
+/*!*************************************!*\
+  !*** external "leaflet-easybutton" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//eval("module.exports = leaflet-easybutton;\n\n//# sourceURL=webpack:///external_%22leaflet-easybutton%22?");
+
+/***/ })
+
+/******/ });

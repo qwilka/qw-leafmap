@@ -1,0 +1,37 @@
+{
+  "name": "qwgis",
+  "version": "0.0.1",
+  "description": "Qwilka GIS basic version",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qwilka/qwgis.git"
+  },
+  "keywords": [
+    "GIS"
+  ],
+  "author": "Stephen McEntee",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/qwilka/qwgis/issues"
+  },
+  "homepage": "https://github.com/qwilka/qwgis#readme",
+  "dependencies": {
+    "geodesy": "^2.2.0",
+    "leaflet": "^1.6.0",
+    "leaflet-easybutton": "^2.4.0",
+    "leaflet.control.layers.tree": "^1.0.0"
+  },
+  "devDependencies": {
+    "css-loader": "^3.4.2",
+    "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.41.5",
+    "webpack-cdn-plugin": "^3.2.0",
+    "webpack-cli": "^3.3.10"
+  }
+}
