@@ -258,7 +258,23 @@
             "title": "Denmark (DNK)",
             "type": "gis-folder-flag-dk",
             "folder": true,
-            "children": []
+            "children": [
+                {
+                    "title": "Offshore pipelines (v)",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerType": "geojson",
+                        "url": "/data/DK_Geus_pipelines_simplified.geojson",
+                        "refs": [],
+                        "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
+                        "layerOpts": {
+                            "attribution": "<a target='_blank' href='http://data.geus.dk/geusmap/ows/help/?lang=en'>DK-Geus</a>"       
+                        }     
+                    }
+                }                
+            ]
         },
         {
             "title": "Ireland (IRL)",
@@ -872,9 +888,64 @@
         },
         {
             "title": "United States of America (USA)",
-            "type": "gis-folder-overlays-flag-us",
+            "type": "gis-folder-flag-us",
             "folder": true,
-            "children": []
+            "children": [
+                {
+                    "title": "Gulf of Mexico",
+                    "type": "gis-folder",
+                    "folder": true,
+                    "children": [
+                        {
+                            "title": "OCS Oil & Gas Pipelines",
+                            "type": "gis-layer",
+                            "checkbox": true,
+                            "selected": false,
+                            "data": {
+                                "layerId": "usp",
+                                "layerType": "WMS",
+                                "url": "https://gis.boem.gov/arcgis/services/BOEM_BSEE/MMC_Layers/MapServer/WmsServer",
+                                "refs": [
+                                ],
+                                "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
+                                "layerOpts": {
+                                    "layers": "26",
+                                    "CRS": "EPSG:4326",
+                                    "format": "image/png",
+                                    "transparent": true,
+                                    "noWrap": true,
+                                    "opacity": 0.9,
+                                    "attribution": "<a target='_blank' href='https://gis.boem.gov/arcgis/rest/services/BOEM_BSEE/POC_Layers/MapServer'>BOEM</a>"      
+                                }     
+                            }
+                        },
+                        {
+                            "title": "GoM deepwater bathymetric hillshade",
+                            "type": "gis-layer",
+                            "checkbox": true,
+                            "selected": false,
+                            "data": {
+                                "layerId": "usb",
+                                "layerType": "WMS",
+                                "url": "https://gis.boem.gov/arcgis/services/BOEM_BSEE/GOM_Deepwater_Bathymetry_and_Hillshade_Tiled/MapServer/WmsServer",
+                                "refs": [
+                                ],
+                                "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
+                                "layerOpts": {
+                                    "layers": "0",
+                                    "CRS": "EPSG:4326",
+                                    "format": "image/png",
+                                    "maxZoom": 14,
+                                    "transparent": true,
+                                    "noWrap": true,
+                                    "opacity": 0.9,
+                                    "attribution": "<a target='_blank' href='https://gis.boem.gov/'>BOEM</a>"      
+                                }     
+                            }
+                        }
+                    ]
+                }                
+            ]
         },
         {
             "title": "Other map resources",

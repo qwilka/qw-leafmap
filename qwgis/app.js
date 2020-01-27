@@ -15,6 +15,8 @@ import './libs/layers_tree/L.Control.Layers.Tree.css';
 import './libs/layers_tree/L.Control.Layers.Tree';
 import './libs/leaflet_hash/leaflet-fullHash';
 
+import {Utm, LatLon} from 'geodesy/utm';
+
 function main() {
    // document.body.appendChild(component());
 
@@ -74,7 +76,6 @@ function makeGis(confData, id_number) {
     //     }
     // }
     // GEBCO.layer = L.tileLayer.wms(GEBCO.baseUrl, GEBCO.options);
-    
     
     let map = L.map('map', {
         attributionControl: (mapOpts.attributionControl || false),
@@ -174,7 +175,82 @@ function makeGis(confData, id_number) {
     layerCtl.collapseTree(false);
     layerCtl.collapseTree(true); 
 
-  }
+    let popup;
+    if (gisOpts.locationPopup) {
+      popup = L.popup();
+      map.on('contextmenu', (evt) => {locationPopup(evt);});
+    }
+
+    function locationPopup(evt) {
+      let url = "https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv";
+      let X = map.layerPointToContainerPoint(evt.layerPoint).x;
+      let Y = map.layerPointToContainerPoint(evt.layerPoint).y;
+      let size = map.getSize();
+      let params = {
+        request: 'GetFeatureInfo',
+        service: 'WMS',
+        srs: 'EPSG:4326',
+        version: '1.1.1',      
+        bbox: map.getBounds().toBBoxString(),
+        x: X,
+        y: Y,
+        height: size.y,
+        width: size.x,
+        layers: 'GEBCO_LATEST_2',
+        query_layers: 'GEBCO_LATEST_2',
+        info_format: 'text/html'
+      };
+      let featInfoUrl = url + L.Util.getParamString(params, url, true);
+      let getinfo = $.ajax({
+          url: featInfoUrl,
+          dataType: "html",
+          success: function (doc) { console.log("getinfo successfully loaded!\n", doc);},
+          error: function (xhr) { console.log("getinfo ERROR!\n", xhr.statusText); }
+      })
+      $.when(getinfo).done(function() {
+          let htmlstr = $.parseHTML( getinfo.responseText );
+          let body = $(htmlstr).find('body:first');
+          $.each(htmlstr, function(i, el){
+              //console.log(i, el)
+              if (el.nodeName == '#text') {
+                  let targetStr = el.nodeValue
+                  // console.log(i, targetStr);
+                  let test = targetStr.match(/Elevation value \(m\):\s*(-?\d+)/)
+                  if (test) {
+                      let elevation = test[1];
+                      if (elevation>=0) {
+                          pustr += "<br>elevation " + elevation + " m (GEBCO)";
+                      } else {
+                          pustr += "<br>depth " + elevation + " m (GEBCO)";
+                      }
+                      // console.log("elevation=", elevation)
+                      popup.setContent(pustr)
+                  }
+              }
+          });
+      });  
+      let lat = evt.latlng.lat;
+      let long = evt.latlng.lng;
+      console.log("long", long, "lat", lat);
+      let latlong_WGS84 = new LatLon(lat, long);
+      let latlong_ED50 = latlong_WGS84.convertDatum(LatLon.datums.ED50);
+      console.log("latlong_WGS84 ", latlong_WGS84.toString());
+      // work-around required to recover method toUtm() (cannot use .convertDatum() directly)
+      latlong_ED50 = new LatLon(latlong_ED50.lat, latlong_ED50.lon, 0, LatLon.datums.ED50);
+      let utm_ED50 = latlong_ED50.toUtm();
+      let pustr = "Location coordinates:";
+      pustr += "<br>long. " + (long).toFixed(5) + "&deg;  lat. " + (lat).toFixed(5) + "&deg; (WGS84)";
+      pustr += "<br>UTM zone " + utm_ED50.zone + utm_ED50.hemisphere;
+      pustr += "<br>E" + (utm_ED50.easting).toFixed(1) + " N" + (utm_ED50.northing).toFixed(1) + " (ED50)";
+      popup
+        .setLatLng(evt.latlng)
+        .setContent(pustr)
+        .openOn(map)
+    }
+
+
+
+}
 
 function createMapLayer(layerObj) {
   let layer;
