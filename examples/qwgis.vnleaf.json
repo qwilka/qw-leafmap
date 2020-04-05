@@ -377,30 +377,115 @@
             "folder": true,
             "children": [
                 {
-                    "title": "NPD FactMaps - facilities, pipelines",
+                    "title": "Sentinel-2 Mosaic (Kartverket)",
                     "type": "gis-layer",
                     "checkbox": true,
                     "selected": false,
                     "data": {
-                        "layerId": "nop",
+                        "layerId": "nos2m",
                         "layerType": "WMS",
-                        "url": "http://gis.npd.no/ogc/factmaps/2_0",
+                        "url": "https://wms.geonorge.no/skwms1/wms.sentinel2mosaikk",
                         "refs": [
-                            "https://factpages.npd.no/",
-                            "https://www.npd.no/en/about-us/information-services/available-data/map-services/"
+                            "https://satellittdata.no/",
+                            "https://kartkatalog.geonorge.no/metadata/satelittdata-sentinel-2---skyfri-mosaikk-wms/18fa1fa7-a1de-4d9f-b484-6560844bd788"
                         ],
                         "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
                         "layerOpts": {
-                            "layers": "dscAll,pplAll,fclFixed",
+                            "layers": "sentinel2mosaikk",
                             "CRS": "EPSG:4326",
                             "version": "1.1.1",
                             "format": "image/png",
                             "transparent": true,
                             "noWrap": true,
                             "opacity": 1.0,
-                            "attribution": "Norwegian Petroleum Directorate <a target='_blank' href='https://factpages.npd.no/'>FactMaps</a>, <a target='_blank' href='https://data.norge.no/nlod/en'>Norwegian Licence for Open Government Data</a>"        
+                            "attribution": "Copernicus Sentinel-2 data (2018)/prosessert av <a target='_blank' href='https://kartkatalog.geonorge.no/metadata/satelittdata-sentinel-2---skyfri-mosaikk-wms/18fa1fa7-a1de-4d9f-b484-6560844bd788'>Statens Kartverk</a> (CC BY-NC 4.0)"        
                         }     
                     }
+                },
+                {
+                    "title": "NPD FactMaps",
+                    "type": "gis-folder",
+                    "folder": true,
+                    "children": [
+                        {
+                            "title": "Fields",
+                            "type": "gis-layer",
+                            "checkbox": true,
+                            "selected": false,
+                            "data": {
+                                "layerId": "nof",
+                                "layerType": "WMS",
+                                "url": "http://gis.npd.no/ogc/factmaps/2_0",
+                                "refs": [
+                                    "https://factpages.npd.no/",
+                                    "https://www.npd.no/en/about-us/information-services/available-data/map-services/"
+                                ],
+                                "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
+                                "layerOpts": {
+                                    "layers": "dscAll",
+                                    "CRS": "EPSG:4326",
+                                    "version": "1.1.1",
+                                    "format": "image/png",
+                                    "transparent": true,
+                                    "noWrap": true,
+                                    "opacity": 1.0,
+                                    "attribution": "Norwegian Petroleum Directorate <a target='_blank' href='https://factpages.npd.no/'>FactMaps</a>, <a target='_blank' href='https://data.norge.no/nlod/en'>Norwegian Licence for Open Government Data</a>"        
+                                }     
+                            }
+                        },
+                        {
+                            "title": "Installations",
+                            "type": "gis-layer",
+                            "checkbox": true,
+                            "selected": false,
+                            "data": {
+                                "layerId": "noi",
+                                "layerType": "WMS",
+                                "url": "http://gis.npd.no/ogc/factmaps/2_0",
+                                "refs": [
+                                    "https://factpages.npd.no/",
+                                    "https://www.npd.no/en/about-us/information-services/available-data/map-services/"
+                                ],
+                                "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
+                                "layerOpts": {
+                                    "layers": "fclFixed",
+                                    "CRS": "EPSG:4326",
+                                    "version": "1.1.1",
+                                    "format": "image/png",
+                                    "transparent": true,
+                                    "noWrap": true,
+                                    "opacity": 1.0,
+                                    "attribution": "Norwegian Petroleum Directorate <a target='_blank' href='https://factpages.npd.no/'>FactMaps</a>, <a target='_blank' href='https://data.norge.no/nlod/en'>Norwegian Licence for Open Government Data</a>"        
+                                }     
+                            }
+                        },
+                        {
+                            "title": "Pipelines",
+                            "type": "gis-layer",
+                            "checkbox": true,
+                            "selected": false,
+                            "data": {
+                                "layerId": "nop",
+                                "layerType": "WMS",
+                                "url": "http://gis.npd.no/ogc/factmaps/2_0",
+                                "refs": [
+                                    "https://factpages.npd.no/",
+                                    "https://www.npd.no/en/about-us/information-services/available-data/map-services/"
+                                ],
+                                "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
+                                "layerOpts": {
+                                    "layers": "pplAll",
+                                    "CRS": "EPSG:4326",
+                                    "version": "1.1.1",
+                                    "format": "image/png",
+                                    "transparent": true,
+                                    "noWrap": true,
+                                    "opacity": 1.0,
+                                    "attribution": "Norwegian Petroleum Directorate <a target='_blank' href='https://factpages.npd.no/'>FactMaps</a>, <a target='_blank' href='https://data.norge.no/nlod/en'>Norwegian Licence for Open Government Data</a>"        
+                                }     
+                            }
+                        }
+                    ]
                 },
                 {
                     "title": "Fishing activity",

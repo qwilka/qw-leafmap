@@ -91,7 +91,7 @@ function makeGis(confData, id_number) {
     if (gisOpts.attributionControl) {
       let attribut = L.control.attribution({ 
           position: 'bottomright', 
-          prefix: '<a target="_blank" href="https://qwilka.github.io/post/2018-04-19-introducing-qwilka-gis/">About Qwilka GIS</a>'
+          prefix: '<a target="_blank" href="https://qwilka.github.io/">Qwilka</a>'
       });
       attribut.addTo(map);
     }
