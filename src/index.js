@@ -53,13 +53,17 @@ window.onload = () => {
 
 var map;
 let popup;
+let useCache=false; // global over-ride, set useCache=false to re-load all cached data
 
 function makeGis(confData, id_number) {
     console.log("makeGis confData", confData);
 
     let mapOpts = confData.gisOptions.mapOptions;
     let gisOpts = confData.gisOptions;
-
+    if (confData.gisOptions.hasOwnProperty('useCache')) {
+      useCache = confData.gisOptions.useCache;
+    }
+    
     // var GEBCO = {
     //     title: "GEBCO",
     //     source: "WMS",
@@ -157,11 +161,11 @@ function makeGis(confData, id_number) {
 
     for (let ii=0; ii<ftree.length; ii++) {
       let ftree_toplevel = ftree[ii], mapObj, layer;
-      console.log("ftree_toplevel.type", ftree_toplevel.type)
+      //console.log("ftree_toplevel.type", ftree_toplevel.type)
       if (ftree_toplevel.type === "gis-folder-basemaps") {
         baseTree = makeLayersTree(ftree_toplevel, map, allMapLayers);
       } else if (ftree_toplevel.type.startsWith("gis-folder")) {
-        console.log("ftree_toplevel.title", ftree_toplevel.title)
+        //console.log("ftree_toplevel.title", ftree_toplevel.title)
         overlayTree.push(makeLayersTree(ftree_toplevel, map, allMapLayers));
       }
     }
@@ -294,7 +298,7 @@ function makeLayersTree(ftree_folder, mapref, allMapLayers) {
       // console.log("layerObj", layerObj);
       let layer = createMapLayer(layerObj);
       if (!layer) continue;
-      console.log("layer", layerObj.title, layer);
+      //console.log("layer", layerObj.title, layer);
       layerTreeChildren.push({ label: layerObj.title, layer: layer });
       if (layerObj.data.layerId) {
         allMapLayers[layerObj.data.layerId] = layer;
@@ -319,16 +323,16 @@ function makeLayersTree(ftree_folder, mapref, allMapLayers) {
   return layerTreeObj;
 }
 
-async function geojWrap(layerObj) {
-  let response = await loadGeojsonA(layerObj);
-  return response;
-}
+// async function geojWrap(layerObj) {
+//   let response = await loadGeojsonA(layerObj);
+//   return response;
+// }
 
-async function loadGeojsonA(layerObj) {
-  let response = await fetch(layerObj.url);
-  let data = await response.json();
-  return data;
-}
+// async function loadGeojsonA(layerObj) {
+//   let response = await fetch(layerObj.url);
+//   let data = await response.json();
+//   return data;
+// }
 
 function loadGeojson(layerObj) {
   let layer  = new L.GeoJSON(null, {
@@ -378,29 +382,60 @@ function loadGeojson(layerObj) {
             }
         });
     },
-  });      
-  fetch(layerObj.url)
-  .then((resp) => {
-    if (resp.status != 200) {
-      console.error(`loadGeojson failure\nurl=«${url}»\nfetch response status code: ${resp.status}`);
-    };
-    resp.json()
+  });   
+  // sdata = JSON.stringify(data);
+  // console.log("sdata length", sdata.length);
+  // compressed = LZString.compress(sdata);
+  // console.log("compressed length", compressed.length);
+  let dataObj=false;   
+  if (useCache && layerObj.cache) {
+    dataObj = localStorage.getItem(layerObj.layerId);
+  }
+  if (dataObj) {
+    console.log(`localStorage retrieving ${layerObj.layerId}`);
+    dataObj = LZString.decompress(dataObj);
+    dataObj = JSON.parse(dataObj);
+    console.log(`dataObj.cache_timestamp ${dataObj.cache_timestamp}`);
+    layer.addData(dataObj.data);
+  } else {
+    fetch(layerObj.url)
+    .then((resp) => {
+      if (resp.status != 200) {
+        console.error(`loadGeojson failure\nurl=«${url}»\nfetch response status code: ${resp.status}`);
+      };
+      resp.json()
+      .catch((err) => {
+        console.error("loadGeojson failure\nresp.json():", err);
+      })
+      .then((data) => {
+        //if (callback) callback(confData);
+        console.log("loadGeojson data", data);
+        layer.addData(data);
+        dataObj = {
+          cache_timestamp: Date.now(),
+          type: "geojson",
+          data: data
+        };
+        dataObj = JSON.stringify(dataObj);
+        console.log("dataObj length", dataObj.length);
+        dataObj = LZString.compress(dataObj);
+        console.log("compressed length", dataObj.length);
+        try {
+          localStorage.setItem(layerObj.layerId, dataObj);
+        } catch (exception) {
+          console.error(`localStorage ${exception} ${layerObj.layerId}`);
+        }
+  
+  
+      })
+      // .catch((err) => {
+      //   console.log("load_config failure in callback:", err);
+      // });      
+    })
     .catch((err) => {
-      console.error("loadGeojson failure\nresp.json():", err);
-    })
-    .then((data) => {
-      //if (callback) callback(confData);
-      console.log("loadGeojson data", data);
-      layer.addData(data);
-
-    })
-    // .catch((err) => {
-    //   console.log("load_config failure in callback:", err);
-    // });      
-  })
-  .catch((err) => {
-    console.error(`loadGeojson fetch(${layerObj.url}) failure: ${err}`);
-  });
+      console.error(`loadGeojson fetch(${layerObj.url}) failure: ${err}`);
+    });
+  }
   return layer;
 }
 

@@ -27,7 +27,8 @@
         "attributionControl": true,
         "locationPopup": true,
         "scaleControl": true,
-        "sidePanel": false
+        "sidePanel": false,
+        "useCache": true
     },
     "ftree_vnleaf_0": [
         {
@@ -291,7 +292,8 @@
                     "data": {
                         "layerId": "dkp",
                         "layerType": "geojson",
-                        "url": "/data/DK_Geus_pipelines_simplified.geojson",
+                        "cache": true,
+                        "url": "https://qwilka.github.io/data/DK_Geus_pipelines_simplified.geojson",
                         "refs": [],
                         "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
                         "layerOpts": {
@@ -935,6 +937,7 @@
                     "data": {
                         "layerId": "gba",
                         "layerType": "geojson",
+                        "cache": true,
                         "url": "/gis/assets/OGA_pipelines.geojson"
                     }        
                 },

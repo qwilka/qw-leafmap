@@ -6,6 +6,10 @@ https://stackoverflow.com/questions/3870086/difference-between-ajax-and-get-and-
 
 https://pieroxy.net/blog/pages/lz-string/index.html
 https://github.com/pieroxy/lz-string/
+https://github.com/eduardtomasek/lz-string-python
+https://javascript.info/localstorage
+https://stackabuse.com/encoding-and-decoding-base64-strings-in-node-js/
+https://stackoverflow.com/questions/13567509/what-happens-when-localstorage-is-full
 
 https://docs.geoserver.org/stable/en/user/services/wms/reference.html
 https://docs.geoserver.org/stable/en/user/services/wms/reference.html
