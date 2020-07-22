@@ -11,10 +11,10 @@ const WebpackCdnPlugin = require('webpack-cdn-plugin');
 const mode = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  entry: path.join(__dirname, 'qwgis/app.js'),
+  entry: path.join(__dirname, 'src/index.js'),
   mode,
   output: {
-    path: path.join(__dirname, 'dist/gis/assets'),
+    path: path.join(__dirname, 'gis/assets'),
     publicPath: '/gis/assets',
     filename: 'qwgis.js',
   },

@@ -86,6 +86,30 @@
                     }
                 },
                 {
+                    "title": "GEBCO_2019",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "data": {
+                        "layerId": "g2",
+                        "layerType": "WMS",
+                        "url": "https://www.gebco.net/data_and_products/gebco_web_services/2019/mapserv",
+                        "refs": [
+                            "https://www.gebco.net/"
+                        ],
+                        "layerOpts": {
+                            "layers": "GEBCO_2019_Grid",
+                            "CRS": "EPSG:4326",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": false,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "Imagery reproduced from the GEBCO_2019 Grid <a target='_blank' href='https://www.gebco.net/'>www.gebco.net</a>"
+                        }
+                    }
+                },
+                {
                     "title": "Sentinel-2 cloudless",
                     "type": "gis-layer-basemap",
                     "checkbox": "radio",
@@ -902,6 +926,17 @@
             "type": "gis-folder-flag-gb",
             "folder": true,
             "children": [
+                {
+                    "title": "OGA pipelines",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "gba",
+                        "layerType": "geojson",
+                        "url": "/gis/assets/OGA_pipelines.geojson"
+                    }        
+                },
                 {
                     "title": "Marine Scotland",
                     "type": "gis-folder-flag-gb-sct",

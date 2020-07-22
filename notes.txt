@@ -1,5 +1,10 @@
 
+https://pieroxy.net/blog/pages/lz-string/index.html
+https://github.com/pieroxy/lz-string/
 
+https://docs.geoserver.org/stable/en/user/services/wms/reference.html
+https://docs.geoserver.org/stable/en/user/services/wms/reference.html
+https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?request=GetMap&service=WMS&version=1.1.1&layers=GEBCO_LATEST&srs=EPSG%3A4326&bbox=-145.15104058007,21.731919794922,-57.154894212888,58.961058642578&&width=780&height=330&format=image%2Fpng
 
 https://medium.com/comparethemarket/how-to-reduce-your-bundle-size-by-automatically-getting-your-dependencies-from-a-cdn-96b25d1e228
 https://github.com/mastilver/dynamic-cdn-webpack-plugin
