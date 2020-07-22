@@ -1,4 +1,9 @@
 
+https://blog.pusher.com/promises-async-await/
+https://javascript.info/async-await
+https://stackoverflow.com/questions/3870086/difference-between-ajax-and-get-and-load
+"url": "https://qwilka.github.io/data/DK_Geus_pipelines_simplified.geojson",
+
 https://pieroxy.net/blog/pages/lz-string/index.html
 https://github.com/pieroxy/lz-string/
 

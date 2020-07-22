@@ -289,6 +289,7 @@
                     "checkbox": true,
                     "selected": false,
                     "data": {
+                        "layerId": "dkp",
                         "layerType": "geojson",
                         "url": "/data/DK_Geus_pipelines_simplified.geojson",
                         "refs": [],

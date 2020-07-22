@@ -260,10 +260,14 @@ function locationPopup(evt, preText=null) {
 }
 
 function createMapLayer(layerObj) {
-  let layer;
+  let layer=false;
   switch(layerObj.data.layerType) {
     case "geojson":
-      layer = loadGeojsonLajax(layerObj.data);
+      //layer = loadGeojsonLajax(layerObj.data);
+      layer = loadGeojson(layerObj.data);
+      //let rdata = await loadGeojsonA(layerObj.data);
+      //let rdata = geojWrap(layerObj.data);
+      //console.log("loadGeojsonA data", rdata);
       break;
     case "tilemap":
       layer = L.tileLayer(layerObj.data.url, layerObj.data.layerOpts);
@@ -289,7 +293,8 @@ function makeLayersTree(ftree_folder, mapref, allMapLayers) {
     if (layerObj.type.startsWith("gis-layer")) {
       // console.log("layerObj", layerObj);
       let layer = createMapLayer(layerObj);
-      //console.log("layer", layer);
+      if (!layer) continue;
+      console.log("layer", layerObj.title, layer);
       layerTreeChildren.push({ label: layerObj.title, layer: layer });
       if (layerObj.data.layerId) {
         allMapLayers[layerObj.data.layerId] = layer;
@@ -314,6 +319,90 @@ function makeLayersTree(ftree_folder, mapref, allMapLayers) {
   return layerTreeObj;
 }
 
+async function geojWrap(layerObj) {
+  let response = await loadGeojsonA(layerObj);
+  return response;
+}
+
+async function loadGeojsonA(layerObj) {
+  let response = await fetch(layerObj.url);
+  let data = await response.json();
+  return data;
+}
+
+function loadGeojson(layerObj) {
+  let layer  = new L.GeoJSON(null, {
+    style: function(feature) {
+            let linestyle;
+            if (feature.properties.hasOwnProperty('style')) {
+              linestyle = feature.properties.style;
+            } else {
+              linestyle = {color: "#ff0000", weight: 2, opacity: 1.0};
+            }
+            return linestyle;      
+    },
+    onEachFeature: function (feature, layer) {
+        layer.on({
+            click: function (evt) {
+              L.DomEvent.stopPropagation(evt);
+              let lat = evt.latlng.lat;
+              let long = evt.latlng.lng;
+              let contstr = '<b>'+feature.properties.name+'</b>';
+              if (feature.properties.hasOwnProperty('description')) {
+                contstr += '<br>' + feature.properties.description;
+              }
+              if (feature.properties.hasOwnProperty('vn_uri')) {
+                contstr += '<br>' + feature.properties.vn_uri;
+              }
+              if (feature.properties.hasOwnProperty('KP')) {
+                let KP_near = getFeatureKPvalue(feature);
+                contstr += '<br> KP: '+parseFloat(KP_near).toFixed(3);
+                //contstr += '<br> distance: '+parseFloat(near.properties.location).toFixed(3);
+              }
+              let popup = L.popup();
+              popup
+                  .setLatLng(evt.latlng)
+                  .setContent(contstr)
+                  .openOn(map)
+            },
+            contextmenu: function (evt) {
+                L.DomEvent.stopPropagation(evt);
+                let preText=feature.properties.name+'</b>';
+                if (feature.properties.hasOwnProperty('KP')) {
+                  let KP_near = getFeatureKPvalue(feature);
+                  preText += '<br> KP: '+parseFloat(KP_near).toFixed(3);
+                  //contstr += '<br> distance: '+parseFloat(near.properties.location).toFixed(3);
+                }
+                locationPopup(evt, preText);
+  
+            }
+        });
+    },
+  });      
+  fetch(layerObj.url)
+  .then((resp) => {
+    if (resp.status != 200) {
+      console.error(`loadGeojson failure\nurl=«${url}»\nfetch response status code: ${resp.status}`);
+    };
+    resp.json()
+    .catch((err) => {
+      console.error("loadGeojson failure\nresp.json():", err);
+    })
+    .then((data) => {
+      //if (callback) callback(confData);
+      console.log("loadGeojson data", data);
+      layer.addData(data);
+
+    })
+    // .catch((err) => {
+    //   console.log("load_config failure in callback:", err);
+    // });      
+  })
+  .catch((err) => {
+    console.error(`loadGeojson fetch(${layerObj.url}) failure: ${err}`);
+  });
+  return layer;
+}
 
 function loadGeojsonLajax(layerObj) {
   let url = layerObj.url;
