@@ -1,3 +1,17 @@
+MIXED HYDROCARBONS
+GAS
+WATER
+OIL
+CONDENSATE
+OTHER FLUID
+HYDRAULIC
+
+status
+ACTIVE
+NOT IN USE
+
+https://stackoverflow.com/questions/42237388/syntaxerror-import-declarations-may-only-appear-at-top-level-of-a-module
+https://github.com/TNOCS/minify-geojson
 
 https://blog.pusher.com/promises-async-await/
 https://javascript.info/async-await

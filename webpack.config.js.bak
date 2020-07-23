@@ -37,8 +37,17 @@ module.exports = {
           name: 'leaflet',
           style: '',
           path: 'dist/leaflet.js'
+        },
+        {
+          name: 'geodesy',
+          var: 'geodesy',
+          paths: [
+              'utm.min.js'
+          ],
+          prodUrl: "//cdn.jsdelivr.net/npm/:name@:version/:path"
         }
-      ],
+    ],
+
       publicPath: '/node_modules', // override when prod is false
     }),
   ],

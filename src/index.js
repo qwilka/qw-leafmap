@@ -335,14 +335,30 @@ function makeLayersTree(ftree_folder, mapref, allMapLayers) {
 // }
 
 function loadGeojson(layerObj) {
+  let attribution = null;
+  if (layerObj.hasOwnProperty("layerOpts")) {
+    attribution = layerObj.layerOpts.attribution || null;
+  }
   let layer  = new L.GeoJSON(null, {
     style: function(feature) {
-            let linestyle;
-            if (feature.properties.hasOwnProperty('style')) {
+            let linestyle = {color: "#ff0000", weight: 2, opacity: 1.0};
+            if (layerObj.hasOwnProperty('style')) {
+              if (layerObj.style.hasOwnProperty('default')) {
+                Object.assign(linestyle, layerObj.style.default);
+              }
+              for (const [key, styObj] of Object.entries(layerObj.style)) {
+                if (key.indexOf(':')>0) {
+                  let [prop, val] = key.split(":");
+                  if (feature.properties.hasOwnProperty(prop)) {
+                    if (feature.properties[prop].toLowerCase() === val.toLowerCase()) {
+                      Object.assign(linestyle, styObj);
+                    }
+                  }
+                }
+              }
+            } else if (feature.properties.hasOwnProperty('style')) {
               linestyle = feature.properties.style;
-            } else {
-              linestyle = {color: "#ff0000", weight: 2, opacity: 1.0};
-            }
+            } 
             return linestyle;      
     },
     onEachFeature: function (feature, layer) {
@@ -351,13 +367,25 @@ function loadGeojson(layerObj) {
               L.DomEvent.stopPropagation(evt);
               let lat = evt.latlng.lat;
               let long = evt.latlng.lng;
-              let contstr = '<b>'+feature.properties.name+'</b>';
-              if (feature.properties.hasOwnProperty('description')) {
-                contstr += '<br>' + feature.properties.description;
+              let contstr = '';
+              if (feature.properties.hasOwnProperty('name')) {
+                contstr += '<b>'+feature.properties.name+'</b>';
               }
-              if (feature.properties.hasOwnProperty('vn_uri')) {
-                contstr += '<br>' + feature.properties.vn_uri;
+              if (layerObj.hasOwnProperty('popupProps')) {
+                for (let ii=0; ii<layerObj.popupProps.length; ii++) {
+                  let prop = layerObj.popupProps[ii];
+                  if (feature.properties.hasOwnProperty(prop)) {
+                    contstr += `<br>${prop}: ${feature.properties[prop]}`;
+                  }
+                }
               }
+              //let contstr = '<b>'+feature.properties.name+'</b>';
+              // if (feature.properties.hasOwnProperty('description')) {
+              //   contstr += '<br>' + feature.properties.description;
+              // }
+              // if (feature.properties.hasOwnProperty('vn_uri')) {
+              //   contstr += '<br>' + feature.properties.vn_uri;
+              // }
               if (feature.properties.hasOwnProperty('KP')) {
                 let KP_near = getFeatureKPvalue(feature);
                 contstr += '<br> KP: '+parseFloat(KP_near).toFixed(3);
@@ -371,7 +399,10 @@ function loadGeojson(layerObj) {
             },
             contextmenu: function (evt) {
                 L.DomEvent.stopPropagation(evt);
-                let preText=feature.properties.name+'</b>';
+                let preText = "";
+                if (feature.properties.hasOwnProperty('name')) {
+                  preText += '<b>'+feature.properties.name+'</b>';
+                }
                 if (feature.properties.hasOwnProperty('KP')) {
                   let KP_near = getFeatureKPvalue(feature);
                   preText += '<br> KP: '+parseFloat(KP_near).toFixed(3);
@@ -382,6 +413,7 @@ function loadGeojson(layerObj) {
             }
         });
     },
+    attribution: attribution
   });   
   // sdata = JSON.stringify(data);
   // console.log("sdata length", sdata.length);
