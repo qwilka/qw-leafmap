@@ -97,7 +97,7 @@ function makeGis(confData, id_number) {
     if (gisOpts.attributionControl) {
       let attribut = L.control.attribution({ 
           position: 'bottomright', 
-          prefix: '<a target="_blank" href="https://qwilka.github.io/">Qwilka</a>'
+          prefix: '<a target="_blank" href="https://qwilka.com">Qwilka</a>'
       });
       attribut.addTo(map);
     }
@@ -345,10 +345,22 @@ function loadGeojson(layerObj) {
             if (layerObj.hasOwnProperty('style')) {
               if (layerObj.style.hasOwnProperty('default')) {
                 Object.assign(linestyle, layerObj.style.default);
+                if (layerObj.style.default.color === true && feature.properties.hasOwnProperty('color')) {
+                  let _color = feature.properties.color;
+                  if (/^(0x)?[0-9a-fA-F]+$/.test(_color)) {
+                    if (_color.startsWith("0x")) {
+                      _color = _color.slice(2);
+                    }
+                    if (!_color.startsWith("#")) {
+                      _color = "#" + _color;
+                    }
+                  }              
+                  linestyle.color = _color;
+                }
               }
               for (const [key, styObj] of Object.entries(layerObj.style)) {
-                if (key.indexOf(':')>0) {
-                  let [prop, val] = key.split(":");
+                if (key.indexOf('|')>0) {
+                  let [prop, val] = key.split("||");
                   if (feature.properties.hasOwnProperty(prop)) {
                     if (feature.properties[prop].toLowerCase() === val.toLowerCase()) {
                       Object.assign(linestyle, styObj);
@@ -359,6 +371,18 @@ function loadGeojson(layerObj) {
             } else if (feature.properties.hasOwnProperty('style')) {
               linestyle = feature.properties.style;
             } 
+            // if (layerObj.style.default.color === true && feature.properties.hasOwnProperty('color')) {
+            //   let _color = feature.properties.color;
+            //   if (/^(0x)?[0-9a-fA-F]+$/.test(_color)) {
+            //     if (_color.startsWith("0x")) {
+            //       _color = _color.slice(2);
+            //     }
+            //     if (!_color.startsWith("#")) {
+            //       _color = "#" + _color;
+            //     }
+            //   }              
+            //   linestyle.color = _color;
+            // }
             return linestyle;      
     },
     onEachFeature: function (feature, layer) {
@@ -373,9 +397,13 @@ function loadGeojson(layerObj) {
               }
               if (layerObj.hasOwnProperty('popupProps')) {
                 for (let ii=0; ii<layerObj.popupProps.length; ii++) {
-                  let prop = layerObj.popupProps[ii];
+                  let _parts = layerObj.popupProps[ii].split("||");
+                  let prop = _parts[0], field = _parts[0];
+                  if (_parts.length>1) {
+                    field = _parts[1];
+                  }
                   if (feature.properties.hasOwnProperty(prop)) {
-                    contstr += `<br>${prop}: ${feature.properties[prop]}`;
+                    contstr += `<br>${field}: ${feature.properties[prop]}`;
                   }
                 }
               }
@@ -413,19 +441,20 @@ function loadGeojson(layerObj) {
             }
         });
     },
-    attribution: attribution
+    attribution: attribution,
+    pointToLayer: function(feature, latlng) {
+      return L.circleMarker(latlng, layerObj.layerOpts.geojsonMarkerOptions);
+    }
   });   
-  // sdata = JSON.stringify(data);
-  // console.log("sdata length", sdata.length);
-  // compressed = LZString.compress(sdata);
-  // console.log("compressed length", compressed.length);
   let dataObj=false;   
   if (useCache && layerObj.cache) {
     dataObj = localStorage.getItem(layerObj.layerId);
   }
   if (dataObj) {
     console.log(`localStorage retrieving ${layerObj.layerId}`);
-    dataObj = LZString.decompress(dataObj);
+    //dataObj = LZString.decompress(dataObj);
+    dataObj = LZString.decompressFromUTF16(dataObj);
+    //console.log(`after LZString.decompress ${dataObj}`);
     dataObj = JSON.parse(dataObj);
     console.log(`dataObj.cache_timestamp ${dataObj.cache_timestamp}`);
     layer.addData(dataObj.data);
@@ -450,7 +479,8 @@ function loadGeojson(layerObj) {
         };
         dataObj = JSON.stringify(dataObj);
         console.log("dataObj length", dataObj.length);
-        dataObj = LZString.compress(dataObj);
+        //dataObj = LZString.compress(dataObj);
+        dataObj = LZString.compressToUTF16(dataObj);
         console.log("compressed length", dataObj.length);
         try {
           localStorage.setItem(layerObj.layerId, dataObj);
@@ -495,7 +525,10 @@ function loadGeojsonLajax(layerObj) {
               L.DomEvent.stopPropagation(evt);
               let lat = evt.latlng.lat;
               let long = evt.latlng.lng;
-              let contstr = '<b>'+feature.properties.name+'</b>';
+              let contstr = '';
+              if (feature.properties.hasOwnProperty('description')) {
+                contstr += '<b>'+feature.properties.name+'</b>';
+              }
               if (feature.properties.hasOwnProperty('description')) {
                 contstr += '<br>' + feature.properties.description;
               }
@@ -569,7 +602,10 @@ let loadGeoJObj = {
             L.DomEvent.stopPropagation(evt);
             let lat = evt.latlng.lat;
             let long = evt.latlng.lng;
-            let contstr = '<b>'+feature.properties.name+'</b>';
+            let contstr = '';
+            if (feature.properties.hasOwnProperty('description')) {
+              contstr += '<b>'+feature.properties.name+'</b>';
+            }
             if (feature.properties.hasOwnProperty('description')) {
               contstr += '<br>' + feature.properties.description;
             }

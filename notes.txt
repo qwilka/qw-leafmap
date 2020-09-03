@@ -1,14 +1,4 @@
-MIXED HYDROCARBONS
-GAS
-WATER
-OIL
-CONDENSATE
-OTHER FLUID
-HYDRAULIC
 
-status
-ACTIVE
-NOT IN USE
 
 https://stackoverflow.com/questions/42237388/syntaxerror-import-declarations-may-only-appear-at-top-level-of-a-module
 https://github.com/TNOCS/minify-geojson
@@ -24,6 +14,8 @@ https://github.com/eduardtomasek/lz-string-python
 https://javascript.info/localstorage
 https://stackabuse.com/encoding-and-decoding-base64-strings-in-node-js/
 https://stackoverflow.com/questions/13567509/what-happens-when-localstorage-is-full
+https://stackoverflow.com/questions/16795823/html5-localstorage-seems-to-become-corrupt
+https://arty.name/localstorage.html
 
 https://docs.geoserver.org/stable/en/user/services/wms/reference.html
 https://docs.geoserver.org/stable/en/user/services/wms/reference.html
@@ -135,3 +127,61 @@ https://wms.geonorge.no/skwms1/wms.sentinel2mosaikk?service=wms&version=1.3.0&re
                         }     
                     }
                 },
+
+
+https://stackoverflow.com/questions/9221362/regular-expression-for-a-hexadecimal-number
+
+                {
+                    "title": "Submarine Cables",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "scm",
+                        "layerType": "geojson",
+                        "cache": false,
+                        "style": {
+                            "default": {
+                                "color": true,
+                                "weight": 3,
+                                "opacity": 1
+                            },
+                            "color:7f449b": {
+                                "color": "#7f449b"
+                            },
+                            "color:d98328": {
+                                "color": "#d98328"
+                            },
+                            "color:4d50a2": {
+                                "color": "#4d50a2"
+                            },
+                            "color:09addc": {
+                                "color": "#09addc"
+                            },
+                            "color:66b646": {
+                                "color": "#66b646"
+                            },
+                            "color:933d97": {
+                                "color": "#933d97"
+                            },
+                            "color:8dc740": {
+                                "color": "#8dc740"
+                            },
+                            "color:b6b8ba": {
+                                "color": "#b6b8ba"
+                            },
+                            "status:removed": {
+                                "color": "Blue",
+                                "weight": 1,
+                                "opacity": 0.3
+                            },
+                            "status:not in use": {
+                                "color": "Black",
+                                "weight": 1,
+                                "opacity": 0.3
+                            },
+                            "status:active": {
+                                "weight": 2,
+                                "opacity": 1
+                            }
+                        },
