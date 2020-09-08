@@ -97,13 +97,13 @@ function makeGis(confData, id_number) {
     if (gisOpts.attributionControl) {
       let attribut = L.control.attribution({ 
           position: 'bottomright', 
-          prefix: '<a target="_blank" href="https://qwilka.com">Qwilka</a>'
+          prefix: '<a target="_blank" href="http://qwilka.com">Qwilka</a>'
       });
       attribut.addTo(map);
     }
 
     if (gisOpts.scaleControl) {
-      let scale = L.control.scale({position:'bottomleft', metric:true, imperial:false});
+      let scale = L.control.scale({position:'topright', metric:true, imperial:false});
       scale.addTo(map);      
     }
 

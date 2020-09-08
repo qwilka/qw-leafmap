@@ -1,7 +1,8 @@
 {
     "app_id": "vnmap",
-    "title": "title set from object...",
+    "title": "Qwilka GIS",
     "appType": "vnleaf",
+    "timestamp": 1599570036,
     "gisOptions": {
         "mapOptions": {
             "attributionControl": false,
@@ -27,7 +28,7 @@
         "attributionControl": true,
         "locationPopup": true,
         "scaleControl": true,
-        "sidePanel": false,
+        "sidePanel": true,
         "useCache": true
     },
     "ftree_vnleaf_0": [
@@ -66,7 +67,7 @@
                     "title": "GEBCO",
                     "type": "gis-layer-basemap",
                     "checkbox": "radio",
-                    "selected": true,
+                    "selected": false,
                     "data": {
                         "layerId": "g1",
                         "layerType": "WMS",
@@ -90,7 +91,7 @@
                     "title": "GEBCO_2019",
                     "type": "gis-layer-basemap",
                     "checkbox": "radio",
-                    "selected": false,
+                    "selected": true,
                     "data": {
                         "layerId": "g2",
                         "layerType": "WMS",
@@ -226,6 +227,24 @@
                     }
                 },
                 {
+                    "title": "ETOPO1",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "data": {
+                        "layerId": "etopo1",
+                        "layerType": "WMS",
+                        "url": "https://gis.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer",
+                        "refs": [
+                            "https://gis.ngdc.noaa.gov/arcgis/rest/services/etopo1/MapServer"
+                        ],
+                        "layerOpts": {
+                            "layers": "1",
+                            "attribution": "ETOPO1: <a target='_blank' href='https://www.ncei.noaa.gov/maps-and-geospatial-products'>NCEI</a>"
+                        }
+                    }
+                },
+                {
                     "title": "No background",
                     "type": "gis-layer-basemap",
                     "checkbox": "radio",
@@ -234,6 +253,92 @@
                         "layerId": "w",
                         "layerType": "tilemap",
                         "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg=="
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Bathymetry",
+            "type": "gis-folder",
+            "folder": true,
+            "children": [
+                {
+                    "title": "NCEI bathymetry hillshade",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "bya",
+                        "layerType": "WMS",
+                        "url": "https://gis.ngdc.noaa.gov/arcgis/services/multibeam_mosaic_hillshade/ImageServer/WMSServer",
+                        "refs": [
+                            "https://gis.ngdc.noaa.gov/arcgis/rest/services",
+                            "https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer"
+                        ],
+                        "layerOpts": {
+                            "layers": "multibeam_mosaic_hillshade:MultidirectionalHillshadeHaxby_8000-0",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1.0,
+                            "attribution": "<a target='_blank' href='https://www.ncei.noaa.gov/maps-and-geospatial-products'>NCEI</a> bathymetry hillshade"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Subsea cables",
+            "type": "gis-folder-overlays",
+            "folder": true,
+            "children": [
+                {
+                    "title": "Submarine Cables",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "scm",
+                        "layerType": "geojson",
+                        "cache": false,
+                        "style": {
+                            "default": {
+                                "color": true,
+                                "weight": 1,
+                                "opacity": 1
+                            }
+                        },
+                        "popupProps": [
+                            "slug||CABLE"
+                        ],
+                        "url": "https://raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/public/api/v2/cable/cable-geo.json",
+                        "layerOpts": {
+                            "attribution": "<a target='_blank' href='https://github.com/telegeography/www.submarinecablemap.com'>Submarine Cable Map</a>"
+                        }
+                    }
+                },
+                {
+                    "title": "Cable landing points",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "scl",
+                        "layerType": "geojson",
+                        "cache": false,
+                        "url": "https://raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/public/api/v2/landing-point/landing-point-geo.json",
+                        "layerOpts": {
+                            "attribution": "<a target='_blank' href='https://github.com/telegeography/www.submarinecablemap.com'>Submarine Cable Map</a>",
+                            "geojsonMarkerOptions": {
+                                "radius": 4,
+                                "fillColor": "#ff7800",
+                                "color": "#000",
+                                "weight": 1,
+                                "opacity": 0.8,
+                                "fillOpacity": 0.6                                
+                            }
+                        }
                     }
                 }
             ]
@@ -257,10 +362,7 @@
                             "http://services.ga.gov.au/gis/services/Oil_Gas_Infrastructure/MapServer/WMSServer?request=GetCapabilities&service=WMS"
                         ],
                         "bbox": [
-                            -12.3046875,
-                            55.52863,
-                            36.5625,
-                            74.70644988
+                            92.021,-46.739,167.519,0
                         ],
                         "layerOpts": {
                             "layers": [
@@ -299,13 +401,13 @@
                                 "weight": 3,
                                 "opacity": 1
                             },
-                            "content_name:gas": {
+                            "content_name||gas": {
                                 "color": "DarkOrange"
                             },
-                            "content_name:oil": {
+                            "content_name||oil": {
                                 "color": "Green"
                             },
-                            "content_name:Multi-phase": {
+                            "content_name||Multi-phase": {
                                 "color": "Maroon"
                             }
                         },
@@ -315,10 +417,7 @@
                         "url": "https://qwilka.github.io/data/DK_Geus_pipelines_simplified.geojson",
                         "refs": [],
                         "bbox": [
-                            -12.3046875,
-                            55.52863,
-                            36.5625,
-                            74.70644988
+                            -1.3403,51.9036,17.5341,59.3555
                         ],
                         "layerOpts": {
                             "attribution": "<a target='_blank' href='http://data.geus.dk/geusmap/ows/help/?lang=en'>DK-Geus</a>"
@@ -346,10 +445,7 @@
                             "https://data.gov.ie/dataset/offshore-commercial-field"
                         ],
                         "bbox": [
-                            -12.3046875,
-                            55.52863,
-                            36.5625,
-                            74.70644988
+                            -17.907,49.353,0.966,57.243
                         ],
                         "layerOpts": {
                             "layers": "1,2",
@@ -375,10 +471,7 @@
                             "http://data.marine.ie/geonetwork/srv/eng/catalog.search#/metadata/ie.marine.data:dataset.2177"
                         ],
                         "bbox": [
-                            -12.3046875,
-                            55.52863,
-                            36.5625,
-                            74.70644988
+                            -17.907,49.353,0.966,57.243
                         ],
                         "layerOpts": {
                             "layers": "1",
@@ -404,10 +497,7 @@
                             "http://data.marine.ie/geonetwork/srv/eng/catalog.search#/metadata/ie.marine.data:dataset.2177"
                         ],
                         "bbox": [
-                            -12.3046875,
-                            55.52863,
-                            36.5625,
-                            74.70644988
+                            -17.907,49.353,0.966,57.243
                         ],
                         "layerOpts": {
                             "layers": "2",
@@ -471,10 +561,10 @@
                             "https://kartkatalog.geonorge.no/metadata/dybdedata-kurver-generaliserte-wms/7790f618-eb6a-4c4a-a925-8a605565ae92"
                         ],
                         "bbox": [
-                            -45.0,
-                            51.7776,
-                            55.5137,
-                            83.5405
+                            -12.3046875,
+                            55.52863,
+                            36.5625,
+                            74.70644988
                         ],
                         "layerOpts": {
                             "layers": "Dybdekurver_havomraader_WMS",
@@ -1107,6 +1197,9 @@
                                 "layerId": "gba",
                                 "layerType": "geojson",
                                 "cache": true,
+                                "bbox": [
+                                    -22.587,48.661,15.161,63.273
+                                ],
                                 "style": {
                                     "default": {
                                         "color": "Red",
@@ -1160,7 +1253,7 @@
                                 ],
                                 "url": "/gis/assets/OGA_pipelines.geojson",
                                 "layerOpts": {
-                                    "attribution": "UK <a target='_blank' href='https://data-ogauthority.opendata.arcgis.com/datasets/oga-offshore-zipped-shapefiles-wgs84'>OGA</a> 2020-07-22"
+                                    "attribution": "UK <a target='_blank' href='https://data-ogauthority.opendata.arcgis.com/datasets/oga-offshore-zipped-shapefiles-wgs84'>Oil&Gas Authority</a> 2020-09-03"
                                 }
                             }
                         },
@@ -1173,6 +1266,9 @@
                                 "layerId": "gbb",
                                 "layerType": "geojson",
                                 "cache": true,
+                                "bbox": [
+                                    -22.587,48.661,15.161,63.273
+                                ],
                                 "style": {
                                     "default": {
                                         "radius": 4,
@@ -1232,7 +1328,7 @@
                                 ],
                                 "url": "/gis/assets/OGA_platforms.geojson",
                                 "layerOpts": {
-                                    "attribution": "UK <a target='_blank' href='https://data-ogauthority.opendata.arcgis.com/datasets/oga-offshore-zipped-shapefiles-wgs84'>OGA</a> 2020-07-22",
+                                    "attribution": "UK <a target='_blank' href='https://data-ogauthority.opendata.arcgis.com/datasets/oga-offshore-zipped-shapefiles-wgs84'>Oil&Gas Authority</a> 2020-09-03",
                                     "geojsonMarkerOptions": {
                                         "radius": 8,
                                         "fillColor": "#0099cc",
@@ -1269,10 +1365,7 @@
                                     "https://data.gov.uk/dataset/ac766f0e-c121-4876-853d-cd68aa6181e1/resource/2987869a-dc81-4f4d-8955-1983ae288603"
                                 ],
                                 "bbox": [
-                                    -12.3046875,
-                                    55.52863,
-                                    36.5625,
-                                    74.70644988
+                                    -22.587,48.661,15.161,63.273
                                 ],
                                 "layerOpts": {
                                     "layers": "nmp:NMPMAP8polygon,nmp:NMPMAP8line",
@@ -1304,10 +1397,7 @@
                                     "https://data.gov.uk/dataset/ac766f0e-c121-4876-853d-cd68aa6181e1/resource/2987869a-dc81-4f4d-8955-1983ae288603"
                                 ],
                                 "bbox": [
-                                    -12.3046875,
-                                    55.52863,
-                                    36.5625,
-                                    74.70644988
+                                    -22.587,48.661,15.161,63.273
                                 ],
                                 "layerOpts": {
                                     "layers": "utility_and_government_services_fishing_intensity_pipelines_all_gears",
@@ -1336,33 +1426,6 @@
                     "folder": true,
                     "children": [
                         {
-                            "title": "OCS Oil & Gas Pipelines",
-                            "type": "gis-layer",
-                            "checkbox": true,
-                            "selected": false,
-                            "data": {
-                                "layerId": "usp",
-                                "layerType": "WMS",
-                                "url": "https://gis.boem.gov/arcgis/services/BOEM_BSEE/MMC_Layers/MapServer/WmsServer",
-                                "refs": [],
-                                "bbox": [
-                                    -12.3046875,
-                                    55.52863,
-                                    36.5625,
-                                    74.70644988
-                                ],
-                                "layerOpts": {
-                                    "layers": "26",
-                                    "CRS": "EPSG:4326",
-                                    "format": "image/png",
-                                    "transparent": true,
-                                    "noWrap": true,
-                                    "opacity": 0.9,
-                                    "attribution": "<a target='_blank' href='https://gis.boem.gov/arcgis/rest/services/BOEM_BSEE/POC_Layers/MapServer'>BOEM</a>"
-                                }
-                            }
-                        },
-                        {
                             "title": "GoM deepwater bathymetric hillshade",
                             "type": "gis-layer",
                             "checkbox": true,
@@ -1373,10 +1436,7 @@
                                 "url": "https://gis.boem.gov/arcgis/services/BOEM_BSEE/GOM_Deepwater_Bathymetry_and_Hillshade_Tiled/MapServer/WmsServer",
                                 "refs": [],
                                 "bbox": [
-                                    -12.3046875,
-                                    55.52863,
-                                    36.5625,
-                                    74.70644988
+                                    -99.206,20.550,-80.332,32.379
                                 ],
                                 "layerOpts": {
                                     "layers": "0",
@@ -1389,13 +1449,39 @@
                                     "attribution": "<a target='_blank' href='https://gis.boem.gov/'>BOEM</a>"
                                 }
                             }
+                        },
+                        {
+                            "title": "OCS Oil & Gas Pipelines",
+                            "type": "gis-layer",
+                            "checkbox": true,
+                            "selected": false,
+                            "data": {
+                                "layerId": "usp",
+                                "layerType": "WMS",
+                                "url": "https://gis.ngdc.noaa.gov/arcgis/services/GulfDataAtlas/BOEM_OilAndGasPipelines/MapServer/WmsServer",
+                                "refs": [
+                                    "https://gis.ngdc.noaa.gov/arcgis/rest/services/GulfDataAtlas"
+                                ],
+                                "bbox": [
+                                    -99.206,20.550,-80.332,32.379
+                                ],
+                                "layerOpts": {
+                                    "layers": "0,1,2,3",
+                                    "CRS": "EPSG:4326",
+                                    "format": "image/png",
+                                    "transparent": true,
+                                    "noWrap": true,
+                                    "opacity": 1.0,
+                                    "attribution": "<a target='_blank' href='https://gis.ngdc.noaa.gov/arcgis/rest/services/GulfDataAtlas/BOEM_OilAndGasPipelines/MapServer'>BOEM</a>"
+                                }
+                            }
                         }
                     ]
                 }
             ]
         },
         {
-            "title": "Other map resources",
+            "title": "Other resources",
             "type": "gis-folder-overlays",
             "folder": true,
             "children": [
@@ -1423,50 +1509,25 @@
                     }
                 },
                 {
-                    "title": "Submarine Cables",
+                    "title": "Graticule",
                     "type": "gis-layer",
                     "checkbox": true,
                     "selected": false,
                     "data": {
-                        "layerId": "scm",
-                        "layerType": "geojson",
-                        "cache": false,
-                        "style": {
-                            "default": {
-                                "color": true,
-                                "weight": 1,
-                                "opacity": 1
-                            }
-                        },
-                        "popupProps": [
-                            "slug||CABLE"
+                        "layerId": "g",
+                        "layerType": "WMS",
+                        "url": "https://gis.ngdc.noaa.gov/arcgis/services/graticule/MapServer/WmsServer",
+                        "refs": [
+                            "https://gis.ngdc.noaa.gov/arcgis/rest/services/graticule/MapServer"
                         ],
-                        "url": "https://raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/public/api/v2/cable/cable-geo.json",
                         "layerOpts": {
-                            "attribution": "<a target='_blank' href='https://github.com/telegeography/www.submarinecablemap.com'>Submarine Cable Map</a>"
-                        }
-                    }
-                },
-                {
-                    "title": "Cable landing points",
-                    "type": "gis-layer",
-                    "checkbox": true,
-                    "selected": false,
-                    "data": {
-                        "layerId": "scl",
-                        "layerType": "geojson",
-                        "cache": false,
-                        "url": "https://raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/public/api/v2/landing-point/landing-point-geo.json",
-                        "layerOpts": {
-                            "attribution": "<a target='_blank' href='https://github.com/telegeography/www.submarinecablemap.com'>Submarine Cable Map</a>",
-                            "geojsonMarkerOptions": {
-                                "radius": 4,
-                                "fillColor": "#ff7800",
-                                "color": "#000",
-                                "weight": 1,
-                                "opacity": 0.8,
-                                "fillOpacity": 0.6                                
-                            }
+                            "layers": "1,2,3,4",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1.0,
+                            "attribution": "Graticule: <a target='_blank' href='https://www.ncei.noaa.gov/maps-and-geospatial-products'>NCEI</a>"
                         }
                     }
                 },

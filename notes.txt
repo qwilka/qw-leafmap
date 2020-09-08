@@ -1,4 +1,4 @@
-
+http://localhost:8000/gis/qwleaf.html
 
 https://stackoverflow.com/questions/42237388/syntaxerror-import-declarations-may-only-appear-at-top-level-of-a-module
 https://github.com/TNOCS/minify-geojson
@@ -32,7 +32,12 @@ https://survivejs.com/webpack/developing/getting-started/
 https://love2dev.com/blog/using-gruntjs-to-bundle-and-minify-javascript-and-css/
 
 
-
+===============================================================
+from datetime import datetime, timezone
+ts = datetime.utcnow().replace(tzinfo=timezone.utc).timestamp()
+ts = int(ts)
+dt = datetime.utcfromtimestamp(ts).isoformat()
+===============================================================
 
 
 new HtmlWebpackPlugin({ template: "./index.html" }),
