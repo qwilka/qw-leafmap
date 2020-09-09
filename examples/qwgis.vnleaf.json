@@ -281,7 +281,7 @@
                             "format": "image/png",
                             "transparent": true,
                             "noWrap": true,
-                            "opacity": 1.0,
+                            "opacity": 1,
                             "attribution": "<a target='_blank' href='https://www.ncei.noaa.gov/maps-and-geospatial-products'>NCEI</a> bathymetry hillshade"
                         }
                     }
@@ -289,7 +289,7 @@
             ]
         },
         {
-            "title": "Subsea cables",
+            "title": "Subsea Cables",
             "type": "gis-folder-overlays",
             "folder": true,
             "children": [
@@ -336,7 +336,7 @@
                                 "color": "#000",
                                 "weight": 1,
                                 "opacity": 0.8,
-                                "fillOpacity": 0.6                                
+                                "fillOpacity": 0.6
                             }
                         }
                     }
@@ -362,7 +362,10 @@
                             "http://services.ga.gov.au/gis/services/Oil_Gas_Infrastructure/MapServer/WMSServer?request=GetCapabilities&service=WMS"
                         ],
                         "bbox": [
-                            92.021,-46.739,167.519,0
+                            92.021,
+                            -46.739,
+                            167.519,
+                            0
                         ],
                         "layerOpts": {
                             "layers": [
@@ -414,10 +417,13 @@
                         "popupProps": [
                             "content_name"
                         ],
-                        "url": "https://qwilka.github.io/data/DK_Geus_pipelines_simplified.geojson",
+                        "url": "/data/DK_Geus_pipelines_simplified.geojson",
                         "refs": [],
                         "bbox": [
-                            -1.3403,51.9036,17.5341,59.3555
+                            -1.3403,
+                            51.9036,
+                            17.5341,
+                            59.3555
                         ],
                         "layerOpts": {
                             "attribution": "<a target='_blank' href='http://data.geus.dk/geusmap/ows/help/?lang=en'>DK-Geus</a>"
@@ -445,7 +451,10 @@
                             "https://data.gov.ie/dataset/offshore-commercial-field"
                         ],
                         "bbox": [
-                            -17.907,49.353,0.966,57.243
+                            -17.907,
+                            49.353,
+                            0.966,
+                            57.243
                         ],
                         "layerOpts": {
                             "layers": "1,2",
@@ -471,7 +480,10 @@
                             "http://data.marine.ie/geonetwork/srv/eng/catalog.search#/metadata/ie.marine.data:dataset.2177"
                         ],
                         "bbox": [
-                            -17.907,49.353,0.966,57.243
+                            -17.907,
+                            49.353,
+                            0.966,
+                            57.243
                         ],
                         "layerOpts": {
                             "layers": "1",
@@ -497,7 +509,10 @@
                             "http://data.marine.ie/geonetwork/srv/eng/catalog.search#/metadata/ie.marine.data:dataset.2177"
                         ],
                         "bbox": [
-                            -17.907,49.353,0.966,57.243
+                            -17.907,
+                            49.353,
+                            0.966,
+                            57.243
                         ],
                         "layerOpts": {
                             "layers": "2",
@@ -1198,7 +1213,10 @@
                                 "layerType": "geojson",
                                 "cache": true,
                                 "bbox": [
-                                    -22.587,48.661,15.161,63.273
+                                    -22.587,
+                                    48.661,
+                                    15.161,
+                                    63.273
                                 ],
                                 "style": {
                                     "default": {
@@ -1251,7 +1269,7 @@
                                     "startup",
                                     "status"
                                 ],
-                                "url": "/gis/assets/OGA_pipelines.geojson",
+                                "url": "/data/OGA_pipelines.min.geojson",
                                 "layerOpts": {
                                     "attribution": "UK <a target='_blank' href='https://data-ogauthority.opendata.arcgis.com/datasets/oga-offshore-zipped-shapefiles-wgs84'>Oil&Gas Authority</a> 2020-09-03"
                                 }
@@ -1267,7 +1285,10 @@
                                 "layerType": "geojson",
                                 "cache": true,
                                 "bbox": [
-                                    -22.587,48.661,15.161,63.273
+                                    -22.587,
+                                    48.661,
+                                    15.161,
+                                    63.273
                                 ],
                                 "style": {
                                     "default": {
@@ -1283,7 +1304,7 @@
                                         "color": "#0033cc",
                                         "weight": 2,
                                         "opacity": 1,
-                                        "fillOpacity": 0.8 
+                                        "fillOpacity": 0.8
                                     },
                                     "type||buoy": {
                                         "radius": 4,
@@ -1291,7 +1312,7 @@
                                         "fillColor": "#ee8890",
                                         "fillOpacity": 0.8,
                                         "weight": 2,
-                                        "opacity": 1.0
+                                        "opacity": 1
                                     },
                                     "type||MONITOR BUOY": {
                                         "radius": 4,
@@ -1299,7 +1320,7 @@
                                         "fillColor": "#96e86a",
                                         "fillOpacity": 0.8,
                                         "weight": 2,
-                                        "opacity": 1.0
+                                        "opacity": 1
                                     },
                                     "type||LOADING BUOY": {
                                         "radius": 4,
@@ -1307,7 +1328,7 @@
                                         "fillColor": "#6a9fe8",
                                         "fillOpacity": 0.8,
                                         "weight": 2,
-                                        "opacity": 1.0
+                                        "opacity": 1
                                     },
                                     "status||removed": {
                                         "radius": 4,
@@ -1315,7 +1336,7 @@
                                         "color": "black",
                                         "weight": 2,
                                         "opacity": 0.3,
-                                        "fillOpacity": 0.3 
+                                        "fillOpacity": 0.3
                                     }
                                 },
                                 "popupProps": [
@@ -1326,7 +1347,7 @@
                                     "installed",
                                     "datasource"
                                 ],
-                                "url": "/gis/assets/OGA_platforms.geojson",
+                                "url": "/data/OGA_platforms.min.geojson",
                                 "layerOpts": {
                                     "attribution": "UK <a target='_blank' href='https://data-ogauthority.opendata.arcgis.com/datasets/oga-offshore-zipped-shapefiles-wgs84'>Oil&Gas Authority</a> 2020-09-03",
                                     "geojsonMarkerOptions": {
@@ -1335,7 +1356,7 @@
                                         "color": "#0033cc",
                                         "weight": 1,
                                         "opacity": 0.8,
-                                        "fillOpacity": 0.6                                
+                                        "fillOpacity": 0.6
                                     }
                                 }
                             }
@@ -1365,7 +1386,10 @@
                                     "https://data.gov.uk/dataset/ac766f0e-c121-4876-853d-cd68aa6181e1/resource/2987869a-dc81-4f4d-8955-1983ae288603"
                                 ],
                                 "bbox": [
-                                    -22.587,48.661,15.161,63.273
+                                    -22.587,
+                                    48.661,
+                                    15.161,
+                                    63.273
                                 ],
                                 "layerOpts": {
                                     "layers": "nmp:NMPMAP8polygon,nmp:NMPMAP8line",
@@ -1397,7 +1421,10 @@
                                     "https://data.gov.uk/dataset/ac766f0e-c121-4876-853d-cd68aa6181e1/resource/2987869a-dc81-4f4d-8955-1983ae288603"
                                 ],
                                 "bbox": [
-                                    -22.587,48.661,15.161,63.273
+                                    -22.587,
+                                    48.661,
+                                    15.161,
+                                    63.273
                                 ],
                                 "layerOpts": {
                                     "layers": "utility_and_government_services_fishing_intensity_pipelines_all_gears",
@@ -1426,7 +1453,7 @@
                     "folder": true,
                     "children": [
                         {
-                            "title": "GoM deepwater bathymetric hillshade",
+                            "title": "Deepwater bathymetric hillshade",
                             "type": "gis-layer",
                             "checkbox": true,
                             "selected": false,
@@ -1436,7 +1463,10 @@
                                 "url": "https://gis.boem.gov/arcgis/services/BOEM_BSEE/GOM_Deepwater_Bathymetry_and_Hillshade_Tiled/MapServer/WmsServer",
                                 "refs": [],
                                 "bbox": [
-                                    -99.206,20.550,-80.332,32.379
+                                    -99.206,
+                                    20.55,
+                                    -80.332,
+                                    32.379
                                 ],
                                 "layerOpts": {
                                     "layers": "0",
@@ -1451,7 +1481,7 @@
                             }
                         },
                         {
-                            "title": "OCS Oil & Gas Pipelines",
+                            "title": "BOEM Oil & Gas Pipelines",
                             "type": "gis-layer",
                             "checkbox": true,
                             "selected": false,
@@ -1463,7 +1493,10 @@
                                     "https://gis.ngdc.noaa.gov/arcgis/rest/services/GulfDataAtlas"
                                 ],
                                 "bbox": [
-                                    -99.206,20.550,-80.332,32.379
+                                    -99.206,
+                                    20.55,
+                                    -80.332,
+                                    32.379
                                 ],
                                 "layerOpts": {
                                     "layers": "0,1,2,3",
@@ -1471,7 +1504,53 @@
                                     "format": "image/png",
                                     "transparent": true,
                                     "noWrap": true,
-                                    "opacity": 1.0,
+                                    "opacity": 1,
+                                    "attribution": "<a target='_blank' href='https://gis.ngdc.noaa.gov/arcgis/rest/services/GulfDataAtlas/BOEM_OilAndGasPipelines/MapServer'>BOEM</a>"
+                                }
+                            }
+                        },
+                        {
+                            "title": "BSEE pipelines",
+                            "type": "DISABLED",
+                            "checkbox": false,
+                            "selected": false,
+                            "data": {
+                                "layerId": "bse",
+                                "layerType": "geojson",
+                                "cache": false,
+                                "bbox": [
+                                    -99.206,
+                                    20.55,
+                                    -80.332,
+                                    32.379
+                                ],
+                                "style": {
+                                    "default": {
+                                        "color": "Black",
+                                        "weight": 1,
+                                        "opacity": 1
+                                    },
+                                    "STATUS_CODE||ACT": {
+                                        "color": "#ff00ff",
+                                        "weight": 3,
+                                        "opacity": 1
+                                    },
+                                    "status||ACTIVE": {
+                                        "color": "#ff0000",
+                                        "weight": 3,
+                                        "opacity": 1
+                                    }
+                                },
+                                "popupProps": [
+                                    "CO_NAME",
+                                    "status",
+                                    "size",
+                                    "product",
+                                    "MAOP_PRSS",
+                                    "SEGMENT_NUM"
+                                ],
+                                "url": "/data/BSEE_GoM_pipelines.min.geojson",
+                                "layerOpts": {
                                     "attribution": "<a target='_blank' href='https://gis.ngdc.noaa.gov/arcgis/rest/services/GulfDataAtlas/BOEM_OilAndGasPipelines/MapServer'>BOEM</a>"
                                 }
                             }
@@ -1526,7 +1605,7 @@
                             "format": "image/png",
                             "transparent": true,
                             "noWrap": true,
-                            "opacity": 1.0,
+                            "opacity": 1,
                             "attribution": "Graticule: <a target='_blank' href='https://www.ncei.noaa.gov/maps-and-geospatial-products'>NCEI</a>"
                         }
                     }

@@ -15,7 +15,7 @@ import './libs/layers_tree/L.Control.Layers.Tree.css';
 import './libs/layers_tree/L.Control.Layers.Tree';
 import './libs/leaflet_hash/leaflet-fullHash';
 
-import {Utm, LatLon} from 'geodesy/utm';
+//import {Utm, LatLon} from 'geodesy/utm';
 
 function main() {
    // document.body.appendChild(component());

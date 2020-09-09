@@ -41,8 +41,11 @@
   </head>
   <body>
     <div id="map"></div>
-    <script>
-      var conf_data_path = "/gis/assets/qwgis.vnleaf.json";
+    <script type="module">
+      import Utm, {LatLon} from 'https://cdn.jsdelivr.net/npm/geodesy@2.2.1/utm.min.js';
+      window.LatLon = LatLon;
+      window.Utm = Utm;
+      window.conf_data_path = "/gis/assets/qwgis.vnleaf.json";
     </script>
 
 

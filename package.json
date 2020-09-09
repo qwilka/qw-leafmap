@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/qwilka/qwgis#readme",
   "dependencies": {
-    "geodesy": "^2.2.1",
     "leaflet": "^1.6.0",
     "leaflet-easybutton": "^2.4.0",
     "leaflet.control.layers.tree": "^1.0.0"
