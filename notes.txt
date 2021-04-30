@@ -190,3 +190,81 @@ https://stackoverflow.com/questions/9221362/regular-expression-for-a-hexadecimal
                                 "opacity": 1
                             }
                         },
+
+
+
+=====================================================
+                {
+                    "title": "Graticule",
+                    "type": "DISABLED",
+                    "checkbox": false,
+                    "selected": false,
+                    "data": {
+                        "layerId": "g",
+                        "layerType": "WMS",
+                        "url": "https://gis.ngdc.noaa.gov/arcgis/services/graticule/MapServer/WmsServer",
+                        "refs": [
+                            "https://gis.ngdc.noaa.gov/arcgis/rest/services/graticule/MapServer"
+                        ],
+                        "layerOpts": {
+                            "layers": "1,2,3,4",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "Graticule: <a target='_blank' href='https://www.ncei.noaa.gov/maps-and-geospatial-products'>NCEI</a>"
+                        }
+                    }
+                },
+
+
+
+                        {
+                            "title": "BSEE pipelines (geojson)",
+                            "type": "gis-layer",
+                            "checkbox": true,
+                            "selected": false,
+                            "data": {
+                                "layerId": "bse",
+                                "layerType": "geojson",
+                                "cache": true,
+                                "bbox": [
+                                    -99.206,
+                                    20.55,
+                                    -80.332,
+                                    32.379
+                                ],
+                                "style": {
+                                    "default": {
+                                        "color": "Black",
+                                        "weight": 1,
+                                        "opacity": 1
+                                    },
+                                    "STATUS_CODE||ACT": {
+                                        "color": "#ff00ff",
+                                        "weight": 3,
+                                        "opacity": 1
+                                    },
+                                    "status||ACTIVE": {
+                                        "color": "#ff0000",
+                                        "weight": 3,
+                                        "opacity": 1
+                                    }
+                                },
+                                "popupProps": [
+                                    "CO_NAME",
+                                    "status",
+                                    "size",
+                                    "product",
+                                    "MAOP_PRSS",
+                                    "SEGMENT_NUM"
+                                ],
+                                "url": "/data/BSEE_GoM_pipelines.min.geojson",
+                                "layerOpts": {
+                                    "attribution": "<a target='_blank' href='https://gis.ngdc.noaa.gov/arcgis/rest/services/GulfDataAtlas/BOEM_OilAndGasPipelines/MapServer'>BOEM</a>"
+                                }
+                            }
+                        }
+
+=====================================================
