@@ -97,7 +97,7 @@
                         "layerType": "WMS",
                         "url": "https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv",
                         "refs": [
-                            "https://www.gebco.net/"
+                            "https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/"
                         ],
                         "layerOpts": {
                             "layers": "GEBCO_LATEST",
@@ -107,7 +107,7 @@
                             "transparent": false,
                             "noWrap": true,
                             "opacity": 1,
-                            "attribution": "Imagery reproduced from the GEBCO_2014 Grid, version 20150318, <a target='_blank' href='https://www.gebco.net/'>www.gebco.net</a>"
+                            "attribution": "Imagery reproduced from the GEBCO_2020 Grid, <a target='_blank' href='https://www.gebco.net/'>GEBCO</a>  Compilation Group (2020) GEBCO 2020 Grid (doi:10.5285/a29c5465-b138-234d-e053-6c86abc040b9)"
                         }
                     }
                 },
@@ -126,8 +126,9 @@
                             "https://gis.stackexchange.com/questions/253034/sentinel-2-imagery-as-a-webservice-in-a-leaflet-or-openlayers-map?rq=1"
                         ],
                         "layerOpts": {
-                            "layers": "s2cloudless-2020",
+                            "layers": "s2cloudless-2020_3857",
                             "CRS": "EPSG:4326",
+                            "version": "1.1.1",
                             "format": "image/png",
                             "transparent": false,
                             "noWrap": true,
