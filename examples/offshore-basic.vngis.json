@@ -125,14 +125,7 @@
                             "https://ows.emodnet-bathymetry.eu/"
                         ],
                         "layerOpts": {
-                            "layers": "contours",
-                            "CRS": "EPSG:4326",
-                            "version": "1.3.0",
-                            "format": "image/png",
-                            "transparent": false,
-                            "noWrap": true,
-                            "opacity": 1,
-                            "attribution": "<a target='_blank' href='https://emodnet.ec.europa.eu/en/bathymetry'>EMODnet, </a>"
+                            "tms": true
                         }
                     }
                 },

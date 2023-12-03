@@ -1,5 +1,29 @@
 http://localhost:8000/gis/qwleaf.html
 
+
+
+=================================================
+https://leafletjs.com/examples/wms/wms.html
+
+https://factpages.npd.no/
+https://www.npd.no/en/about-us/open-data/factpages-and-factmaps-technical-information/
+https://factmaps.npd.no/arcgis/services/FactMaps_ogc/3_0_WGS84_z32/MapServer/WMSServer?request=GetCapabilities&service=WMS
+https://factmaps.npd.no/factmaps/3_0/
+
+
+https://emodnet.ec.europa.eu/en/bathymetry#bathymetry-services
+https://emodnet.ec.europa.eu/en/emodnet-web-service-documentation#wmts
+https://ows.emodnet-bathymetry.eu/
+https://emodnet.ec.europa.eu/geoviewer/
+
+
+https://github.com/EMODnet/Web-Service-Documentation
+https://github.com/EMODnet/Web-Service-Documentation/tree/main/R-tutorial
+https://github.com/EMODnet/Web-Service-Documentation/blob/main/R-tutorial/EMODnet_web_services_in_R_part1.ipynb
+=================================================
+
+
+
 https://stackoverflow.com/questions/42237388/syntaxerror-import-declarations-may-only-appear-at-top-level-of-a-module
 https://github.com/TNOCS/minify-geojson
 
