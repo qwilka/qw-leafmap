@@ -1,6 +1,8 @@
 http://localhost:8000/gis/qwleaf.html
 
 
+data -> /home/develop/engineering/src/qwilka.github.io/data
+
 
 =================================================
 https://leafletjs.com/examples/wms/wms.html
