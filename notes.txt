@@ -1,5 +1,8 @@
 http://localhost:8000/gis/qwleaf.html
 
+export NODE_OPTIONS=--openssl-legacy-provider
+npm run build
+
 
 data -> /home/develop/engineering/src/qwilka.github.io/data
 

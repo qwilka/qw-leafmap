@@ -292,6 +292,7 @@ function makeLayersTree(ftree_folder, mapref, allMapLayers) {
   let layerTreeChildren = [];
   for (let jj=0; jj<ftree_folder.children.length; jj++) {
     let layerObj = ftree_folder.children[jj];
+    if (layerObj.hasOwnProperty('active') && layerObj.active == false) continue;
     //console.log("layerObj.title", layerObj.title);
     //console.log("layerObj.type", layerObj.type);
     if (layerObj.type.startsWith("gis-layer")) {

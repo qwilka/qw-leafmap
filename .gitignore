@@ -4,5 +4,7 @@ src/vnleaf
 fields
 dist/
 gis/
-/data
 _tmp
+
+.ipynb_checkpoints
+

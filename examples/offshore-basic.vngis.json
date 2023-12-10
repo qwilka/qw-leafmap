@@ -92,6 +92,7 @@
                     "type": "gis-layer-basemap",
                     "checkbox": "radio",
                     "selected": true,
+                    "active": true,
                     "data": {
                         "layerId": "g1",
                         "layerType": "WMS",
@@ -116,6 +117,7 @@
                     "type": "gis-layer-basemap",
                     "checkbox": "radio",
                     "selected": false,
+                    "active": false,
                     "data": {
                         "layerId": "e3",
                         "layerType": "tilemap",
@@ -498,6 +500,7 @@
                     "title": "Fishing activity",
                     "type": "gis-folder",
                     "folder": true,
+                    "active": false,
                     "data": {
                         "refs": [
                             "https://www.fiskeridir.no/Om-oss/Nyheter/2017/Fiskeridirektoratet-lanserer-ny-kartloesning-med-WMS",
