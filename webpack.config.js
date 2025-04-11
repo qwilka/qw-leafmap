@@ -1,45 +1,17 @@
 const path = require('path');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackCdnPlugin = require('webpack-cdn-plugin');
-
-// const webpack = require('webpack');
-//   new webpack.ProvidePlugin({
-//     "window.L": "leaflet"
-//   }),
-
-const mode = process.env.NODE_ENV || 'development';
-
 module.exports = {
-  entry: path.join(__dirname, 'src/index.js'),
-  mode,
+  entry: './src/index.js',
   output: {
-    path: path.join(__dirname, 'gis/assets'),
-    publicPath: '/gis/assets',
-    filename: 'qwgis.js',
-  },
-  externals: {
-    'leaflet': 'L'
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'build'),
   },
   module: {
     rules: [
-        { test: /\.css$/, use: ['style-loader', 'css-loader'] }
-    ]
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({ 
-      filename: '../1/index.html',
-      template: "./index.html"
-    }), // output file relative to output.path
-    new WebpackCdnPlugin({
-      modules: [
-        { 
-          name: 'leaflet',
-          style: '',
-          path: 'dist/leaflet.js'
-        }
-      ],
-      publicPath: '/node_modules', // override when prod is false
-    }),
-  ],
 };

@@ -3,8 +3,10 @@ lwapps-build/
 src/vnleaf
 fields
 dist/
+build/
 gis/
 _tmp
-
 .ipynb_checkpoints
+package-lock.json
+
 

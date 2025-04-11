@@ -21,6 +21,7 @@
             namedToggle: false,
             collapseAll: '',
             expandAll: '',
+            labelIsSelector: 'both',
         },
 
         // Class names are error prone texts, so write them once here
@@ -38,6 +39,7 @@
                 node: 'leaflet-layerstree-node',
                 name: 'leaflet-layerstree-header-name',
                 label: 'leaflet-layerstree-header-label',
+                selAllCheckbox: 'leaflet-layerstree-sel-all-checkbox',
             };
         },
 
@@ -59,26 +61,26 @@
             return this._setTrees(undefined, tree);
         },
 
-        addBaseLayer: function(layer, name) {
+        addBaseLayer: function(_layer, _name) {
             throw 'addBaseLayer is disabled';
         },
 
-        addOverlay: function(layer, name) {
+        addOverlay: function(_layer, _name) {
             throw 'addOverlay is disabled';
         },
 
-        removeLayer: function(layer) {
+        removeLayer: function(_layer) {
             throw 'removeLayer is disabled';
         },
 
         collapse: function() {
-            this._scrollTop = this._form.scrollTop;
+            this._scrollTop = this._sect().scrollTop;
             return L.Control.Layers.prototype.collapse.call(this);
         },
 
         expand: function() {
-            var ret = L.Control.Layers.prototype.expand.call(this);
-            this._form.scrollTop = this._scrollTop;
+            L.Control.Layers.prototype.expand.call(this);
+            this._sect().scrollTop = this._scrollTop;
         },
 
         onAdd: function(map) {
@@ -145,10 +147,10 @@
             for (var i = 0; i < inputs.length; i++) {
                 // Loop over every (valid) input.
                 var input = inputs[i];
-                if (this._getLayer && !!this._getLayer(input.layerId).overlay != !!overlay) continue
+                if (this._getLayer && !!this._getLayer(input.layerId).overlay != !!overlay) continue;
                 if (input.checked) {
                     // Get out of the header,
-                    // to not open the posible (but rare) children
+                    // to not open the possible (but rare) children
                     iter(input.parentElement.parentElement.parentElement.parentElement);
                 }
             }
@@ -156,6 +158,11 @@
         },
 
         // "private" methods, not exposed in the API
+        _sect: function() {
+            // to keep compatibility after 1.3 https://github.com/Leaflet/Leaflet/pull/6380
+            return this._section || this._form;
+        },
+
         _setTrees: function(base, overlays) {
             var id = 0; // to keep unique id
             function iterate(tree, output, overlays) {
@@ -178,7 +185,7 @@
                 if (Array.isArray(input)) {
                     return {noShow: true, children: input};
                 } else {
-                    return input
+                    return input;
                 }
             }
 
@@ -195,13 +202,13 @@
             if (overlays !== undefined) this._overlaysTree = forArrays(overlays);
 
             var bflat = iterate(this._baseTree, {});
-            for (var i in bflat) {
-                this._addLayer(bflat[i], i);
+            for (var j in bflat) {
+                this._addLayer(bflat[j], j);
             }
 
             var oflat = iterate(this._overlaysTree, {}, true);
-            for (i in oflat) {
-                this._addLayer(oflat[i], i, true);
+            for (var k in oflat) {
+                this._addLayer(oflat[k], k, true);
             }
             return (this._map) ? this._update() : this;
         },
@@ -209,15 +216,15 @@
         // Used to update the vertical scrollbar
         _localExpand: function() {
             if (this._map && L.DomUtil.hasClass(this._container, 'leaflet-control-layers-expanded')) {
-                var top = this._form.scrollTop;
+                var top = this._sect().scrollTop;
                 this.expand();
-                this._form.scrollTop = top; // to keep the scroll location
+                this._sect().scrollTop = top; // to keep the scroll location
                 this._scrollTop = top;
             }
             return this;
         },
 
-        // collapses or expands the tree in the containter.
+        // collapses or expands the tree in the container.
         _applyOnTree: function(container, collapse) {
             var iters = [
                 {cls: this.cls.children, hide: collapse},
@@ -240,7 +247,7 @@
         },
 
         // it is called in the original _update, and shouldn't do anything.
-        _addItem: function(obj) {
+        _addItem: function(_obj) {
         },
 
         // overwrite _update function in Control.Layers
@@ -258,7 +265,7 @@
             var container = overlay ? this._overlaysList : this._baseLayersList;
             this._expandCollapseAll(overlay, this.options.collapseAll, this.collapseTree);
             this._expandCollapseAll(overlay, this.options.expandAll, this.expandTree);
-            this._iterateTreeLayout(tree, container, overlay, tree.noShow)
+            this._iterateTreeLayout(tree, container, overlay, [], tree.noShow);
             if (this._checkDisabledLayers) {
                 // to keep compatibility
                 this._checkDisabledLayers();
@@ -277,7 +284,7 @@
                 o.tabIndex = 0;
                 L.DomEvent.on(o, 'click keydown', function(e) {
                     if (e.type !== 'keydown' || e.keyCode === 32) {
-                        o.blur()
+                        o.blur();
                         fn.call(ctx, overlay);
                         this._localExpand();
                     }
@@ -285,8 +292,8 @@
             }
         },
 
-        // recursive funtion to create the DOM children
-        _iterateTreeLayout: function(tree, container, overlay, noShow) {
+        // recursive function to create the DOM children
+        _iterateTreeLayout: function(tree, container, overlay, selAllNodes, noShow) {
             if (!tree) return;
             function creator(type, cls, append, innerHTML) {
                 var obj = L.DomUtil.create(type, cls, append);
@@ -311,6 +318,49 @@
                 header.appendChild(entry);
             }
 
+            function updateSelAllCheckbox(ancestor) {
+                var selector = ancestor.querySelector('input[type=checkbox]');
+                var selectedAll = true;
+                var selectedNone = true;
+                var inputs = ancestor.querySelectorAll('input[type=checkbox]');
+                [].forEach.call(inputs, function(inp) { // to work in node for tests
+                    if (inp === selector) {
+                        // ignore
+                    } else if (inp.indeterminate) {
+                        selectedAll = false;
+                        selectedNone = false;
+                    } else if (inp.checked) {
+                        selectedNone = false;
+                    } else if (!inp.checked) {
+                        selectedAll = false;
+                    }
+                });
+                if (selectedAll) {
+                    selector.indeterminate = false;
+                    selector.checked = true;
+                } else if (selectedNone) {
+                    selector.indeterminate = false;
+                    selector.checked = false;
+                } else {
+                    selector.indeterminate = true;
+                    selector.checked = false;
+                }
+            }
+
+            function manageSelectorsAll(input, ctx) {
+                selAllNodes.forEach(function(ancestor) {
+                    L.DomEvent.on(input, 'click', function(_ev) {
+                        updateSelAllCheckbox(ancestor);
+                    }, ctx);
+                }, ctx);
+            }
+
+            var selAll;
+            if (tree.selectAllCheckbox) {
+                selAll = this._createCheckboxElement(false);
+                selAll.className += ' ' + this.cls.selAllCheckbox;
+            }
+
             var hide = this.cls.hide; // To toggle state
             // create the children group, with the header event click
             if (tree.children) {
@@ -319,8 +369,12 @@
                 L.DomUtil.addClass(sensible, this.cls.pointer);
                 sensible.tabIndex = 0;
                 L.DomEvent.on(sensible, 'click keydown', function(e) {
+                    // leaflet internal flag to prevent click propagation and collapsing tree on mobile browsers
+                    if (this._preventClick) {
+                        return;
+                    }
                     if (e.type === 'keydown' && e.keyCode !== 32) {
-                        return
+                        return;
                     }
                     sensible.blur();
 
@@ -337,26 +391,46 @@
                     }
                     this._localExpand();
                 }, this);
+                if (selAll) {
+                    selAllNodes.splice(0, 0, container);
+                }
                 tree.children.forEach(function(child) {
-                    var node = creator('div', this.cls.node, children)
-                    this._iterateTreeLayout(child, node, overlay);
+                    var node = creator('div', this.cls.node, children);
+                    this._iterateTreeLayout(child, node, overlay, selAllNodes);
                 }, this);
+                if (selAll) {
+                    selAllNodes.splice(0, 1);
+                }
             } else {
                 // no children, so the selector makes no sense.
                 L.DomUtil.addClass(sel, this.cls.neverShow);
             }
 
-            // create the input and label, as in Control.Layers
-            var label = creator(tree.layer ? 'label' : 'span', this.cls.label, entry);
+            // make (or not) the label clickable to toggle the layer
+            var labelType;
+            if (tree.layer) {
+                if ((this.options.labelIsSelector === 'both') || // if option is set to both
+                    (overlay && this.options.labelIsSelector === 'overlay') || // if an overlay layer and options is set to overlay
+                    (!overlay && this.options.labelIsSelector === 'base')) { // if a base layer and option is set to base
+                    labelType = 'label';
+                } else { // if option is set to something else
+                    labelType = 'span';
+                }
+            } else {
+                labelType = 'span';
+            }
+            // create the input and label
+            var label = creator(labelType, this.cls.label, entry);
             if (tree.layer) {
                 // now create the element like in _addItem
-                var checked = this._map.hasLayer(tree.layer)
+                var checked = this._map.hasLayer(tree.layer);
                 var input;
-                var radioGroup = overlay ? tree.radioGroup : 'leaflet-base-layers';
+                var radioGroup = overlay ? tree.radioGroup : 'leaflet-base-layers_' + L.Util.stamp(this);
                 if (radioGroup) {
                     input = this._createRadioElement(radioGroup, checked);
                 } else {
                     input = this._createCheckboxElement(checked);
+                    manageSelectorsAll(input, this);
                 }
                 if (this._layerControlInputs) {
                     // to keep compatibility with 1.0.3
@@ -366,11 +440,71 @@
                 L.DomEvent.on(input, 'click', this._onInputClick, this);
                 label.appendChild(input);
             }
-            var name = creator('span', this.cls.name, label, tree.label);
-            L.DomUtil.addClass(closed, hide);
+
+            function isText(variable) {
+                return (typeof variable === 'string' || variable instanceof String);
+            }
+
+            function isFunction(functionToCheck) {
+                return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+            }
+
+            function selectAllCheckboxes(select, ctx) {
+                var inputs = container.getElementsByTagName('input');
+                for (var i = 0; i < inputs.length; i++) {
+                    var input = inputs[i];
+                    if (input.type !== 'checkbox') continue;
+                    input.checked = select;
+                    input.indeterminate = false;
+                }
+                ctx._onInputClick();
+            }
+            if (tree.selectAllCheckbox) {
+                // selAll is already created
+                label.appendChild(selAll);
+                if (isText(tree.selectAllCheckbox)) {
+                    selAll.title = tree.selectAllCheckbox;
+                }
+                L.DomEvent.on(selAll, 'click', function(ev) {
+                    ev.stopPropagation();
+                    selectAllCheckboxes(selAll.checked, this);
+                }, this);
+                updateSelAllCheckbox(container);
+                manageSelectorsAll(selAll, this);
+            }
+
+            creator('span', this.cls.name, label, tree.label);
+
+            // hide the button which doesn't fit the collapsed state, then hide children conditionally
+            L.DomUtil.addClass(tree.collapsed ? opened : closed, hide);
+            tree.collapsed && children && L.DomUtil.addClass(children, hide);
+
             if (noShow) {
                 L.DomUtil.addClass(header, this.cls.neverShow);
                 L.DomUtil.addClass(children, this.cls.childrenNopad);
+            }
+
+            var eventeds = tree.eventedClasses;
+            if (!(eventeds instanceof Array)) {
+                eventeds = [eventeds];
+            }
+
+            for (var e = 0; e < eventeds.length; e++) {
+                var evented = eventeds[e];
+                if (evented && evented.className) {
+                    var obj = container.querySelector('.' + evented.className);
+                    if (obj) {
+                        L.DomEvent.on(obj, evented.event || 'click', (function(selectAll) {
+                            return function(ev) {
+                                ev.stopPropagation();
+                                var select = isFunction(selectAll) ? selectAll(ev, container, tree, this._map) : selectAll;
+                                if (select !== undefined && select !== null) {
+                                    selectAllCheckboxes(select, this);
+                                }
+                            };
+                        })(evented.selectAll), this);
+                    }
+                }
             }
         },
 
@@ -386,6 +520,6 @@
 
     L.control.layers.tree = function(base, overlays, options) {
         return new L.Control.Layers.Tree(base, overlays, options);
-    }
+    };
 
 })(L);

@@ -1,37 +1,19 @@
 {
-    "app_id": "vnmap",
-    "title": "Qwilka GIS",
-    "appType": "vnleaf",
-    "timestamp": 1599570036,
-    "gisOptions": {
-        "mapOptions": {
-            "attributionControl": false,
-            "center": [
-                53.98,
-                -7.3
-            ],
-            "minZoom": 3,
-            "maxZoom": 26,
-            "zoom": 5,
-            "maxBounds": [
-                [
-                    -90,
-                    -180
-                ],
-                [
-                    90,
-                    180
-                ]
-            ],
-            "zoomControl": true
-        },
-        "attributionControl": true,
-        "locationPopup": true,
-        "scaleControl": true,
-        "sidePanel": true,
-        "useCache": true
-    },
-    "ftree_vnleaf_0": [
+  "app": {
+    "name": "basic-map-leaf",
+    "description": "Qwilka Map-1",
+    "version": "1.0.0",
+    "author": "Qwilka",
+    "license": "MIT",
+    "refs": ["http://qwilka.com", "https://github.com/qwilka/basic-map-leaf"]
+  },
+  "title": "Qwilka Map-1", 
+  "mapOptions": {
+    "zoomControlPosition": "topleft",
+    "attributionControl": true,
+    "attributionPrefix": "<a target=\"_blank\" href=\"http://qwilka.com\">Qwilka</a>"
+  },
+    "layerTree": [
         {
             "title": "Base maps",
             "type": "gis-folder-basemaps",

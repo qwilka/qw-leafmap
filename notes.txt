@@ -1,7 +1,5 @@
 http://localhost:8000/gis/qwleaf.html
 
-
-https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported
 export NODE_OPTIONS=--openssl-legacy-provider
 npm run build
 
