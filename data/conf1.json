@@ -78,7 +78,7 @@
                     "data": {
                         "layerId": "g1",
                         "layerType": "WMS",
-                        "url": "https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv",
+                        "url": "https://wms.gebco.net/mapserv",
                         "refs": [
                             "https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/"
                         ],

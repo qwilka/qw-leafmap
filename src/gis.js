@@ -34,14 +34,15 @@ export const makeMap = (confData) => {
 
 
     
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+    // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 19,
+    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    // }).addTo(map);
 
 
 
-    let ftree = confData["ftree_vnleaf_" + id_number.toString()];
+    //let ftree = confData["ftree_vnleaf_" + id_number.toString()];
+    let ftree = confData["layerTree"];
     if (!ftree) {
       ftree = confData.tree_vnleaf_0;
     }
@@ -81,6 +82,7 @@ export const makeMap = (confData) => {
     //   }
     // }
 
+    var allMapLayers = {};
 
     //let overlayTree = {label: 'overlays', children: []};
     let overlayTree = [];
@@ -156,3 +158,25 @@ function makeLayersTree(ftree_folder, mapref, allMapLayers) {
     }
     return layerTreeObj;
 }
+
+
+function createMapLayer(layerObj) {
+  let layer=false;
+  switch(layerObj.data.layerType) {
+    case "geojson":
+      //layer = loadGeojson(layerObj.data);
+      break;
+    case "tilemap":
+      layer = L.tileLayer(layerObj.data.url, layerObj.data.layerOpts);
+      break;
+    case "WMS":
+      layer = L.tileLayer.wms(layerObj.data.url, layerObj.data.layerOpts);
+      break;
+  }
+  //mapref.addLayer(layer);
+  // let layerStamp = L.Util.stamp(layer);
+  // console.log("addLayer layerStamp", layerStamp);
+  // console.log("addLayer layer", layer);
+  return layer;
+}
+
