@@ -2,6 +2,11 @@
 import 'leaflet/dist/leaflet.css';
 import L from "leaflet";
 
+//import {Utm, LatLon} from 'geodesy/utm';
+// import LatLon from 'geodesy/latlon-ellipsoidal.js';
+// import Utm from 'geodesy/utm.js';
+import Mgrs, { Utm, LatLon, Dms } from 'geodesy/mgrs.js';
+
 import './libs/fullHash/leaflet-fullHash';
 import './libs/control-layers-tree/L.Control.Layers.Tree.css';
 import './libs/control-layers-tree/L.Control.Layers.Tree';
@@ -129,7 +134,17 @@ export const makeMap = (confData) => {
 
 
 
-
+    //let popup;
+    if (mapOpts.locationPopup) {
+      let geoPopup = L.popup();
+      map.on('contextmenu', (evt) => {
+        let pustr = locationPopup(evt, map, geoPopup);
+        geoPopup.setLatLng(evt.latlng)
+        .setContent(pustr)
+        .openOn(map);    
+      });
+  
+    }
 
 
 
@@ -216,5 +231,132 @@ function createMapLayer(layerObj) {
   // console.log("addLayer layerStamp", layerStamp);
   // console.log("addLayer layer", layer);
   return layer;
+}
+
+
+
+function locationPopup(evt, map, popup, preText=null) {
+  // https://www.gebco.net/data-products/gebco-web-services/previous-wms
+  // https://wms.gebco.net/2014/mapserv?request=getcapabilities&service=wms&version=1.3.0
+  //let url = "https://wms.gebco.net/2014/mapserv";
+  let url = "https://wms.gebco.net/mapserv";
+  let X = map.layerPointToContainerPoint(evt.layerPoint).x;
+  let Y = map.layerPointToContainerPoint(evt.layerPoint).y;
+  let size = map.getSize();
+  let pustr;
+  if (preText) {
+    pustr = preText + "<br>Location coordinates:";
+  } else {
+    pustr = "Location coordinates:";
+  }
+
+
+  let lat = evt.latlng.lat;
+  let long = evt.latlng.lng;
+  console.log("long", long, "lat", lat);
+  let latlong_WGS84 = new LatLon(lat, long);
+  let latlong_ED50 = latlong_WGS84.convertDatum(LatLon.datums.ED50);
+  console.log("latlong_WGS84 ", latlong_WGS84.toString());
+  // work-around required to recover method toUtm() (cannot use .convertDatum() directly)
+  latlong_ED50 = new LatLon(latlong_ED50.lat, latlong_ED50.lon, 0, LatLon.datums.ED50);
+  let utm_ED50 = latlong_ED50.toUtm();
+  //let pustr = "Location coordinates:";
+  pustr += "<br>long. " + (long).toFixed(5) + "&deg;  lat. " + (lat).toFixed(5) + "&deg; (WGS84)";
+  pustr += "<br>UTM zone " + utm_ED50.zone + utm_ED50.hemisphere;
+  pustr += "<br>E" + (utm_ED50.easting).toFixed(1) + " N" + (utm_ED50.northing).toFixed(1) + " (ED50)";
+
+
+  // let params = {
+  //   request: 'GetFeatureInfo',
+  //   service: 'WMS',
+  //   CRS: 'EPSG:4326',
+  //   version: '1.3.0',      
+  //   bbox: map.getBounds().toBBoxString(),
+  //   x: X,
+  //   y: Y,
+  //   height: size.y,
+  //   width: size.x,
+  //   layers: 'GEBCO_2014_Grid',
+  //   query_layers: 'GEBCO_2014_Grid',
+  //   info_format: 'text/html'
+  // };
+  let params = {
+    request: 'GetFeatureInfo',
+    service: 'WMS',
+    srs: 'EPSG:4326',
+    version: '1.1.1',      
+    bbox: map.getBounds().toBBoxString(),
+    x: X,
+    y: Y,
+    height: size.y,
+    width: size.x,
+    layers: 'GEBCO_LATEST_2',
+    query_layers: 'GEBCO_LATEST_2',
+    info_format: 'text/html'
+  };
+
+
+  let featInfoUrl = url + L.Util.getParamString(params, url, true);
+  infoRequest(featInfoUrl, pustr, popup);
+  // let getinfo = $.ajax({
+  //     url: featInfoUrl,
+  //     dataType: "html",
+  //     success: function (doc) { console.log("getinfo successfully loaded!\n", doc);},
+  //     error: function (xhr) { console.log("getinfo ERROR!\n", xhr.statusText); }
+  // })
+  // $.when(getinfo).done(function() {
+  //     let htmlstr = $.parseHTML( getinfo.responseText );
+  //     let body = $(htmlstr).find('body:first');
+  //     $.each(htmlstr, function(i, el){
+  //         //console.log(i, el)
+  //         if (el.nodeName == '#text') {
+  //             let targetStr = el.nodeValue
+  //             // console.log(i, targetStr);
+  //             let test = targetStr.match(/Elevation value \(m\):\s*(-?\d+)/)
+  //             if (test) {
+  //                 let elevation = test[1];
+  //                 if (elevation>=0) {
+  //                     pustr += "<br>elevation " + elevation + " m (GEBCO)";
+  //                 } else {
+  //                     pustr += "<br>depth " + elevation + " m (GEBCO)";
+  //                 }
+  //                 // console.log("elevation=", elevation)
+  //                 popup.setContent(pustr)
+  //             }
+  //         }
+  //     });
+  // });  
+
+
+  return pustr;
+}
+
+async function infoRequest(url, pustr, popup){
+  console.log("infoRequest url ", url);
+  let elevation = null;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const rtext = await response.text();
+    console.log(rtext);
+
+    let test = rtext.match(/Elevation value \(m\):\s*(-?\d+)/)
+    if (test) {
+        //console.log("test elevation string: ", test);
+        let elevation = test[1];
+        if (elevation>=0) {
+            pustr += "<br>elevation " + elevation + " m (GEBCO)";
+        } else {
+            pustr += "<br>depth " + elevation + " m (GEBCO)";
+        }
+        // console.log("elevation=", elevation)
+        popup.setContent(pustr)
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 

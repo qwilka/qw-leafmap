@@ -7,6 +7,7 @@ import { makeMap } from './gis';
 window.onload = () => {
     let confFile = "a";
     let url = new URL( window.location.href );
+    // url.searchParams not working with fullHash
     // http://localhost:8080/?c=a#5/58.275/-71.323/e1-ez1-cl1
     if (url.searchParams.has("c")) confFile = url.searchParams.get("conf");
     confFile = "/data/" + confFile + ".json";
@@ -49,15 +50,14 @@ function config_launch(conf){
 
 
 var fallbackConfig = {
-  "title": "basic-map-leaf [FALLBACK]",
-  "app": {
-    "name": "basic-map-leaf",
-    "description": "A basic map using Leaflet." ,
+  "title": "Qwilka-leaf-map [FALLBACK]",
+    "name": "qwilka-leaf-map",
+    "description": "A basic web application using Leaflet." ,
     "version": "0.0.2",
     "author": "SMcE",
-    "license": "MIT",
-    "refs": ["https://qwilka.github.io/gis/1/#5/53.980/-7.300/g1", "https://github.com/qwilka/basic-map-leaf"]
-  },  
+    "repository": "https://github.com/qwilka/basic-map-leaf",
+    "url": "",
+    "refs": ["https://qwilka.github.io/", "http://www.qwilka.com/"],
   "mapOptions": {
     "zoomControlPosition": "topleft",
     "layerControl": false,

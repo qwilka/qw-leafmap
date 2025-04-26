@@ -83,21 +83,6 @@ class VnNode {
         return null;
     }
 
-    // get_child(node=null) {
-    //     if (_.isNull(node)) {
-    //         return this.#childs.slice(this.#eidx);
-    //     } else if (Number.isInteger(node)) {
-    //         if (node>=this.#eidx && node<this.#childs.length) return this.#childs[node];
-    //     } else if (_.isString(node)) {
-    //         // let idx = this.#childs.indexOf(node);
-    //         // if (idx>=0) return this.#childs[idx];
-    //         //let childs = this.get_child();
-    //         let named = this.get_child().filter(n => n.name === node);
-    //         if (named.length === 1) return named[0];
-    //         if (named.length > 1) return named;
-    //     }
-    //     return null;
-    // }
 
     get_root() {
         let n = this;
@@ -107,22 +92,6 @@ class VnNode {
         return n;
     }
 
-    // get_data(path=null, ascend=true) {
-    //     if (path===null) return this.#data;
-    //     let _val = _.get(this.#data, path)
-    //     if (this.#childs[0] && _.isUndefined(_val)) {
-    //         console.log(" Search embedded nodes for:", path);
-    //         for (let _n of this.#childs[0]) {
-    //             console.log(" Search ", _n.name);
-    //             _val = _n.get_data(path, false);
-    //             if (!_.isUndefined(_val)) break;
-    //         }
-    //     }
-    //     if (ascend && _.isUndefined(_val) && this.parent) {
-    //         _val = this.parent.get_data(path, true);
-    //     }
-    //     return _val;        
-    // }
 
     has_data(path){
         return this.#data.hasOwnProperty(path) ? true : false;
@@ -204,11 +173,6 @@ class VnNode {
         return rootnode;
     }
 
-    // clone(change_id=true) {
-    //     let jstr = this.to_JSON();
-    //     let newtree = VnNode.from_JSON(jstr);
-    //     return newtree;
-    // }
 
 
 }

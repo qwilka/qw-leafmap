@@ -27,6 +27,7 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "geodesy": "^2.4.0",
     "leaflet": "^1.9.4"
   }
 }

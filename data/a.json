@@ -1,13 +1,12 @@
 {
-    "title": "basic-map-leaf [a]",
-    "app": {
-      "name": "basic-map-leaf",
-      "description": "A basic map using Leaflet." ,
-      "version": "0.0.2",
-      "author": "SMcE",
-      "license": "MIT",
-      "refs": ["https://qwilka.github.io/gis/1/#5/53.980/-7.300/g1", "https://github.com/qwilka/basic-map-leaf"]
-    },  
+    "title": "Qwilka-leaf-map [a]",
+    "name": "qwilka-leaf-map",
+    "description": "A basic map using Leaflet." ,
+    "version": "0.0.2",
+    "author": "SMcE",
+    "license": "MIT",
+    "repository": "https://github.com/qwilka/basic-map-leaf",
+    "refs": ["https://qwilka.github.io/gis/1/#5/53.980/-7.300/g1", "https://github.com/qwilka/basic-map-leaf"],
     "mapOptions": {
       "zoomControlPosition": "topright",
       "layerControl": true,
@@ -16,7 +15,8 @@
       "attributionControl": null,    
       "attributionPosition": "bottomright",
       "attributionPrefix": "<a target=\"_blank\" href=\"https://qwilka.github.io/\">Qwilka</a>",
-      "hash": true
+      "hash": true,
+      "locationPopup": true
     },
     "layers": [
         {
@@ -33,6 +33,26 @@
             }
 
         },
+        {
+          "name": "GEBCO",
+          "title": "GEBCO",
+          "id": "g1",
+          "parent": "basemaps",
+          "type": "wms",
+          "url": "https://wms.gebco.net/mapserv",
+          "selected": false,
+          "options": {
+            "layers": "GEBCO_LATEST",
+            "CRS": "EPSG:4326",
+            "version": "1.3.0",
+            "format": "image/png",
+            "transparent": false,
+            "noWrap": true,
+            "opacity": 1,
+            "attribution": "Imagery reproduced from the GEBCO_2022 Grid, <a target='_blank' href='https://www.gebco.net/'>GEBCO</a> Compilation Group (2022) GEBCO_2022 Grid (doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c)"
+          }
+
+        },  
         {
           "name": "WorldImagery",
           "title": "Esri World Imagery",
