@@ -1,18 +1,21 @@
 {
-  "app": {
-    "name": "basic-map-leaf",
-    "description": "Qwilka Map-1",
-    "version": "1.0.0",
-    "author": "Qwilka",
-    "license": "MIT",
-    "refs": ["http://qwilka.com", "https://github.com/qwilka/basic-map-leaf"]
-  },
-  "title": "Qwilka Map-1", 
-  "mapOptions": {
-    "zoomControlPosition": "topleft",
-    "attributionControl": true,
-    "attributionPrefix": "<a target=\"_blank\" href=\"http://qwilka.com\">Qwilka</a>"
-  },
+    "app": {
+        "name": "basic-map-leaf",
+        "description": "Qwilka Map-1",
+        "version": "1.0.0",
+        "author": "Qwilka",
+        "license": "MIT",
+        "refs": [
+            "http://qwilka.com",
+            "https://github.com/qwilka/basic-map-leaf"
+        ]
+    },
+    "title": "Qwilka Map-1",
+    "mapOptions": {
+        "zoomControlPosition": "topleft",
+        "attributionControl": true,
+        "attributionPrefix": "<a target=\"_blank\" href=\"http://qwilka.com\">Qwilka</a>"
+    },
     "layerTree": [
         {
             "title": "Base maps",
@@ -491,7 +494,7 @@
                     },
                     "children": [
                         {
-                            "title": "2017 Utenlandske fiskefartøy",
+                            "title": "2017 Utenlandske fiskefart\u00f8y",
                             "type": "gis-layer",
                             "checkbox": true,
                             "selected": false,
@@ -518,7 +521,7 @@
                             }
                         },
                         {
-                            "title": "2017 Norske fiskefartøy",
+                            "title": "2017 Norske fiskefart\u00f8y",
                             "type": "gis-layer",
                             "checkbox": true,
                             "selected": false,
@@ -545,7 +548,7 @@
                             }
                         },
                         {
-                            "title": "2016 Utenlandske fiskefartøy",
+                            "title": "2016 Utenlandske fiskefart\u00f8y",
                             "type": "gis-layer",
                             "checkbox": true,
                             "selected": false,
@@ -571,7 +574,7 @@
                             }
                         },
                         {
-                            "title": "2016 Norske fiskefartøy",
+                            "title": "2016 Norske fiskefart\u00f8y",
                             "type": "gis-layer",
                             "checkbox": true,
                             "selected": false,
@@ -597,7 +600,7 @@
                             }
                         },
                         {
-                            "title": "2015 Utenlandske fiskefartøy",
+                            "title": "2015 Utenlandske fiskefart\u00f8y",
                             "type": "gis-layer",
                             "checkbox": true,
                             "selected": false,
@@ -623,7 +626,7 @@
                             }
                         },
                         {
-                            "title": "2015 Norske fiskefartøy",
+                            "title": "2015 Norske fiskefart\u00f8y",
                             "type": "gis-layer",
                             "checkbox": true,
                             "selected": false,
@@ -649,7 +652,7 @@
                             }
                         }
                     ]
-                }                
+                }
             ]
         },
         {
