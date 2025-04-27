@@ -194,44 +194,40 @@ function makeLayersTree(ftree_folder, mapref, allMapLayers) {
 
 function node2maplayer(vnnode) {
   let layer=false;
-  switch(vnnode.type) {
+  switch(vnnode.type.toLowerCase()) {
     case "geojson":
       //layer = loadGeojson(layerObj.data);
       break;
     case "tilemap":
       layer = L.tileLayer(vnnode.url, vnnode.options);
       break;
-    case "WMS":
+    case "wms":
       layer = L.tileLayer.wms(vnnode.url, vnnode.options);
       break;
   }
-  //mapref.addLayer(layer);
-  // let layerStamp = L.Util.stamp(layer);
-  // console.log("addLayer layerStamp", layerStamp);
-  // console.log("addLayer layer", layer);
   return layer;
 }
 
 
-function createMapLayer(layerObj) {
-  let layer=false;
-  switch(layerObj.data.layerType) {
-    case "geojson":
-      //layer = loadGeojson(layerObj.data);
-      break;
-    case "tilemap":
-      layer = L.tileLayer(layerObj.data.url, layerObj.data.layerOpts);
-      break;
-    case "WMS":
-      layer = L.tileLayer.wms(layerObj.data.url, layerObj.data.layerOpts);
-      break;
-  }
-  //mapref.addLayer(layer);
-  // let layerStamp = L.Util.stamp(layer);
-  // console.log("addLayer layerStamp", layerStamp);
-  // console.log("addLayer layer", layer);
-  return layer;
-}
+// function createMapLayer(layerObj) {
+//   let layer=false;
+//   switch(layerObj.data.layerType) {
+//     case "geojson":
+//       //layer = loadGeojson(layerObj.data);
+//       break;
+//     case "tilemap":
+//       layer = L.tileLayer(layerObj.data.url, layerObj.data.layerOpts);
+//       break;
+//     case "wms":
+//       layer = L.tileLayer.wms(layerObj.data.url, layerObj.data.layerOpts);
+//       break;
+//   }
+//   //mapref.addLayer(layer);
+//   // let layerStamp = L.Util.stamp(layer);
+//   // console.log("addLayer layerStamp", layerStamp);
+//   // console.log("addLayer layer", layer);
+//   return layer;
+// }
 
 
 
@@ -250,20 +246,26 @@ function locationPopup(evt, map, popup, preText=null) {
     pustr = "Location coordinates:";
   }
 
-
   let lat = evt.latlng.lat;
   let long = evt.latlng.lng;
+  pustr += "<br>long. " + (long).toFixed(5) + "&deg;  lat. " + (lat).toFixed(5) + "&deg; (WGS84)";
+
+
   console.log("long", long, "lat", lat);
   let latlong_WGS84 = new LatLon(lat, long);
-  let latlong_ED50 = latlong_WGS84.convertDatum(LatLon.datums.ED50);
   console.log("latlong_WGS84 ", latlong_WGS84.toString());
+
+  let utm_wgs84 = latlong_WGS84.toUtm();
+  pustr += "<br>UTM zone " + utm_wgs84.zone + utm_wgs84.hemisphere;
+  pustr += "<br>E" + (utm_wgs84.easting).toFixed(1) + " N" + (utm_wgs84.northing).toFixed(1) + " (WGS84)";
+
+  let latlong_ED50 = latlong_WGS84.convertDatum(LatLon.datums.ED50);
   // work-around required to recover method toUtm() (cannot use .convertDatum() directly)
   latlong_ED50 = new LatLon(latlong_ED50.lat, latlong_ED50.lon, 0, LatLon.datums.ED50);
-  let utm_ED50 = latlong_ED50.toUtm();
-  //let pustr = "Location coordinates:";
-  pustr += "<br>long. " + (long).toFixed(5) + "&deg;  lat. " + (lat).toFixed(5) + "&deg; (WGS84)";
-  pustr += "<br>UTM zone " + utm_ED50.zone + utm_ED50.hemisphere;
+  let utm_ED50 = latlong_ED50.toUtm();  
+  //pustr += "<br>UTM zone " + utm_ED50.zone + utm_ED50.hemisphere;
   pustr += "<br>E" + (utm_ED50.easting).toFixed(1) + " N" + (utm_ED50.northing).toFixed(1) + " (ED50)";
+
 
 
   // let params = {

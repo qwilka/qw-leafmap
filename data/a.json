@@ -1,5 +1,5 @@
 {
-    "title": "Qwilka-leaf-map [a]",
+    "title": "Qwilka-leaf-map [a+]",
     "name": "qwilka-leaf-map",
     "description": "A basic map using Leaflet." ,
     "version": "0.0.2",
@@ -38,7 +38,7 @@
           "title": "GEBCO",
           "id": "g1",
           "parent": "basemaps",
-          "type": "wms",
+          "type": "WMS",
           "url": "https://wms.gebco.net/mapserv",
           "selected": false,
           "options": {
