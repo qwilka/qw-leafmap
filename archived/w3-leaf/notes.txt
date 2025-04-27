@@ -1,0 +1,329 @@
+https://devconnected.com/how-to-change-git-remote-origin/
+
+
+2020-07-24 not compiling correctly in production (see index.html generation)
+webpack --mode development
+https://www.w3schools.com/icons/icons_reference.asp
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+
+https://cdnjs.com/
+https://www.jsdelivr.com/?query=jquery.contextMenu%20
+
+https://medium.com/comparethemarket/how-to-reduce-your-bundle-size-by-automatically-getting-your-dependencies-from-a-cdn-96b25d1e228
+https://github.com/mastilver/dynamic-cdn-webpack-plugin
+https://stackoverflow.com/questions/31575809/how-to-use-a-library-from-a-cdn-in-a-webpack-project-in-production
+https://dev.to/obahareth/lessons-learned-from-a-year-of-fighting-with-webpack-andbabel-1knc
+
+
+https://survivejs.com/webpack/developing/getting-started/
+
+https://love2dev.com/blog/using-gruntjs-to-bundle-and-minify-javascript-and-css/
+
+
+https://nominatim.org/  
+
+
+new HtmlWebpackPlugin({ template: "./index.html" }),
+module.exports = {
+  entry: path.join(__dirname, 'qwgis/app.js'),
+  mode,
+  output: {
+    path: path.join(__dirname, 'dist/gis/assets'),
+    publicPath: '/gis/assets',
+    filename: 'qwgis.js',
+  },
+
+  <body>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+   <script type="text/plain" src="//cdn.jsdelivr.net/npm/leaflet-easybutton@2.4.0/src/leaflet-easybutton.js"></script>
+   <script type="module" src="//cdn.jsdelivr.net/npm/geodesy@2.2.0/utm.min.js"></script>
+   <script type="text/javascript" src="/gis/assets/qwgis.js"></script>
+  </body>
+</html>
+
+
+https://stackoverflow.com/questions/43198547/webpack-module-not-found-error-cant-resolve-jquery
+
+https://github.com/mastilver/dynamic-cdn-webpack-plugin/issues/62
+
+https://github.com/shirotech/webpack-cdn-plugin/pull/50   Custom injected cdn file location
+https://github.com/shirotech/webpack-cdn-plugin/pull/42  allow module specific CDN URL configurations
+https://github.com/Leaflet/Leaflet.markercluster/issues/441
+https://webpack.js.org/guides/shimming/
+https://webpack.js.org/plugins/provide-plugin/
+https://github.com/Esri/esri-leaflet-webpack-example
+https://blog.johnnyreilly.com/2016/05/the-mysterious-case-of-webpack-angular-and-jquery.html
+https://www.toptal.com/javascript/a-guide-to-managing-webpack-dependencies
+
+
+
+https://medium.com/@mattlag/es6-modules-getting-started-gotchas-2ad154f38e2e
+If you don’t include type="module", you will get an lot of different errors that are incredibly confusing:
+
+
+    new webpack.ProvidePlugin({
+      "window.L": "leaflet"
+    }),
+
+        {
+          name: 'leaflet-easybutton',
+          path: 'src/leaflet-easybutton.js',
+          prodUrl: "//cdn.jsdelivr.net/npm/:name@:version/:path"
+        },
+
+====================================================================
+dist/gis/1/index.html
+delete line added by webpack-cdn-plugin:
+ <script type="text/javascript" src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/npm/geodesy@2.2.0/utm.min.js"></script><script type="text/javascript" src="/gis/assets/qwgis.js"></script></body>
+
+dist/gis/assets/qwgis.js
+eval("module.exports = leaflet;\n\n//# sourceURL=webpack:///external_%22leaflet%22?");
+  «module.exports = leaflet» -> «module.exports = L»
+(production:)
+ «.exports=leaflet» -> «.exports=L»
+
+
+======================================================================
+
+https://wms.geonorge.no/skwms1/wms.sentinel2mosaikk?service=wms&version=1.3.0&request=getcapabilities
+
+                {
+                    "title": "NPD FactMaps - facilities, pipelines",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "nop",
+                        "layerType": "WMS",
+                        "url": "http://gis.npd.no/ogc/factmaps/2_0",
+                        "refs": [
+                            "https://factpages.npd.no/",
+                            "https://www.npd.no/en/about-us/information-services/available-data/map-services/"
+                        ],
+                        "bbox": [-12.3046875, 55.52863, 36.5625, 74.70644988],
+                        "layerOpts": {
+                            "layers": "dscAll,pplAll,fclFixed",
+                            "CRS": "EPSG:4326",
+                            "version": "1.1.1",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1.0,
+                            "attribution": "Norwegian Petroleum Directorate <a target='_blank' href='https://factpages.npd.no/'>FactMaps</a>, <a target='_blank' href='https://data.norge.no/nlod/en'>Norwegian Licence for Open Government Data</a>"        
+                        }     
+                    }
+                },
+
+================================================================
+// import 'jquery.fancytree/dist/skin-awesome/ui.fancytree.css';
+// import $ from 'jquery';  
+// import 'jquery.fancytree';
+// import 'jquery.fancytree/dist/modules/jquery.fancytree.glyph';
+// import 'jquery-contextmenu/dist/jquery.contextMenu.css';  
+// import 'jquery-contextmenu';
+
+// import '@fortawesome/fontawesome-free/css/all.css';
+// import flagAu from '../assets/images/au.jpg';
+// import flagDk from '../assets/images/dk.jpg';
+// import flagGb from '../assets/images/gb.jpg';
+// import flagGbSct from '../assets/images/gb-sct.jpg';
+// import flagIe from '../assets/images/ie.jpg';
+// import flagNo from '../assets/images/no.jpg';
+// import flagUs from '../assets/images/us.jpg';
+================================================================
+// https://github.com/Leaflet/Leaflet.markercluster/issues/874#issuecomment-437895103
+//import * as L from 'leaflet';
+
+// import L from 'leaflet';
+// import 'leaflet-easybutton';
+// import './libs/leaflet.ajax.min';
+
+// import 'leaflet/dist/leaflet.css';
+// import 'leaflet-easybutton/src/easy-button.css';
+// import '@fortawesome/fontawesome-free/css/all.css';
+
+// //import LatLon from 'geodesy/latlon-ellipsoidal-datum.js';
+// import {Utm, LatLon} from 'geodesy/utm';
+
+
+// import $ from 'jquery'; 
+// //import * as turf from '@turf/turf';
+// import {lineString, point} from '@turf/helpers';
+// import {nearestPointOnLine} from '@turf/nearest-point-on-line';
+================================================================
+  // locationPopup(evt) {
+  //   //let map = this.map;
+  //   let pustr;
+  //   let popup = this.popup;  // required for callback below
+  //   let url = "https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv";
+  //   let X = this.map.layerPointToContainerPoint(evt.layerPoint).x;
+  //   let Y = this.map.layerPointToContainerPoint(evt.layerPoint).y;
+  //   let size = this.map.getSize();
+  //   let params = {
+  //     request: 'GetFeatureInfo',
+  //     service: 'WMS',
+  //     srs: 'EPSG:4326',
+  //     version: '1.1.1',      
+  //     bbox: this.map.getBounds().toBBoxString(),
+  //     x: X,
+  //     y: Y,
+  //     height: size.y,
+  //     width: size.x,
+  //     layers: 'GEBCO_LATEST_2',
+  //     query_layers: 'GEBCO_LATEST_2',
+  //     info_format: 'text/html'
+  //   };
+  //   let featInfoUrl = url + L.Util.getParamString(params, url, true);
+  //   let getinfo = $.ajax({
+  //       url: featInfoUrl,
+  //       dataType: "html",
+  //       success: function (doc) { console.log("getinfo successfully loaded!\n", doc);},
+  //       error: function (xhr) { console.log("getinfo ERROR!\n", xhr.statusText); }
+  //   })
+  //   $.when(getinfo).done(function() {
+  //       let htmlstr = $.parseHTML( getinfo.responseText );
+  //       let body = $(htmlstr).find('body:first');
+  //       $.each(htmlstr, function(i, el){
+  //           //console.log(i, el)
+  //           if (el.nodeName == '#text') {
+  //               let targetStr = el.nodeValue
+  //               // console.log(i, targetStr);
+  //               let test = targetStr.match(/Elevation value \(m\):\s*(-?\d+)/)
+  //               if (test) {
+  //                   let elevation = test[1];
+  //                   if (elevation>=0) {
+  //                       pustr += "<br>elevation " + elevation + " m (GEBCO)";
+  //                   } else {
+  //                       pustr += "<br>depth " + elevation + " m (GEBCO)";
+  //                   }
+  //                   // console.log("elevation=", elevation)
+  //                   popup.setContent(pustr)
+  //               }
+  //           }
+  //       });
+  //   });  
+  //   let lat = evt.latlng.lat;
+  //   let long = evt.latlng.lng;
+  //   console.log("long", long, "lat", lat);
+  //   let latlong_WGS84 = new LatLon(lat, long);
+  //   let latlong_ED50 = latlong_WGS84.convertDatum(LatLon.datums.ED50);
+  //   console.log("latlong_WGS84 ", latlong_WGS84.toString());
+  //   // work-around required to recover method toUtm() (cannot use .convertDatum() directly)
+  //   latlong_ED50 = new LatLon(latlong_ED50.lat, latlong_ED50.lon, 0, LatLon.datums.ED50);
+  //   //let latlong_WGS84 = new LatLon(lat, long, LatLon.datums.WGS84);
+  //   // let ll = latlong_WGS84.convertDatum(LatLon.datums.WGS84);
+  //   // console.log("latlon 2nd", ll.toString());
+  //   //let utmCoord = latlong_WGS84.toUtm();
+  //   //let latlong_this.popup = L.popup();latlong_WGS84.convertDatum(LatLon.datums.ED50);
+  //   //let utm_WGS84 = latlong_WGS84.toUtm();
+  //   //let utm_ED50 = new Utm(utm_WGS84.zone, 'N', 572120, 6382750, LatLon.datums.ED50); 
+  //   let utm_ED50 = latlong_ED50.toUtm();
+  //   //let utmCoord = utm_ED50;
+  //   pustr = "Location coordinates:";
+  //   pustr += "<br>long. " + (long).toFixed(5) + "&deg;  lat. " + (lat).toFixed(5) + "&deg; (WGS84)";
+  //   pustr += "<br>UTM zone " + utm_ED50.zone + utm_ED50.hemisphere;
+  //   pustr += "<br>E" + (utm_ED50.easting).toFixed(1) + " N" + (utm_ED50.northing).toFixed(1) + " (ED50)";
+  //   this.popup
+  //     .setLatLng(evt.latlng)
+  //     .setContent(pustr)
+  //     .openOn(this.map)
+  // }
+================================================================
+  // loadGeojson(url) {
+  //   let map = this.map;
+  //   let popup = L.popup();
+  //   let layer  = new L.GeoJSON.AJAX(url ,{
+  //     dataType: 'json',
+  //     local: true,
+  //     style: function(feature) {
+  //             let linestyle;
+  //             if (feature.properties.hasOwnProperty('style')) {
+  //               linestyle = feature.properties.style;
+  //             } else if (feature.properties.hasOwnProperty('content_name')) {
+  //               // Denmark pipelines geojson
+  //               switch (feature.properties.content_name.toLowerCase()) {
+  //                 case 'gas': return {color: "#008b00"};
+  //                 case 'oil':  return {color: "#8b0000"};
+  //                 case 'multi-phase':  return {color: "#cdcd00"};
+  //                 default:  return {color: "#36648b", "weight": 1, "opacity": 1.0}; 
+  //               }   
+  //             } else {
+  //               linestyle = {color: "#ff0000", weight: 2, opacity: 1.0};
+  //             }
+  //             return linestyle;      
+  //     },
+  //     onEachFeature: function (feature, layer) {
+  //         layer.on({
+  //             contextmenu: function onGeojsonLayerClick(evt) {
+  //                 L.DomEvent.stopPropagation(evt);
+  //                 let lat = evt.latlng.lat;
+  //                 let long = evt.latlng.lng;
+  //                 let contstr = '<b>'+feature.properties.name+'</b>';
+  //                 if (feature.properties.hasOwnProperty('description')) {
+  //                   contstr += '<br>' + feature.properties.description;
+  //                 }
+  //                 if (feature.properties.hasOwnProperty('vn_uri')) {
+  //                   contstr += '<br>' + feature.properties.vn_uri;
+  //                 }
+  //                 if (feature.properties.hasOwnProperty('KP')) {
+  //                   let KP = feature.properties.KP;
+  //                   //let pldist = feature.properties.distance;
+  //                   //console.log(feature.coordinates);
+  //                   let pl = lineString(feature.geometry.coordinates);
+  //                   let pt = point([long, lat]);
+  //                   let near = nearestPointOnLine(pl, pt);
+  //                   console.log(near.geometry.coordinates, near.properties.index, near.properties.dist, near.properties.location);
+  //                   console.log("index, dist, location", near.properties.index, near.properties.dist, near.properties.location);
+  //                   let pt_loc = near.properties.location;
+  //                   console.log("pt_loc", pt_loc);
+  //                   let idx = near.properties.index;
+  //                   // var KP1 = KP[idx];
+  //                   // var KP2 = KP[idx+1];
+  //                   let pt1 = point(feature.geometry.coordinates[idx]);
+  //                   let pt1_near = nearestPointOnLine(pl, pt1);
+  //                   let pt1_loc = pt1_near.properties.location;
+  //                   console.log("pt1_loc", pt1_loc);
+  //                   let pt2 = point(feature.geometry.coordinates[idx+1]);
+  //                   let pt2_near = nearestPointOnLine(pl, pt2);
+  //                   let pt2_loc = pt2_near.properties.location;
+  //                   console.log("pt2_loc", pt2_loc);
+  //                   //let contstr = "'CLR22 Processed ROV Position'";
+  //                   let eta = (pt_loc - pt1_loc)/(pt2_loc - pt1_loc);
+  //                   let KP_near = KP[idx]*(1 - eta) + KP[idx+1]*eta; 
+  //                   console.log("eta, KP_near, distance", eta, KP_near, near.properties.location)
+  //                   contstr += '<br> KP: '+parseFloat(KP_near).toFixed(3);
+  //                   //contstr += '<br> distance: '+parseFloat(near.properties.location).toFixed(3);
+  //                 }
+  //                 popup
+  //                     .setLatLng(evt.latlng)
+  //                     .setContent(contstr)
+  //                     .openOn(map)
+  //             },
+  //             click: function onGeojsonLayerClick(evt) {
+  //               if (feature.properties.hasOwnProperty('content_name')) {
+  //                 // Denmark pipelines geojson
+  //                 let contstr = "Denmark pipeline";
+  //                 contstr += '<br>name: <b>'+feature.properties.name+'</b>';
+  //                 contstr += '<br>service: '+feature.properties.content_name.toLowerCase();
+  //                 popup
+  //                     .setLatLng(evt.latlng)
+  //                     .setContent(contstr)
+  //                     .openOn(map)
+  //               }
+  //             }
+  //           });
+  //     },
+  //   }  );
+  //   //console.log("geojson layer", layer)
+  //   return layer;
+  // }
+================================================================

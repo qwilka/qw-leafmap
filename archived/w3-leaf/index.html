@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> -->
+    <link rel="icon" href="/data/favicon.ico" type="image/x-icon" />
+    <title>Qwilka GIS (w3leaf)</title>
+
+    <style>
+      body { margin:0; padding:0; }
+      body, table, tr, td, th, div, h1, h2, input { font-family: "Calibri", "Trebuchet MS", "Ubuntu", Serif; font-size: 11pt; }
+      #map { position:absolute; top:0; bottom:0; width:100%; } /* full size */
+      .ctl {
+          padding: 2px 10px 2px 10px;
+          background: white;
+          background: rgba(255,255,255,0.9);
+          box-shadow: 0 0 15px rgba(0,0,0,0.2);
+          border-radius: 5px;
+          text-align: right;
+      }
+      .title {
+          font-size: 18pt;
+          font-weight: bold;
+      }
+      .src {
+          font-size: 10pt;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.3.1/css/flag-icon.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/jquery.fancytree@2.35/dist/skin-awesome/ui.fancytree.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery.fancytree@2.35/dist/jquery.fancytree-all-deps.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/jquery-contextmenu@2.9.0/dist/jquery.contextMenu.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery-contextmenu@2.9.0/dist/jquery.contextMenu.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
+
+
+  </head>
+  <body>
+    <div id="vnmap"></div>
+    <script type="module">
+      import Utm, {LatLon} from 'https://cdn.jsdelivr.net/npm/geodesy@2.2.1/utm.min.js';
+      //import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.2.1/latlon-ellipsoidal.min.js';
+      window.LatLon = LatLon;
+      window.Utm = Utm;
+      window.conf_data_path = "/gis/assets/qwgis.vnleaf.json";
+      window.app = null;
+    </script>
+
+
+  <!-- <script type="module" src="//cdn.jsdelivr.net/npm/geodesy@2.2.0/utm.min.js"></script> -->
+  <!-- <script type="text/javascript" src="/gis/assets/qwleaf.js"></script> -->
+
+  </body>
+</html>

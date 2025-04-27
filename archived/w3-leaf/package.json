@@ -1,0 +1,32 @@
+{
+  "name": "qwleaf",
+  "version": "0.0.1",
+  "description": "Qwilka GIS version 3",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/bencuilcagh/qwleaf.git"
+  },
+  "keywords": [
+    "GIS"
+  ],
+  "author": "Stephen McEntee",
+  "license": "UNLICENSED",
+  "homepage": "https://bitbucket.org/bencuilcagh/qwleaf#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^4.3.0",
+    "webpack": "^4.43.0",
+    "webpack-cdn-plugin": "^3.3.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "css-loader": "^3.5.2",
+    "file-loader": "^6.0.0",
+    "leaflet": "^1.6.0",
+    "style-loader": "^1.1.4"
+  }
+}
