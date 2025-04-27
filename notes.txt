@@ -8,7 +8,10 @@ data -> /home/develop/engineering/src/qwilka.github.io/data
 
 
 https://tsev.dev/posts/2023-08-27-setting-up-a-modern-monorepo/
+https://medium.com/@ammarameer/linking-multiple-repositories-using-npm-for-seamless-local-development-2a1c2ca14257
 
+
+https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/OGC/WMS.html
 
 
 =================================================

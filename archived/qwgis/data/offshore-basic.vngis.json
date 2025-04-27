@@ -1,0 +1,783 @@
+{
+    "app_id": "vnmap",
+    "title": "Qwilka GIS",
+    "appType": "vnleaf",
+    "timestamp": 1599570036,
+    "gisOptions": {
+        "mapOptions": {
+            "attributionControl": false,
+            "center": [
+                53.98,
+                -7.3
+            ],
+            "minZoom": 3,
+            "maxZoom": 26,
+            "zoom": 5,
+            "maxBounds": [
+                [
+                    -90,
+                    -180
+                ],
+                [
+                    90,
+                    180
+                ]
+            ],
+            "zoomControl": true
+        },
+        "attributionControl": true,
+        "locationPopup": true,
+        "scaleControl": true,
+        "sidePanel": true,
+        "useCache": true
+    },
+    "ftree_vnleaf_0": [
+        {
+            "title": "Base maps",
+            "type": "gis-folder-basemaps",
+            "radiogroup": true,
+            "folder": true,
+            "children": [
+                {
+                    "title": "OpenStreetMap",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "data": {
+                        "layerId": "o1",
+                        "layerType": "WMS",
+                        "url": "http://ows.terrestris.de/osm/service",
+                        "refs": [
+                            "https://wiki.openstreetmap.org/wiki/List_of_OSM-based_services",
+                            "http://ows.terrestris.de/"
+                        ],
+                        "layerOpts": {
+                            "layers": "OSM-WMS",
+                            "CRS": "EPSG:4326",
+                            "version": "1.1.1",
+                            "format": "image/png",
+                            "transparent": false,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "&copy; <a target='_blank' href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+                        }
+                    }
+                },
+                {
+                    "title": "OSM/Terrain Light",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "data": {
+                        "layerId": "o2",
+                        "layerType": "WMS",
+                        "url": "https://tiles.maps.eox.at/",
+                        "refs": [
+                            "https://maps.eox.at/?#",
+                            "https://gis.stackexchange.com/questions/253034/sentinel-2-imagery-as-a-webservice-in-a-leaflet-or-openlayers-map?rq=1"
+                        ],
+                        "layerOpts": {
+                            "layers": "terrain-light_3857,overlay_base_bright_3857",
+                            "CRS": "EPSG:4326",
+                            "format": "image/png",
+                            "transparent": false,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "Terrain Light &copy; <a target='_blank' href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>, Rendering &copy; <a target='_blank' href='https://maps.eox.at/'>EOX</a>"
+                        }
+                    }
+                },
+                {
+                    "title": "GEBCO",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": true,
+                    "active": true,
+                    "data": {
+                        "layerId": "g1",
+                        "layerType": "WMS",
+                        "url": "https://wms.gebco.net/mapserv",
+                        "refs": [
+                            "https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/"
+                        ],
+                        "layerOpts": {
+                            "layers": "GEBCO_LATEST",
+                            "CRS": "EPSG:4326",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": false,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "Imagery reproduced from the GEBCO_2020 Grid, <a target='_blank' href='https://www.gebco.net/'>GEBCO</a>  Compilation Group (2020) GEBCO 2020 Grid (doi:10.5285/a29c5465-b138-234d-e053-6c86abc040b9)"
+                        }
+                    }
+                },
+                {
+                    "title": "EMODnet Bathymetry",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "active": true,
+                    "data": {
+                        "layerId": "e3",
+                        "layerType": "WMS",
+                        "url": "http://ows.emodnet-bathymetry.eu/ows",
+                        "refs": [
+                            "https://tiles.emodnet-bathymetry.eu/",
+                            "https://ows.emodnet-bathymetry.eu/"
+                        ],
+                        "layerOpts": {
+                            "layers": "emodnet:mean_atlas_land",
+                            "CRS": "EPSG:4326",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": false,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "<a target='_blank' href='https://emodnet.ec.europa.eu/en/bathymetry'>EMODnet, </a>"
+                        }
+                    }
+                },
+                {
+                    "title": "EMODnet coastlines",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "active": false,
+                    "data": {
+                        "layerId": "e2",
+                        "layerType": "WMS",
+                        "url": "http://ows.emodnet-bathymetry.eu/ows",
+                        "refs": [
+                            "https://tiles.emodnet-bathymetry.eu/",
+                            "https://ows.emodnet-bathymetry.eu/"
+                        ],
+                        "layerOpts": {
+                            "layers": "coastlines",
+                            "CRS": "EPSG:4326",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": false,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "<a target='_blank' href='https://emodnet.ec.europa.eu/en/bathymetry'>EMODnet, </a>"
+                        }
+                    }
+                },
+                {
+                    "title": "Sentinel-2 cloudless",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "data": {
+                        "layerId": "st1",
+                        "layerType": "WMS",
+                        "url": "https://tiles.maps.eox.at/",
+                        "refs": [
+                            "https://s2maps.eu/",
+                            "https://wiki.openstreetmap.org/wiki/Sentinel-2",
+                            "https://gis.stackexchange.com/questions/253034/sentinel-2-imagery-as-a-webservice-in-a-leaflet-or-openlayers-map?rq=1"
+                        ],
+                        "layerOpts": {
+                            "layers": "s2cloudless-2020_3857",
+                            "CRS": "EPSG:4326",
+                            "version": "1.1.1",
+                            "format": "image/png",
+                            "transparent": false,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "<a target='_blank' href='https://s2maps.eu/'>Sentinel-2 cloudless</a> by <a target='_blank' href='https://eox.at/'>EOX IT Services GmbH</a> (Contains modified <a target='_blank' href='https://sentinel.esa.int/web/sentinel/home'>Copernicus Sentinel</a> data 2020)"
+                        }
+                    }
+                },
+                {
+                    "title": "Esri WorldImagery",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "data": {
+                        "layerId": "e1",
+                        "layerType": "WMS",
+                        "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                        "refs": [
+                            "https://www.arcgis.com/home/item.html?id=50c23e4987a44de4ab163e1baeab4a46",
+                            "http://leaflet-extras.github.io/leaflet-providers/preview/"
+                        ],
+                        "layerOpts": {
+                            "attribution": "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+                        }
+                    }
+                },
+                {
+                    "title": "No background",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "data": {
+                        "layerId": "w",
+                        "layerType": "tilemap",
+                        "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg=="
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Denmark (DNK)",
+            "type": "gis-folder-flag-dk",
+            "folder": true,
+            "children": [
+                {
+                    "title": "Offshore pipelines (geojson)",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "dkp",
+                        "layerType": "geojson",
+                        "cache": true,
+                        "style": {
+                            "default": {
+                                "color": "Red",
+                                "weight": 3,
+                                "opacity": 1
+                            },
+                            "content_name||gas": {
+                                "color": "DarkOrange"
+                            },
+                            "content_name||oil": {
+                                "color": "Green"
+                            },
+                            "content_name||Multi-phase": {
+                                "color": "Maroon"
+                            }
+                        },
+                        "popupProps": [
+                            "content_name"
+                        ],
+                        "url": "/data/DK_Geus_pipelines_simplified.geojson",
+                        "refs": [],
+                        "bbox": [
+                            -1.3403,
+                            51.9036,
+                            17.5341,
+                            59.3555
+                        ],
+                        "layerOpts": {
+                            "attribution": "<a target='_blank' href='http://data.geus.dk/geusmap/ows/help/?lang=en'>DK-Geus</a>"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Ireland (IRL)",
+            "type": "gis-folder-flag-ie",
+            "folder": true,
+            "children": [
+                {
+                    "title": "Offshore fields, facilities",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "ief",
+                        "layerType": "WMS",
+                        "url": "http://atlas.marine.ie/arcgis/services/EnergyResourcesInfrastructure/MapServer/WMSServer",
+                        "refs": [
+                            "https://data.gov.ie/dataset",
+                            "https://data.gov.ie/dataset/offshore-commercial-field"
+                        ],
+                        "bbox": [
+                            -17.907,
+                            49.353,
+                            0.966,
+                            57.243
+                        ],
+                        "layerOpts": {
+                            "layers": "1,2",
+                            "CRS": "EPSG:4326",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 0.9,
+                            "attribution": "IRL Offshore fields, facilities <a target='_blank' href='https://data.gov.ie/dataset/offshore-commercial-field'>data.gov.ie</a> <a href='https://creativecommons.org/licenses/by/4.0/'>(CC BY 4.0)</a>"
+                        }
+                    }
+                },
+                {
+                    "title": "Offshore Gas Pipelines",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "iep",
+                        "layerType": "WMS",
+                        "url": "http://atlas.marine.ie/arcgis/services/10_Energy_Energy_Petroleum/MapServer/WmsServer",
+                        "refs": [
+                            "http://data.marine.ie/geonetwork/srv/eng/catalog.search#/metadata/ie.marine.data:dataset.2177"
+                        ],
+                        "bbox": [
+                            -17.907,
+                            49.353,
+                            0.966,
+                            57.243
+                        ],
+                        "layerOpts": {
+                            "layers": "1",
+                            "CRS": "EPSG:4326",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 0.9,
+                            "attribution": "IRL Marine Institute <a target='_blank' href='http://data.marine.ie/geonetwork/srv/eng/catalog.search#/metadata/ie.marine.data:dataset.2177'>Offshore Gas Pipeline</a>, <a href='https://creativecommons.org/licenses/by/4.0/'>(CC BY 4.0)</a>"
+                        }
+                    }
+                },
+                {
+                    "title": "Exploration Wells",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "iew",
+                        "layerType": "WMS",
+                        "url": "http://atlas.marine.ie/arcgis/services/10_Energy_Energy_Petroleum/MapServer/WmsServer",
+                        "refs": [
+                            "http://data.marine.ie/geonetwork/srv/eng/catalog.search#/metadata/ie.marine.data:dataset.2177"
+                        ],
+                        "bbox": [
+                            -17.907,
+                            49.353,
+                            0.966,
+                            57.243
+                        ],
+                        "layerOpts": {
+                            "layers": "2",
+                            "CRS": "EPSG:4326",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 0.9,
+                            "attribution": "IRL Marine Institute <a target='_blank' href='http://data.marine.ie/geonetwork/srv/eng/catalog.search#/metadata/ie.marine.data:dataset.2171'>Exploration Wells</a>, <a href='https://creativecommons.org/licenses/by/4.0/'>(CC BY 4.0)</a>"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Norway (NOR)",
+            "type": "gis-folder-flag-no",
+            "folder": true,
+            "children": [
+                {
+                    "title": "Fields (NPD FactMaps)",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "active": false,
+                    "data": {
+                        "layerId": "nof",
+                        "layerType": "WMS",
+                        "url": "https://factmaps.sodir.no/api/services/Factmaps/FactMapsWGS84/MapServer/WMSServer",
+                        "refs": [
+                            "https://factpages.npd.no/",
+                            "https://factmaps.npd.no/factmaps/3_0/",
+                            "https://www.npd.no/en/about-us/open-data/factpages-and-factmaps-technical-information/"
+                        ],
+                        "bbox": [
+                            -12.3046875,
+                            55.52863,
+                            36.5625,
+                            74.70644988
+                        ],
+                        "layerOpts": {
+                            "layers": "33",
+                            "CRS": "EPSG:4326",
+                            "version": "1.1.1",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "Norwegian Offshore Directorate <a target='_blank' href='https://www.sodir.no/en/about-us/open-data/'>FactMaps</a>, <a target='_blank' href='https://data.norge.no/nlod/en/2.0'>Norwegian Licence for Open Government Data</a>"
+                        }
+                    }
+                },
+                {
+                    "title": "Facilities (NOD FactMaps)",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "noi",
+                        "layerType": "WMS",
+                        "url": "https://factmaps.sodir.no/api/services/Factmaps/FactMapsWGS84/MapServer/WMSServer",
+                        "refs": [
+                            "https://factmaps.sodir.no/api/rest/services/Factmaps/FactMapsWGS84/MapServer",
+                            "https://www.sodir.no/en/about-us/open-data/",
+                            "https://factmaps.sodir.no/api/services/Factmaps/FactMapsWGS84/MapServer/WMSServer?request=GetCapabilities&service=WMS"
+                        ],
+                        "bbox": [
+                            -12.3046875,
+                            55.52863,
+                            36.5625,
+                            74.70644988
+                        ],
+                        "layerOpts": {
+                            "layers": "68",
+                            "CRS": "EPSG:4326",
+                            "version": "1.1.1",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "Norwegian Offshore Directorate <a target='_blank' href='https://www.sodir.no/en/about-us/open-data/'>FactMaps</a>, <a target='_blank' href='https://data.norge.no/nlod/en/2.0'>Norwegian Licence for Open Government Data</a>"
+                        }
+                    }
+                },
+                {
+                    "title": "Pipelines (NOD FactMaps)",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "nop",
+                        "layerType": "WMS",
+                        "url": "https://factmaps.sodir.no/api/services/Factmaps/FactMapsWGS84/MapServer/WMSServer",
+                        "refs": [
+                            "https://factmaps.sodir.no/api/rest/services/Factmaps/FactMapsWGS84/MapServer",
+                            "https://www.sodir.no/en/about-us/open-data/",
+                            "https://factmaps.sodir.no/api/services/Factmaps/FactMapsWGS84/MapServer/WMSServer?request=GetCapabilities&service=WMS"
+                        ],
+                        "bbox": [
+                            -12.3046875,
+                            55.52863,
+                            36.5625,
+                            74.70644988
+                        ],
+                        "layerOpts": {
+                            "layers": "67",
+                            "CRS": "EPSG:4326",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "Norwegian Offshore Directorate <a target='_blank' href='https://www.sodir.no/en/about-us/open-data/'>FactMaps</a>, <a target='_blank' href='https://data.norge.no/nlod/en/2.0'>Norwegian Licence for Open Government Data</a>"
+                        }
+                    }
+                }           
+            ]
+        },
+        {
+            "title": "United Kingdom (GBR)",
+            "type": "gis-folder-flag-gb",
+            "folder": true,
+            "children": [
+                {
+                    "title": "Pipelines OGA (geojson)",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "gba",
+                        "layerType": "geojson",
+                        "cache": true,
+                        "bbox": [
+                            -22.587,
+                            48.661,
+                            15.161,
+                            63.273
+                        ],
+                        "style": {
+                            "default": {
+                                "color": "Red",
+                                "weight": 3,
+                                "opacity": 1
+                            },
+                            "fluid||gas": {
+                                "color": "DarkOrange"
+                            },
+                            "fluid||oil": {
+                                "color": "Green"
+                            },
+                            "fluid||water": {
+                                "color": "Cyan"
+                            },
+                            "fluid||condensate": {
+                                "color": "Orange"
+                            },
+                            "fluid||hydraulic": {
+                                "color": "Salmon"
+                            },
+                            "fluid||mixed hydrocarbons": {
+                                "color": "Maroon"
+                            },
+                            "status||removed": {
+                                "color": "Black",
+                                "weight": 5,
+                                "opacity": 0.2
+                            },
+                            "status||not in use": {
+                                "color": "Black",
+                                "weight": 2,
+                                "opacity": 0.8
+                            },
+                            "status||active": {
+                                "weight": 3,
+                                "opacity": 1
+                            }
+                        },
+                        "popupProps": [
+                            "desc",
+                            "ID",
+                            "operator",
+                            "fluid",
+                            "length",
+                            "Do",
+                            "Di",
+                            "MOP",
+                            "startup",
+                            "status"
+                        ],
+                        "url": "/data/OGA_pipelines.min.geojson",
+                        "layerOpts": {
+                            "attribution": "UK <a target='_blank' href='https://data-ogauthority.opendata.arcgis.com/datasets/oga-offshore-zipped-shapefiles-wgs84'>Oil&Gas Authority</a> 2020-09-03"
+                        }
+                    }
+                },
+                {
+                    "title": "Platforms/infrastructure OGA (geojson)",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "gbb",
+                        "layerType": "geojson",
+                        "cache": true,
+                        "bbox": [
+                            -22.587,
+                            48.661,
+                            15.161,
+                            63.273
+                        ],
+                        "style": {
+                            "default": {
+                                "radius": 4,
+                                "color": "Black",
+                                "fillOpacity": 0,
+                                "weight": 2,
+                                "opacity": 0.3
+                            },
+                            "status||active": {
+                                "radius": 8,
+                                "fillColor": "#0099cc",
+                                "color": "#0033cc",
+                                "weight": 2,
+                                "opacity": 1,
+                                "fillOpacity": 0.8
+                            },
+                            "type||buoy": {
+                                "radius": 4,
+                                "color": "#ff0000",
+                                "fillColor": "#ee8890",
+                                "fillOpacity": 0.8,
+                                "weight": 2,
+                                "opacity": 1
+                            },
+                            "type||MONITOR BUOY": {
+                                "radius": 4,
+                                "color": "#00ff00",
+                                "fillColor": "#96e86a",
+                                "fillOpacity": 0.8,
+                                "weight": 2,
+                                "opacity": 1
+                            },
+                            "type||LOADING BUOY": {
+                                "radius": 4,
+                                "color": "#0000ff",
+                                "fillColor": "#6a9fe8",
+                                "fillOpacity": 0.8,
+                                "weight": 2,
+                                "opacity": 1
+                            },
+                            "status||removed": {
+                                "radius": 4,
+                                "fillColor": "black",
+                                "color": "black",
+                                "weight": 2,
+                                "opacity": 0.3,
+                                "fillOpacity": 0.3
+                            }
+                        },
+                        "popupProps": [
+                            "operator",
+                            "desc",
+                            "type",
+                            "status",
+                            "installed",
+                            "datasource"
+                        ],
+                        "url": "/data/OGA_platforms.min.geojson",
+                        "layerOpts": {
+                            "attribution": "UK <a target='_blank' href='https://data-ogauthority.opendata.arcgis.com/datasets/oga-offshore-zipped-shapefiles-wgs84'>Oil&Gas Authority</a> 2020-09-03",
+                            "geojsonMarkerOptions": {
+                                "radius": 8,
+                                "fillColor": "#0099cc",
+                                "color": "#0033cc",
+                                "weight": 1,
+                                "opacity": 0.8,
+                                "fillOpacity": 0.6
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "United States of America (USA)",
+            "type": "gis-folder-flag-us",
+            "folder": true,
+            "children": [
+                {
+                    "title": "BOEM Oil & Gas Pipelines",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "usp",
+                        "layerType": "WMS",
+                        "url": "https://gis.ngdc.noaa.gov/arcgis/services/GulfDataAtlas/BOEM_OilAndGasPipelines/MapServer/WmsServer",
+                        "refs": [
+                            "https://gis.ngdc.noaa.gov/arcgis/rest/services/GulfDataAtlas"
+                        ],
+                        "bbox": [
+                            -99.206,
+                            20.55,
+                            -80.332,
+                            32.379
+                        ],
+                        "layerOpts": {
+                            "layers": "0,1,2,3",
+                            "CRS": "EPSG:4326",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "<a target='_blank' href='https://gis.ngdc.noaa.gov/arcgis/rest/services/GulfDataAtlas/BOEM_OilAndGasPipelines/MapServer'>BOEM</a>"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "title": "Other resources",
+            "type": "gis-folder-overlays",
+            "folder": true,
+            "children": [
+                {
+                    "title": "Exclusive economic zone boundaries",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "data": {
+                        "layerId": "eez",
+                        "layerType": "WMS",
+                        "url": "http://geo.vliz.be:80/geoserver/MarineRegions/wms",
+                        "refs": [
+                            "http://www.marineregions.org/webservices.php"
+                        ],
+                        "layerOpts": {
+                            "layers": "MarineRegions:eez_boundaries",
+                            "version": "1.1.1",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 0.8,
+                            "attribution": "EEZ boundaries: <a target='_blank' href='http://www.marineregions.org'>Flanders Marine Institute</a>, <a target='_blank' href='https://creativecommons.org/licenses/by/4.0/'>(CC BY 4.0)</a>"
+                        }
+                    }
+                },
+                {
+                    "title": "EMODnet coastlines",
+                    "type": "gis-layer-basemap",
+                    "checkbox": "radio",
+                    "selected": false,
+                    "active": true,
+                    "data": {
+                        "layerId": "e4",
+                        "layerType": "WMS",
+                        "url": "http://ows.emodnet-bathymetry.eu/ows",
+                        "refs": [
+                            "https://tiles.emodnet-bathymetry.eu/",
+                            "https://ows.emodnet-bathymetry.eu/"
+                        ],
+                        "layerOpts": {
+                            "layers": "coastlines",
+                            "CRS": "EPSG:4326",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1.0,
+                            "attribution": "<a target='_blank' href='https://emodnet.ec.europa.eu/en/bathymetry'>EMODnet, </a>"
+                        }
+                    }
+                },
+                {
+                    "title": "NCEI bathymetry hillshade",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "active":false,
+                    "data": {
+                        "layerId": "bya",
+                        "layerType": "WMS",
+                        "url": "https://gis.ngdc.noaa.gov/arcgis/services/multibeam_mosaic_hillshade/ImageServer/WMSServer",
+                        "refs": [
+                            "https://gis.ngdc.noaa.gov/arcgis/rest/services",
+                            "https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer"
+                        ],
+                        "layerOpts": {
+                            "layers": "multibeam_mosaic_hillshade:MultidirectionalHillshadeHaxby_8000-0",
+                            "version": "1.3.0",
+                            "format": "image/png",
+                            "transparent": true,
+                            "noWrap": true,
+                            "opacity": 1,
+                            "attribution": "<a target='_blank' href='https://www.ncei.noaa.gov/maps-and-geospatial-products'>NCEI</a> bathymetry hillshade"
+                        }
+                    }
+                },
+                {
+                    "title": "Submarine Cables (geojson)",
+                    "type": "gis-layer",
+                    "checkbox": true,
+                    "selected": false,
+                    "active": true,
+                    "data": {
+                        "layerId": "scm",
+                        "layerType": "geojson",
+                        "cache": true,
+                        "style": {
+                            "default": {
+                                "color": true,
+                                "weight": 1,
+                                "opacity": 1
+                            }
+                        },
+                        "popupProps": [
+                            "slug||CABLE"
+                        ],
+                        "url": "/data/cables.geojson",
+                        "refs": [
+                            "https://www2.telegeography.com/", "https://github.com/telegeography/","https://github.com/dirediredock/SubmarineCables", "https://github.com/bunam/submarine_cable_map", "https://observablehq.com/@ariellemartinez/submarine-cable-map"
+                        ],
+                        "layerOpts": {
+                            "attribution": "<a target='_blank' href='https://github.com/telegeography/'>Telegeography</a>"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
