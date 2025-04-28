@@ -1,7 +1,7 @@
 {
-  "name": "qwgis",
+  "name": "qw-map",
   "version": "0.0.1",
-  "description": "Qwilka GIS basic version",
+  "description": "Basic webmap",
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --mode development"
