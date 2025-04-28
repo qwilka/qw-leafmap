@@ -14,6 +14,9 @@ import './libs/control-layers-tree/L.Control.Layers.Tree';
 import {VnNode, layersTree, basemaps, overlays} from './vntree.js';
 window.layersTree = layersTree;
 
+
+
+
 export const makeMap = (confData) => {
     console.log("makeMap: ", confData.title);
     let mapOpts = confData.mapOptions;
@@ -88,38 +91,38 @@ export const makeMap = (confData) => {
 
     } else if (mapOpts.layerTreeControl) {
 
-      let ftree = confData["layerTree"];
-      if (!ftree) {
-        ftree = confData.tree_vnleaf_0;
-      }
+      // let ftree = confData["layerTree"];
+      // if (!ftree) {
+      //   ftree = confData.tree_vnleaf_0;
+      // }
 
-      let baseTree = {
-        label: 'World base maps &#x1f5fa;',
-        children: []
-      };
-      //var allMapLayers = {};
-      let overlayTree = [];
+      // let baseTree = {
+      //   label: 'World base maps &#x1f5fa;',
+      //   children: []
+      // };
+      // //var allMapLayers = {};
+      // let overlayTree = [];
 
-      for (let ii=0; ii<ftree.length; ii++) {
-        let ftree_toplevel = ftree[ii], mapObj, layer;
-        //console.log("ftree_toplevel.type", ftree_toplevel.type)
-        if (ftree_toplevel.type === "gis-folder-basemaps") {
-          baseTree = makeLayersTree(ftree_toplevel, map, allMapLayers);
-        } else if (ftree_toplevel.type.startsWith("gis-folder")) {
-          //console.log("ftree_toplevel.title", ftree_toplevel.title)
-          overlayTree.push(makeLayersTree(ftree_toplevel, map, allMapLayers));
-        }
-      }
+      // for (let ii=0; ii<ftree.length; ii++) {
+      //   let ftree_toplevel = ftree[ii], mapObj, layer;
+      //   //console.log("ftree_toplevel.type", ftree_toplevel.type)
+      //   if (ftree_toplevel.type === "gis-folder-basemaps") {
+      //     baseTree = makeLayersTree(ftree_toplevel, map, allMapLayers);
+      //   } else if (ftree_toplevel.type.startsWith("gis-folder")) {
+      //     //console.log("ftree_toplevel.title", ftree_toplevel.title)
+      //     overlayTree.push(makeLayersTree(ftree_toplevel, map, allMapLayers));
+      //   }
+      // }
 
-      layerCtl = L.control.layers.tree(baseTree, overlayTree, {
-        collapseAll: '<font color="#909090" size="2">(close all)</font>',
-        collapsed: true 
-      });
-      layerCtl.addTo(map);
-      //layerCtl.setPosition('topleft');   
-      //mapOpts.layerControlPosition ? layerCtl.setPosition(mapOpts.layerControlPosition) : layerCtl.setPosition('topleft');
-      //layerCtl.collapseTree(false);
-      layerCtl.collapseTree(true); 
+      // layerCtl = L.control.layers.tree(baseTree, overlayTree, {
+      //   collapseAll: '<font color="#909090" size="2">(close all)</font>',
+      //   collapsed: true 
+      // });
+      // layerCtl.addTo(map);
+      // //layerCtl.setPosition('topleft');   
+      // //mapOpts.layerControlPosition ? layerCtl.setPosition(mapOpts.layerControlPosition) : layerCtl.setPosition('topleft');
+      // //layerCtl.collapseTree(false);
+      // layerCtl.collapseTree(true); 
     }  else {
       let fallbackLayer = confData.layers[0];
       L.tileLayer(fallbackLayer.url, fallbackLayer.layerOpts).addTo(map);
@@ -156,47 +159,47 @@ export const makeMap = (confData) => {
 
 
 
-function makeLayersTree(ftree_folder, mapref, allMapLayers) {
-    let layerTreeChildren = [];
-    for (let jj=0; jj<ftree_folder.children.length; jj++) {
-      let layerObj = ftree_folder.children[jj];
-      if (layerObj.hasOwnProperty('active') && layerObj.active == false) continue;
-      //console.log("layerObj.title", layerObj.title);
-      //console.log("layerObj.type", layerObj.type);
-      if (layerObj.type.startsWith("gis-layer")) {
-        // console.log("layerObj", layerObj);
-        let layer = createMapLayer(layerObj);
-        if (!layer) continue;
-        //console.log("layer", layerObj.title, layer);
-        layerTreeChildren.push({ label: layerObj.title, layer: layer });
-        if (layerObj.data.layerId) {
-          allMapLayers[layerObj.data.layerId] = layer;
-        }
-        // console.log("layerObj.title", layerObj.title);
-        // console.log("layerObj.selected", layerObj.selected);
-        if (layerObj.selected) {
-          //console.log("default layer", layer);
-          mapref.addLayer(layer);
-        }
-      } else if (layerObj.type.startsWith("gis-folder")) {
-        //console.log("recursive layerObj.type gis-folder", layerObj.type);
-        //let layerTreeFolder = {label:layerObj.title, children:[]};
-        let obj = makeLayersTree(layerObj, mapref, allMapLayers);
-        layerTreeChildren.push(obj);
-      };
-    }
-    let layerTreeObj = {
-      label: ftree_folder.title,
-      children: layerTreeChildren
-    }
-    return layerTreeObj;
-}
+// function makeLayersTree(ftree_folder, mapref, allMapLayers) {
+//     let layerTreeChildren = [];
+//     for (let jj=0; jj<ftree_folder.children.length; jj++) {
+//       let layerObj = ftree_folder.children[jj];
+//       if (layerObj.hasOwnProperty('active') && layerObj.active == false) continue;
+//       //console.log("layerObj.title", layerObj.title);
+//       //console.log("layerObj.type", layerObj.type);
+//       if (layerObj.type.startsWith("gis-layer")) {
+//         // console.log("layerObj", layerObj);
+//         let layer = createMapLayer(layerObj);
+//         if (!layer) continue;
+//         //console.log("layer", layerObj.title, layer);
+//         layerTreeChildren.push({ label: layerObj.title, layer: layer });
+//         if (layerObj.data.layerId) {
+//           allMapLayers[layerObj.data.layerId] = layer;
+//         }
+//         // console.log("layerObj.title", layerObj.title);
+//         // console.log("layerObj.selected", layerObj.selected);
+//         if (layerObj.selected) {
+//           //console.log("default layer", layer);
+//           mapref.addLayer(layer);
+//         }
+//       } else if (layerObj.type.startsWith("gis-folder")) {
+//         //console.log("recursive layerObj.type gis-folder", layerObj.type);
+//         //let layerTreeFolder = {label:layerObj.title, children:[]};
+//         let obj = makeLayersTree(layerObj, mapref, allMapLayers);
+//         layerTreeChildren.push(obj);
+//       };
+//     }
+//     let layerTreeObj = {
+//       label: ftree_folder.title,
+//       children: layerTreeChildren
+//     }
+//     return layerTreeObj;
+// }
 
 function node2maplayer(vnnode) {
   let layer=false;
   switch(vnnode.type.toLowerCase()) {
     case "geojson":
-      //layer = loadGeojson(layerObj.data);
+      layer = loadGeojson(vnnode.url, vnnode.get_data());
       break;
     case "tilemap":
       layer = L.tileLayer(vnnode.url, vnnode.options);
@@ -209,32 +212,9 @@ function node2maplayer(vnnode) {
 }
 
 
-// function createMapLayer(layerObj) {
-//   let layer=false;
-//   switch(layerObj.data.layerType) {
-//     case "geojson":
-//       //layer = loadGeojson(layerObj.data);
-//       break;
-//     case "tilemap":
-//       layer = L.tileLayer(layerObj.data.url, layerObj.data.layerOpts);
-//       break;
-//     case "wms":
-//       layer = L.tileLayer.wms(layerObj.data.url, layerObj.data.layerOpts);
-//       break;
-//   }
-//   //mapref.addLayer(layer);
-//   // let layerStamp = L.Util.stamp(layer);
-//   // console.log("addLayer layerStamp", layerStamp);
-//   // console.log("addLayer layer", layer);
-//   return layer;
-// }
-
 
 
 function locationPopup(evt, map, popup, preText=null) {
-  // https://www.gebco.net/data-products/gebco-web-services/previous-wms
-  // https://wms.gebco.net/2014/mapserv?request=getcapabilities&service=wms&version=1.3.0
-  //let url = "https://wms.gebco.net/2014/mapserv";
   let url = "https://wms.gebco.net/mapserv";
   let X = map.layerPointToContainerPoint(evt.layerPoint).x;
   let Y = map.layerPointToContainerPoint(evt.layerPoint).y;
@@ -267,21 +247,6 @@ function locationPopup(evt, map, popup, preText=null) {
   pustr += "<br>E" + (utm_ED50.easting).toFixed(1) + " N" + (utm_ED50.northing).toFixed(1) + " (ED50)";
 
 
-
-  // let params = {
-  //   request: 'GetFeatureInfo',
-  //   service: 'WMS',
-  //   CRS: 'EPSG:4326',
-  //   version: '1.3.0',      
-  //   bbox: map.getBounds().toBBoxString(),
-  //   x: X,
-  //   y: Y,
-  //   height: size.y,
-  //   width: size.x,
-  //   layers: 'GEBCO_2014_Grid',
-  //   query_layers: 'GEBCO_2014_Grid',
-  //   info_format: 'text/html'
-  // };
   let params = {
     request: 'GetFeatureInfo',
     service: 'WMS',
@@ -297,38 +262,8 @@ function locationPopup(evt, map, popup, preText=null) {
     info_format: 'text/html'
   };
 
-
   let featInfoUrl = url + L.Util.getParamString(params, url, true);
   infoRequest(featInfoUrl, pustr, popup);
-  // let getinfo = $.ajax({
-  //     url: featInfoUrl,
-  //     dataType: "html",
-  //     success: function (doc) { console.log("getinfo successfully loaded!\n", doc);},
-  //     error: function (xhr) { console.log("getinfo ERROR!\n", xhr.statusText); }
-  // })
-  // $.when(getinfo).done(function() {
-  //     let htmlstr = $.parseHTML( getinfo.responseText );
-  //     let body = $(htmlstr).find('body:first');
-  //     $.each(htmlstr, function(i, el){
-  //         //console.log(i, el)
-  //         if (el.nodeName == '#text') {
-  //             let targetStr = el.nodeValue
-  //             // console.log(i, targetStr);
-  //             let test = targetStr.match(/Elevation value \(m\):\s*(-?\d+)/)
-  //             if (test) {
-  //                 let elevation = test[1];
-  //                 if (elevation>=0) {
-  //                     pustr += "<br>elevation " + elevation + " m (GEBCO)";
-  //                 } else {
-  //                     pustr += "<br>depth " + elevation + " m (GEBCO)";
-  //                 }
-  //                 // console.log("elevation=", elevation)
-  //                 popup.setContent(pustr)
-  //             }
-  //         }
-  //     });
-  // });  
-
 
   return pustr;
 }
@@ -362,3 +297,171 @@ async function infoRequest(url, pustr, popup){
   }
 }
 
+
+
+
+function loadGeojson(url, layerData) {
+  let attribution = null;
+  if (layerData.hasOwnProperty("options")) {
+    attribution = layerData.options.attribution || null;
+  }
+  let layer  = new L.GeoJSON(null, {
+    style: function(feature) {
+            let linestyle = {color: "#ff0000", weight: 2, opacity: 1.0};
+            if (layerData.hasOwnProperty('style')) {
+              if (layerData.style.hasOwnProperty('default')) {
+                Object.assign(linestyle, layerData.style.default);
+                if (layerData.style.default.color === true && feature.properties.hasOwnProperty('color')) {
+                  let _color = feature.properties.color;
+                  if (/^(0x)?[0-9a-fA-F]+$/.test(_color)) {
+                    if (_color.startsWith("0x")) {
+                      _color = _color.slice(2);
+                    }
+                    if (!_color.startsWith("#")) {
+                      _color = "#" + _color;
+                    }
+                  }              
+                  linestyle.color = _color;
+                }
+              }
+              for (const [key, styObj] of Object.entries(layerData.style)) {
+                if (key.indexOf('|')>0) {
+                  let [prop, val] = key.split("||");
+                  if (feature.properties.hasOwnProperty(prop)) {
+                    if (feature.properties[prop].toLowerCase() === val.toLowerCase()) {
+                      Object.assign(linestyle, styObj);
+                    }
+                  }
+                }
+              }
+            } else if (feature.properties.hasOwnProperty('style')) {
+              linestyle = feature.properties.style;
+            } 
+            // if (layerData.style.default.color === true && feature.properties.hasOwnProperty('color')) {
+            //   let _color = feature.properties.color;
+            //   if (/^(0x)?[0-9a-fA-F]+$/.test(_color)) {
+            //     if (_color.startsWith("0x")) {
+            //       _color = _color.slice(2);
+            //     }
+            //     if (!_color.startsWith("#")) {
+            //       _color = "#" + _color;
+            //     }
+            //   }              
+            //   linestyle.color = _color;
+            // }
+            return linestyle;      
+    },
+    onEachFeature: function (feature, layer) {
+        layer.on({
+            click: function (evt) {
+              L.DomEvent.stopPropagation(evt);
+              let lat = evt.latlng.lat;
+              let long = evt.latlng.lng;
+              let contstr = '';
+              if (feature.properties.hasOwnProperty('name')) {
+                contstr += '<b>'+feature.properties.name+'</b>';
+              }
+              if (layerData.hasOwnProperty('popupProps')) {
+                for (let ii=0; ii<layerData.popupProps.length; ii++) {
+                  let _parts = layerData.popupProps[ii].split("||");
+                  let prop = _parts[0], field = _parts[0];
+                  if (_parts.length>1) {
+                    field = _parts[1];
+                  }
+                  if (feature.properties.hasOwnProperty(prop)) {
+                    contstr += `<br>${field}: ${feature.properties[prop]}`;
+                  }
+                }
+              }
+              //let contstr = '<b>'+feature.properties.name+'</b>';
+              // if (feature.properties.hasOwnProperty('description')) {
+              //   contstr += '<br>' + feature.properties.description;
+              // }
+              // if (feature.properties.hasOwnProperty('vn_uri')) {
+              //   contstr += '<br>' + feature.properties.vn_uri;
+              // }
+              if (feature.properties.hasOwnProperty('KP')) {
+                let KP_near = getFeatureKPvalue(feature);
+                contstr += '<br> KP: '+parseFloat(KP_near).toFixed(3);
+                //contstr += '<br> distance: '+parseFloat(near.properties.location).toFixed(3);
+              }
+              let popup = L.popup();
+              popup
+                  .setLatLng(evt.latlng)
+                  .setContent(contstr)
+                  .openOn(map)
+            },
+            contextmenu: function (evt) {
+                L.DomEvent.stopPropagation(evt);
+                let preText = "";
+                if (feature.properties.hasOwnProperty('name')) {
+                  preText += '<b>'+feature.properties.name+'</b>';
+                }
+                if (feature.properties.hasOwnProperty('KP')) {
+                  let KP_near = getFeatureKPvalue(feature);
+                  preText += '<br> KP: '+parseFloat(KP_near).toFixed(3);
+                  //contstr += '<br> distance: '+parseFloat(near.properties.location).toFixed(3);
+                }
+                locationPopup(evt, preText);
+  
+            }
+        });
+    },
+    attribution: attribution,
+    pointToLayer: function(feature, latlng) {
+      return L.circleMarker(latlng, layerData.layerOpts.geojsonMarkerOptions);
+    }
+  });   
+  let dataObj=false;   
+  if (layerData.cache) {
+    dataObj = localStorage.getItem(layerData.id);
+  }
+  if (dataObj) {
+    console.log(`localStorage retrieving ${layerData.id}`);
+    //dataObj = LZString.decompressFromUTF16(dataObj);
+    //console.log(`after LZString.decompress ${dataObj}`);
+    dataObj = JSON.parse(dataObj);
+    console.log(`dataObj.cache_timestamp ${dataObj.cache_timestamp}`);
+    layer.addData(dataObj.data);
+  } else {
+    fetch(url)
+    .then((resp) => {
+      if (resp.status != 200) {
+        console.error(`loadGeojson failure\nurl=«${url}»\nfetch response status code: ${resp.status}`);
+      };
+      resp.json()
+      .catch((err) => {
+        console.error("loadGeojson failure\nresp.json():", err);
+      })
+      .then((data) => {
+        //if (callback) callback(confData);
+        console.log("loadGeojson data", data);
+        layer.addData(data);
+        if (layerData.cache) {
+          dataObj = {
+            cache_timestamp: Date.now(),
+            type: "geojson",
+            data: data
+          };
+          dataObj = JSON.stringify(dataObj);
+          console.log("dataObj length", dataObj.length);
+          // https://dev.to/ternentdotdev/json-compression-in-the-browser-with-gzip-and-the-compression-streams-api-4135
+          //dataObj = LZString.compressToUTF16(dataObj);
+          console.log("compressed length", dataObj.length);
+          try {
+            localStorage.setItem(layerData.id, dataObj);
+          } catch (exception) {
+            console.error(`localStorage ${exception} ${layerData.id}`);
+          }
+        }
+      })
+      // .catch((err) => {
+      //   console.log("load_config failure in callback:", err);
+      // });      
+    })
+    .catch((err) => {
+      console.error(`loadGeojson fetch(${url}) failure: ${err}`);
+    });
+  }
+  return layer;
+}

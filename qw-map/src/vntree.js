@@ -62,6 +62,10 @@ class VnNode {
         return this.#data.selected;
     }
 
+    get style() {
+        return this.#data.style;
+    }
+
 
     add_child (newChild) {
         this.#childs.push(newChild)

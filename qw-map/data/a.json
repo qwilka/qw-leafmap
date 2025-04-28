@@ -104,6 +104,44 @@
               "attribution": "<a target='_blank' href='https://emodnet.ec.europa.eu/en/bathymetry'>EMODnet, </a>"
             }
 
-        }
+        },
+        {
+          "name": "DK-pipelines",
+          "title": "Denmark offshore pipelines (geojson)",
+          "id": "dp1",
+          "parent": "overlays",
+          "type": "geojson",
+          "url": "/data/DK_Geus_pipelines_simplified.geojson",
+          "selected": false,
+          "options": {
+            "attribution": "<a target='_blank' href='http://data.geus.dk/geusmap/ows/help/?lang=en'>DK-Geus</a>"
+          },
+          "cache": true,
+            "style": {
+              "default": {
+                  "color": "Red",
+                  "weight": 3,
+                  "opacity": 1
+              },
+              "content_name||gas": {
+                  "color": "DarkOrange"
+              },
+              "content_name||oil": {
+                  "color": "Green"
+              },
+              "content_name||Multi-phase": {
+                  "color": "Maroon"
+              }
+            },
+            "popupProps": [
+                "content_name"
+            ],
+            "bbox": [
+                -1.3403,
+                51.9036,
+                17.5341,
+                59.3555
+            ]          
+      }
     ]
 }
