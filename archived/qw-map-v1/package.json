@@ -1,6 +1,6 @@
 {
   "name": "qw-map",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Basic webmap",
   "main": "webpack.config.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qwilka/qwgis.git"
+    "url": "git+https://github.com/qwilka/qw-map.git"
   },
   "keywords": [
     "GIS"
@@ -16,9 +16,9 @@
   "author": "Stephen McEntee",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/qwilka/qwgis/issues"
+    "url": "https://github.com/qwilka/qw-map/issues"
   },
-  "homepage": "https://github.com/qwilka/qwgis#readme",
+  "homepage": "https://github.com/qwilka/qw-map#readme",
   "dependencies": {
     "leaflet": "^1.6.0",
     "leaflet-easybutton": "^2.4.0",

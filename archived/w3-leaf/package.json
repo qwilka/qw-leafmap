@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/bencuilcagh/qwleaf.git"
+    "url": "git+https://github.com/qwilka/qw-map.git"
   },
   "keywords": [
     "GIS"
   ],
   "author": "Stephen McEntee",
   "license": "UNLICENSED",
-  "homepage": "https://bitbucket.org/bencuilcagh/qwleaf#readme",
+  "homepage": "https://github.com/qwilka/qw-map#readme",
   "devDependencies": {
     "html-webpack-plugin": "^4.3.0",
     "webpack": "^4.43.0",
