@@ -1,8 +1,8 @@
 {
-    "title": "Qwilka-leaf-map [a+]",
+    "title": "Qwilka-leaf-map [telecom]",
     "name": "qwilka-leaf-map",
     "description": "A basic map using Leaflet." ,
-    "version": "0.0.2",
+    "version": "2.0.0",
     "author": "SMcE",
     "license": "MIT",
     "repository": "https://github.com/qwilka/basic-map-leaf",
@@ -12,7 +12,7 @@
       "layerControl": true,
       "layerTreeControl": false,
       "layerControlPosition": "topleft",
-      "attributionControl": null,    
+      "attributionControl": true,    
       "attributionPosition": "bottomright",
       "attributionPrefix": "<a target=\"_blank\" href=\"https://qwilka.github.io/\">Qwilka</a>",
       "hash": true,
@@ -26,13 +26,36 @@
             "parent": "basemaps",
             "type": "tilemap",
             "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-            "selected": true,
+            "selected": false,
             "options": {
                 "maxZoom": 19,
                 "attribution": "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
             }
 
         },
+        {
+          "name": "OSM/Terrain Light",
+          "title": "OpenStreetMap (Terrain Light)",
+          "id": "o2",
+          "parent": "basemaps",
+          "type": "WMS",
+          "url": "https://tiles.maps.eox.at/",
+          "refs": [
+            "https://maps.eox.at/?#",
+            "https://gis.stackexchange.com/questions/253034/sentinel-2-imagery-as-a-webservice-in-a-leaflet-or-openlayers-map?rq=1"
+        ],
+          "selected": true,
+          "options": {
+            "layers": "terrain-light_3857,overlay_base_bright_3857",
+            "CRS": "EPSG:4326",
+            "format": "image/png",
+            "transparent": false,
+            "noWrap": true,
+            "opacity": 1,
+            "attribution": "Terrain Light &copy; <a target='_blank' href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>, Rendering &copy; <a target='_blank' href='https://maps.eox.at/'>EOX</a>"
+          }
+
+      },
         {
           "name": "GEBCO",
           "title": "GEBCO",
@@ -66,7 +89,53 @@
           }
 
       },
-        {
+      {
+        "name": "Submarine-telecom-cables",
+        "title": "Submarine telecom cables",
+        "id": "sc1",
+        "parent": "overlays",
+        "type": "geojson",
+        "url": "/data/submarine-telecom-cables.geojson",
+        "selected": false,
+        "options": {
+          "attribution": "<a target='_blank' href='https://github.com/telegeography/'>Telegeography</a>"
+        },
+        "cache": false,   
+        "style": {
+          "default": {
+              "color": true,
+              "weight": 1,
+              "opacity": 1
+          }
+        },
+        "popupProps": [
+            "slug||CABLE"
+        ]
+      },
+      {
+        "name": "Seacom",
+        "title": "Seacom telecom cables",
+        "id": "sc2",
+        "parent": "overlays",
+        "type": "geojson",
+        "url": "/data/seacom.geojson",
+        "selected": false,
+        "options": {
+          "attribution": "<a target='_blank' href='https://github.com/telegeography/'>Telegeography</a>"
+        },
+        "cache": false,   
+        "style": {
+          "default": {
+              "color": true,
+              "weight": 4,
+              "opacity": 1
+          }
+        },
+        "popupProps": [
+            "slug||CABLE"
+        ]
+      },
+      {
           "name": "EEZ",
           "title": "EEZ boundaries",
           "id": "ez1",
@@ -104,44 +173,6 @@
               "attribution": "<a target='_blank' href='https://emodnet.ec.europa.eu/en/bathymetry'>EMODnet, </a>"
             }
 
-        },
-        {
-          "name": "DK-pipelines",
-          "title": "Denmark offshore pipelines (geojson)",
-          "id": "dp1",
-          "parent": "overlays",
-          "type": "geojson",
-          "url": "/data/DK_Geus_pipelines_simplified.geojson",
-          "selected": false,
-          "options": {
-            "attribution": "<a target='_blank' href='http://data.geus.dk/geusmap/ows/help/?lang=en'>DK-Geus</a>"
-          },
-          "cache": true,
-            "style": {
-              "default": {
-                  "color": "Red",
-                  "weight": 3,
-                  "opacity": 1
-              },
-              "content_name||gas": {
-                  "color": "DarkOrange"
-              },
-              "content_name||oil": {
-                  "color": "Green"
-              },
-              "content_name||Multi-phase": {
-                  "color": "Maroon"
-              }
-            },
-            "popupProps": [
-                "content_name"
-            ],
-            "bbox": [
-                -1.3403,
-                51.9036,
-                17.5341,
-                59.3555
-            ]          
-      }
+        }
     ]
 }

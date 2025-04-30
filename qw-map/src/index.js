@@ -5,12 +5,14 @@ import { makeMap } from './gis';
 
 
 window.onload = () => {
-    let confFile = "a";
+  // conf.json is the fixed configuation file, currently cannot make url.searchParams work with fullHash
+  // to simplify, everything goes into a single build directory
+    let confFile = "conf.json";
     let url = new URL( window.location.href );
     // url.searchParams not working with fullHash
     // http://localhost:8080/?c=a#5/58.275/-71.323/e1-ez1-cl1
-    if (url.searchParams.has("c")) confFile = url.searchParams.get("conf");
-    confFile = "/data/" + confFile + ".json";
+    // if (url.searchParams.has("c")) confFile = url.searchParams.get("conf");
+    // confFile = "/data/" + confFile + ".json";
     loadConfig(confFile);
 }
 

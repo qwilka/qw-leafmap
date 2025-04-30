@@ -77,7 +77,7 @@ export const makeMap = (confData) => {
       let overL = {};
       for (let child of overlays.get_child()) {
         console.log("overlays child ", child.name, child.get_data());
-        let layer = node2maplayer(child);
+        let layer = node2maplayer(child, map);
         if (!layer) continue;
         overL[child.name] = layer;
         allMapLayers[child.id] = layer;
@@ -195,11 +195,11 @@ export const makeMap = (confData) => {
 //     return layerTreeObj;
 // }
 
-function node2maplayer(vnnode) {
+function node2maplayer(vnnode, map=null) {
   let layer=false;
   switch(vnnode.type.toLowerCase()) {
     case "geojson":
-      layer = loadGeojson(vnnode.url, vnnode.get_data());
+      layer = loadGeojson(vnnode.url, vnnode.get_data(), map);
       break;
     case "tilemap":
       layer = L.tileLayer(vnnode.url, vnnode.options);
@@ -300,7 +300,7 @@ async function infoRequest(url, pustr, popup){
 
 
 
-function loadGeojson(url, layerData) {
+function loadGeojson(url, layerData, map) {
   let attribution = null;
   if (layerData.hasOwnProperty("options")) {
     attribution = layerData.options.attribution || null;
