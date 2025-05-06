@@ -1,0 +1,45 @@
+
+
+
+https://nominatim.org/ open source geocoding
+https://www.oshydro.org/projects/sussie/ 
+
+
+# web maps and data
+
+https://www.emodnet-bathymetry.eu/
+https://emodnet.ec.europa.eu/geoviewer/
+https://tiles.emodnet-bathymetry.eu/
+https://github.com/EMODnet
+https://github.com/coronis-computing/emodnet_qmgc
+
+### Denmark
+https://github.com/SDFIdk/okapi
+https://korttjenester.dataforsyningen.dk/wms
+https://www.opendata.dk/search?q=
+https://dataforsyningen.dk/
+https://maps.dataforsyningen.dk/#2/581568/6221313.6/0/1
+https://korttjenester.dataforsyningen.dk/wms
+https://github.com/SDFIdk/okapi
+https://dataforsyningen.dk/data/2686
+https://listservices.dataforsyningen.dk/#/map/WMS/havvind
+https://dataforsyningen.dk/data/3814
+https://eng.gst.dk/danish-hydrographic-office/hydrographic-surveying/crowdsourced-bathymetry
+https://eng.gst.dk/danish-hydrographic-office/hydrographic-surveying/the-sussie-app
+https://bitbucket.org/geodatastyrelsen/sussie/src/master/
+
+
+### Finland
+https://www.traficom.fi/en/statistics-and-publications/spatial-dataset-material/hydrographic-data
+https://julkinen.traficom.fi/oskari/?lang=en
+
+
+### NOAA
+https://www.ncei.noaa.gov/maps/bathymetry/  
+https://www.ncei.noaa.gov/maps/iho_dcdb/
+
+
+
+### GEBCO 
+https://www.gebco.net/data-products/gridded-bathymetry-data#multi_r
+https://download.gebco.net/
