@@ -18,7 +18,7 @@ window.onload = () => {
 }
 
 
-function loadConfig(url) {
+function loadConfig_old(url) {
     console.log("loadConfig: ", url);
     fetch(url)
     .then((resp) => {
@@ -42,6 +42,27 @@ function loadConfig(url) {
       console.log("load_config failure top-level:", err);
     });
 }
+
+// https://stackoverflow.com/questions/38235715/fetch-reject-promise-and-catch-the-error-if-status-is-not-ok
+function loadConfig(url) {
+    console.log("loadConfig: ", url);
+    fetch(url)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(`loadConfig: HTTP error! status: ${response.status}`);
+    })
+    .then((configData) => {
+      console.log("Normal startup with configuration:\n", url);
+      config_launch(configData);
+    })
+    .catch((err) => {
+        console.error("loadConfig: error! failed to load url:\n", url,"\n", err, "\nProceeding with fallback config.");
+        config_launch(fallbackConfig);
+    });
+}
+
 
 
 function config_launch(conf){
