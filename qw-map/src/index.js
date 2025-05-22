@@ -7,18 +7,19 @@ import { makeMap } from './gis';
 window.onload = () => {
   // conf.json is the fixed configuation file, currently cannot make url.searchParams work with fullHash
   // to simplify, everything goes into a single build directory
-    let confFile = "conf.json";
+    let confFile = "conf";
     let url = new URL( window.location.href );
     // url.searchParams not working with fullHash
     // http://localhost:8080/?c=a#5/58.275/-71.323/e1-ez1-cl1
     // if (url.searchParams.has("c")) confFile = url.searchParams.get("conf");
-    // confFile = "/data/" + confFile + ".json";
+    //confFile = window.location.pathname + confFile + ".json";
+    confFile = window.location.pathname + `config-${getHashParams()[4]}.json`;
     loadConfig(confFile);
 }
 
 
 function loadConfig(url) {
-    //console.log("load_config server:", window.location.href);
+    console.log("loadConfig: ", url);
     fetch(url)
     .then((resp) => {
       if (resp.status != 200) {
@@ -40,7 +41,7 @@ function loadConfig(url) {
     .catch((err) => {
       console.log("load_config failure top-level:", err);
     });
-  }
+}
 
 
 function config_launch(conf){
@@ -50,26 +51,49 @@ function config_launch(conf){
 }  
 
 
+function getUrlParams() {
+  let url = new URL( window.location.href );
+  let params = {};
+  for (const [key, value] of url.searchParams.entries()) {
+    params[key] = value;
+  }
+  return params;
+}
+function getHashParams() {    
+  let url = new URL( window.location.href );
+  let params = {};
+  if (url.hash) {
+    let hash = url.hash.substring(1); // remove the #
+    let parts = hash.split("/");
+    for (let i = 0; i < parts.length; i++) {
+      params[i] = parts[i];
+    }
+  }
+  return params;
+}
+
+
 
 var fallbackConfig = {
-  "title": "Qwilka-leaf-map [FALLBACK]",
-    "name": "qwilka-leaf-map",
-    "description": "A basic web application using Leaflet." ,
-    "version": "0.0.2",
+    "title": "Qwilka qw-map [FALLBACK config]",
+    "name": "qw-map",
+    "description": "A basic webmap using Leaflet." ,
+    "version": "2.0.0",
     "author": "SMcE",
-    "repository": "https://github.com/qwilka/basic-map-leaf",
-    "url": "",
-    "refs": ["https://qwilka.github.io/", "http://www.qwilka.com/"],
-  "mapOptions": {
-    "zoomControlPosition": "topleft",
-    "layerControl": false,
-    "layerTreeControl": false,
-    "layerControlPosition": "topleft",
-    "attributionControl": false,    
-    "attributionPosition": "bottomright",
-    "attributionPrefix": "<a target=\"_blank\" href=\"https://qwilka.github.io/\">Qwilka</a>",
-    "hash": true
-  },
+    "license": "MIT",
+    "repository": "https://github.com/qwilka/qw-map",
+    "refs": ["https://qwilka.github.io/gis/1/#5/53.980/-7.300/g1", "https://github.com/qwilka/qw-map"],
+    "mapOptions": {
+      "zoomControlPosition": "topright",
+      "layerControl": true,
+      "layerTreeControl": false,
+      "layerControlPosition": "topleft",
+      "attributionControl": null,    
+      "attributionPosition": "bottomright",
+      "attributionPrefix": "<a target=\"_blank\" href=\"https://qwilka.github.io/\">Qwilka</a>",
+      "hash": true,
+      "locationPopup": true
+    },
   "layers": [
       {
           "name": "OSM1",

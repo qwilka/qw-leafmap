@@ -7,11 +7,11 @@ import L from "leaflet";
 // import Utm from 'geodesy/utm.js';
 import Mgrs, { Utm, LatLon, Dms } from 'geodesy/mgrs.js';
 
-import './libs/fullHash/leaflet-fullHash';
+import './libs/fullHash/leaflet-fullHash-config';
 import './libs/control-layers-tree/L.Control.Layers.Tree.css';
 import './libs/control-layers-tree/L.Control.Layers.Tree';
 
-import {VnNode, layersTree, basemaps, overlays} from './vntree.js';
+import {VnNode, layersTree, basemaps, overlays} from './vntree';
 window.layersTree = layersTree;
 
 
@@ -23,11 +23,11 @@ export const makeMap = (confData) => {
 
     const map = L.map('map', {
         attributionControl: mapOpts.attributionControl===null ? true : false,
-        zoom: (mapOpts.zoom || 5),
+        zoom: (mapOpts.zoom || 8),
         minZoom: (mapOpts.minZoom || 2),
         maxZoom: (mapOpts.maxZoom || 14),
         maxBounds: (mapOpts.maxBounds || [[-90,-180], [90,180]]),
-        center: (mapOpts.center || [57.0, 2.46]),
+        center: (mapOpts.center || [53.711, -7.361]),
         zoomControl: (mapOpts.zoomControl || true)
     });
 
@@ -417,11 +417,12 @@ function loadGeojson(url, layerData, map) {
     dataObj = localStorage.getItem(layerData.id);
   }
   if (dataObj) {
-    console.log(`localStorage retrieving ${layerData.id}`);
+    console.log(`loadGeojson: localStorage retrieving ${layerData.id}`);
     //dataObj = LZString.decompressFromUTF16(dataObj);
     //console.log(`after LZString.decompress ${dataObj}`);
     dataObj = JSON.parse(dataObj);
-    console.log(`dataObj.cache_timestamp ${dataObj.cache_timestamp}`);
+    console.log(`loadGeojson: dataObj.cache_timestamp ${dataObj.cache_timestamp}`);
+    // console.log("loadGeojson: dataObj: ", dataObj);
     layer.addData(dataObj.data);
   } else {
     fetch(url)

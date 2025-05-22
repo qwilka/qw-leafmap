@@ -20,7 +20,8 @@ module.exports = {
       patterns: [
         { from: "./src/index.html", to: "index.html" },
         { from: "./data/favicon.ico", to: "favicon.ico" },
-        { from: "./data/conf-sc.json", to: "conf.json" },
+        { from: "./data/config-c1.json", to: "config-c1.json" },
+        { from: "./data/config-sc.json", to: "config-sc.json" },
       ],
     }),
   ],
