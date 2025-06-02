@@ -22,7 +22,7 @@ export const makeMap = (confData) => {
     let mapOpts = confData.mapOptions;
 
     const map = L.map('map', {
-        attributionControl: mapOpts.attributionControl===null ? true : false,
+        attributionControl: mapOpts.attributionControlDefault || false,
         zoom: (mapOpts.zoom || 8),
         minZoom: (mapOpts.minZoom || 2),
         maxZoom: (mapOpts.maxZoom || 14),
@@ -34,7 +34,7 @@ export const makeMap = (confData) => {
     mapOpts.zoomControlPosition ? map.zoomControl.setPosition(mapOpts.zoomControlPosition) : map.zoomControl.setPosition('topright');
     
 
-    if (mapOpts.attributionControl && mapOpts.attributionControl!==null) {
+    if (mapOpts.attributionControlCustom) {
         let attribut = L.control.attribution({ 
             position: (mapOpts.attributionPosition || 'bottomright'), 
             prefix: (mapOpts.attributionPrefix || false)
@@ -42,6 +42,17 @@ export const makeMap = (confData) => {
         attribut.addTo(map);
     }
 
+    if (confData.layers) {
+      for (let ly of confData.layers) {
+        let parentNode = layersTree.get_node_by_name(ly.parent);
+        if (parentNode) {
+          new VnNode(ly.title || ly.name, parentNode, ly, null, ly.id);
+        } else {
+          console.warn("No parent node found for layer", ly.name);
+        }
+      }
+      console.log(layersTree.to_texttree());
+    }
 
     
     // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -51,20 +62,21 @@ export const makeMap = (confData) => {
     var allMapLayers = {};
     var layerCtl = null;
     if (mapOpts.layerControl) {
-      // VnNode, layersTree, baselayers, overlays
-      let layers = confData.layers;
-      for (let ly of layers) {
-        if (ly.parent === "basemaps") {
-          new VnNode(ly.title || ly.name, basemaps, ly, null, ly.id);
-        }
-        if (ly.parent === "overlays") {
-          new VnNode(ly.title || ly.name, overlays, ly, null, ly.id);
-        }
-      }
-      console.log(layersTree.to_texttree());
+      // // VnNode, layersTree, baselayers, overlays
+      // let layers = confData.layers;
+      // for (let ly of layers) {
+      //   if (ly.parent === "basemaps") {
+      //     new VnNode(ly.title || ly.name, basemaps, ly, null, ly.id);
+      //   }
+      //   if (ly.parent === "overlays") {
+      //     new VnNode(ly.title || ly.name, overlays, ly, null, ly.id);
+      //   }
+      // }
+      // console.log(layersTree.to_texttree());
       let baseL = {};
       for (let child of basemaps.get_child()) {
-        console.log("basemaps child ", child.name, child.get_data());
+        // console.log("basemaps child ", child.name, child.get_data());
+        if (child.get_data('deactivate')) continue;
         let layer = node2maplayer(child);
         if (!layer) continue;
         baseL[child.name] = layer;
@@ -76,7 +88,8 @@ export const makeMap = (confData) => {
 
       let overL = {};
       for (let child of overlays.get_child()) {
-        console.log("overlays child ", child.name, child.get_data());
+        // console.log("overlays child ", child.name, child.get_data());
+        if (child.get_data('deactivate')) continue;
         let layer = node2maplayer(child, map);
         if (!layer) continue;
         overL[child.name] = layer;
@@ -90,6 +103,27 @@ export const makeMap = (confData) => {
       
 
     } else if (mapOpts.layerTreeControl) {
+
+      let baseL = {};
+      for (let _node of basemaps) {
+        if (_node.get_data('deactivate')) continue;
+        if (_node.type === "group") continue;
+        let layer = node2maplayer(_node, map);
+        if (!layer) continue;
+        _node.layer = layer;
+        allMapLayers[_node.id] = layer;
+        if (_node.selected) {
+          map.addLayer(layer);
+        }        
+      }
+
+      let overlayTree = [];
+
+      layerCtl = L.control.layers.tree(baseTree, overlayTree, {
+        collapseAll: '<font color="#909090" size="2">(close all)</font>',
+        collapsed: true 
+      });
+      layerCtl.addTo(map);
 
       // let ftree = confData["layerTree"];
       // if (!ftree) {
@@ -196,7 +230,7 @@ export const makeMap = (confData) => {
 // }
 
 function node2maplayer(vnnode, map=null) {
-  let layer=false;
+  let layer=null;
   switch(vnnode.type.toLowerCase()) {
     case "geojson":
       layer = loadGeojson(vnnode.url, vnnode.get_data(), map);

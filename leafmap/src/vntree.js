@@ -138,6 +138,29 @@ class VnNode {
         }
     }
 
+    get_node_by_name(path) {
+        let names = path.split(".");
+        let loc_root = this;
+        let target_node;
+        do {
+            target_node = null;
+            for (let _n of loc_root) {
+                if (_n.name === names[0]) {
+                    target_node = _n;
+                    break;
+                }
+            }
+            if (target_node) {
+                names.shift();
+                loc_root = target_node;
+            } else {
+                console.warn("VnNode.get_node_by_name: no node found for name:", names[0]);
+                break;
+            }            
+        } while (names.length > 0);
+        return target_node;
+    }
+
 
     to_texttree(tabLevel=-1) {
         let nodetext = "";
@@ -161,8 +184,41 @@ class VnNode {
         for (let child of this.#childs) {
             treeDict.childs.push(child.to_treedict());
         }
-        return treeDict
+        return treeDict;
     }
+
+    to_layerTreeObj() {
+        let layerTreeObj = {};
+        layerTreeObj.label = this.title || this.name;
+        if (this.has_data("layer")) {
+            layerTreeObj.layer = this.layer;
+        }
+        layerTreeObj.children = [];
+        for (let child of this.#childs) {
+            if (child.get_data('deactivate')) continue;
+            layerTreeObj.children.push(child.to_layerTreeObj());
+        }
+        return layerTreeObj;
+    }
+
+
+    // to_layerTreeObj() {
+    //     let root = this.get_root();
+    //     let basemaps = root.get_child("basemaps");
+    //     let overlays = root.get_child("overlays");
+    //     let layerTreeObj = {
+    //         "basemaps": {
+    //             "label": 'World base maps &#x1f5fa;',
+    //         },
+    //     };
+    //     layerTreeObj.children = [];
+    //     layerTreeObj.label = this.title || this.name;
+    //     //layerTreeObj.data = this.#data; 
+    //     for (let child of this.#childs) {
+    //         layerTreeObj.children.push(child.to_layerTreeObj());
+    //     }
+    //     return layerTreeObj
+    // }
 
 
     to_JSON() {
@@ -184,8 +240,8 @@ class VnNode {
 
 // https://leafletjs.com/reference.html#control-layers
 const layersTree = new VnNode("root");
-const basemaps = new VnNode("basemaps", layersTree);
-const overlays = new VnNode("overlays", layersTree);
+const basemaps = new VnNode("basemaps", layersTree, {"title": "World base maps &#x1f5fa;", "type":"group"});
+const overlays = new VnNode("overlays", layersTree, {"type":"group"});
 
 export {VnNode, layersTree, basemaps, overlays};
 

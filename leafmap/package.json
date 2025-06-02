@@ -9,17 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qwilka/qw-map.git"
+    "url": "git+https://github.com/qwilka/qw-leafmap.git"
   },
   "keywords": [
-    "GIS"
+    "GIS", "map"
   ],
   "author": "Stephen McEntee",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/qwilka/qw-map/issues"
+    "url": "https://github.com/qwilka/qw-leafmap/issues"
   },
-  "homepage": "https://github.com/qwilka/qw-map#readme",
+  "homepage": "https://github.com/qwilka/qw-leafmap#readme",
   "devDependencies": {
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
