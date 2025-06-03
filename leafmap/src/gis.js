@@ -25,13 +25,17 @@ export const makeMap = (confData) => {
         attributionControl: mapOpts.attributionControl===true || false,
         zoom: (mapOpts.zoom || 8),
         minZoom: (mapOpts.minZoom || 2),
-        maxZoom: (mapOpts.maxZoom || 14),
+        maxZoom: (mapOpts.maxZoom || 16),
         maxBounds: (mapOpts.maxBounds || [[-90,-180], [90,180]]),
         center: (mapOpts.center || [53.711, -7.361]),
-        zoomControl: (mapOpts.zoomControl || true)
+        zoomControl: (mapOpts.zoomControl || false)
     });
 
-    mapOpts.zoomControlPosition ? map.zoomControl.setPosition(mapOpts.zoomControlPosition) : map.zoomControl.setPosition('topright');
+    if (mapOpts.zoomControl) {
+      mapOpts.zoomControlPosition ? 
+      map.zoomControl.setPosition(mapOpts.zoomControlPosition) : 
+      map.zoomControl.setPosition('topright');
+    }
     
 
     if (mapOpts.attributionControl==="custom") {
@@ -62,35 +66,16 @@ export const makeMap = (confData) => {
       console.log(layersTree.to_texttree());
     }
 
-    
-    // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     maxZoom: 19,
-    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+
 
     var layerCtl = null;
     if (mapOpts.layerControl===true) {
-      // // VnNode, layersTree, baselayers, overlays
-      // let layers = confData.layers;
-      // for (let ly of layers) {
-      //   if (ly.parent === "basemaps") {
-      //     new VnNode(ly.title || ly.name, basemaps, ly, null, ly.id);
-      //   }
-      //   if (ly.parent === "overlays") {
-      //     new VnNode(ly.title || ly.name, overlays, ly, null, ly.id);
-      //   }
-      // }
-      // console.log(layersTree.to_texttree());
       let baseL = {};
       for (let child of basemaps.get_child()) {
         // console.log("basemaps child ", child.name, child.get_data());
         if (child.get_data('deactivate')) continue;
-        //let layer = node2maplayer(child);
         if (!child.layer) continue;
         baseL[child.name] = child.layer;
-        //allMapLayers[child.id] = child.layer;
-        // if (child.selected) {
-        //   map.addLayer(layer);
-        // }
       }       
 
       let overL = {};
@@ -99,10 +84,6 @@ export const makeMap = (confData) => {
         if (child.get_data('deactivate')) continue;
         if (!child.layer) continue;
         overL[child.name] = child.layer;
-        //allMapLayers[child.id] = layer;
-        // if (child.selected) {
-        //   map.addLayer(layer);
-        // }
       } 
       
       layerCtl = L.control.layers(baseL, overL,{"hideSingleBase":true,
@@ -113,73 +94,37 @@ export const makeMap = (confData) => {
 
     } else if (mapOpts.layerControl==="tree") {
 
-      let baseL = basemaps.to_layerTreeObj().children;
+      let baseL = basemaps.to_layerTreeObj();
       console.log("baseL", baseL);
-      // for (let _node of basemaps) {
-      //   if (_node.get_data('deactivate')) continue;
-      //   if (_node.type === "group") continue;
-      //   let layer = node2maplayer(_node, map);
-      //   if (!layer) continue;
-      //   _node.layer = layer;
-      //   allMapLayers[_node.id] = layer;
-      //   if (_node.selected) {
-      //     map.addLayer(layer);
-      //   }        
-      // }
 
       let overL = overlays.to_layerTreeObj().children;
 
-      // layerCtl = L.control.layers.tree(baseTree, overlayTree, {
-      //   collapseAll: '<font color="#909090" size="2">(close all)</font>',
-      //   collapsed: true 
-      // });
-      // layerCtl.addTo(map);
-
-      // let ftree = confData["layerTree"];
-      // if (!ftree) {
-      //   ftree = confData.tree_vnleaf_0;
-      // }
-
-      // let baseTree = {
-      //   label: 'World base maps &#x1f5fa;',
-      //   children: []
-      // };
-      // //var allMapLayers = {};
-      // let overlayTree = [];
-
-      // for (let ii=0; ii<ftree.length; ii++) {
-      //   let ftree_toplevel = ftree[ii], mapObj, layer;
-      //   //console.log("ftree_toplevel.type", ftree_toplevel.type)
-      //   if (ftree_toplevel.type === "gis-folder-basemaps") {
-      //     baseTree = makeLayersTree(ftree_toplevel, map, allMapLayers);
-      //   } else if (ftree_toplevel.type.startsWith("gis-folder")) {
-      //     //console.log("ftree_toplevel.title", ftree_toplevel.title)
-      //     overlayTree.push(makeLayersTree(ftree_toplevel, map, allMapLayers));
-      //   }
-      // }
-
       layerCtl = L.control.layers.tree(baseL, overL, {
         collapseAll: '<font color="#909090" size="2">(close all)</font>',
-        collapsed: true 
+        namedToggle: false,
+        selectorBack: false,
+        closedSymbol: '<font color="#000000" size="4">&#x1F782; &#x1f5c0;</font>',
+        openedSymbol: '<font color="#000000" size="4">&#x1F783; &#x1f5c1;</font>',
+        collapsed: true
       });
       layerCtl.addTo(map);
       layerCtl.setPosition(mapOpts.layerControlPosition || 'topleft');   
-      // //mapOpts.layerControlPosition ? layerCtl.setPosition(mapOpts.layerControlPosition) : layerCtl.setPosition('topleft');
-      // //layerCtl.collapseTree(false);
-      // layerCtl.collapseTree(true); 
+      layerCtl.collapseTree(true); 
     }  
-    // else {
-    //   let fallbackLayer = confData.layers[0];
-    //   L.tileLayer(fallbackLayer.url, fallbackLayer.layerOpts).addTo(map);
-    // }  
-    // if (layerCtl) mapOpts.layerControlPosition ? 
-    //      layerCtl.setPosition(mapOpts.layerControlPosition) : layerCtl.setPosition('topleft');
 
 
     if (mapOpts.hash) {
       let hash = new L.Hash(map, allMapLayers); 
     }
 
+    if (mapOpts.scaleControl) {
+      let scale = L.control.scale({position: mapOpts.scaleControlPosition || 'topright', 
+        metric: mapOpts.scaleControlMetric || true, 
+        imperial: mapOpts.scaleControlImperial || false,
+        maxWidth: mapOpts.scaleControlMaxWidth || 100
+      });
+      scale.addTo(map);      
+    }
 
 
     //let popup;
@@ -201,44 +146,6 @@ export const makeMap = (confData) => {
 }
 
 
-
-
-
-// function makeLayersTree(ftree_folder, mapref, allMapLayers) {
-//     let layerTreeChildren = [];
-//     for (let jj=0; jj<ftree_folder.children.length; jj++) {
-//       let layerObj = ftree_folder.children[jj];
-//       if (layerObj.hasOwnProperty('active') && layerObj.active == false) continue;
-//       //console.log("layerObj.title", layerObj.title);
-//       //console.log("layerObj.type", layerObj.type);
-//       if (layerObj.type.startsWith("gis-layer")) {
-//         // console.log("layerObj", layerObj);
-//         let layer = createMapLayer(layerObj);
-//         if (!layer) continue;
-//         //console.log("layer", layerObj.title, layer);
-//         layerTreeChildren.push({ label: layerObj.title, layer: layer });
-//         if (layerObj.data.layerId) {
-//           allMapLayers[layerObj.data.layerId] = layer;
-//         }
-//         // console.log("layerObj.title", layerObj.title);
-//         // console.log("layerObj.selected", layerObj.selected);
-//         if (layerObj.selected) {
-//           //console.log("default layer", layer);
-//           mapref.addLayer(layer);
-//         }
-//       } else if (layerObj.type.startsWith("gis-folder")) {
-//         //console.log("recursive layerObj.type gis-folder", layerObj.type);
-//         //let layerTreeFolder = {label:layerObj.title, children:[]};
-//         let obj = makeLayersTree(layerObj, mapref, allMapLayers);
-//         layerTreeChildren.push(obj);
-//       };
-//     }
-//     let layerTreeObj = {
-//       label: ftree_folder.title,
-//       children: layerTreeChildren
-//     }
-//     return layerTreeObj;
-// }
 
 function node2maplayer(vnnode, map=null) {
   let layer=null;

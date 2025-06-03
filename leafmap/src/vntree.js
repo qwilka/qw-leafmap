@@ -198,11 +198,12 @@ class VnNode {
 
     to_layerTreeObj() {
         let layerTreeObj = {};
-        layerTreeObj.label = this.title || this.name;
+        layerTreeObj.label = this.get_data("title") || this.name;
         if (this.layer) {
             layerTreeObj.layer = this.layer;
+        } else {
+            layerTreeObj.children = [];
         }
-        layerTreeObj.children = [];
         for (let child of this.#childs) {
             if (child.get_data('deactivate')) continue;
             layerTreeObj.children.push(child.to_layerTreeObj());
@@ -249,7 +250,7 @@ class VnNode {
 
 // https://leafletjs.com/reference.html#control-layers
 const layersTree = new VnNode("root");
-const basemaps = new VnNode("basemaps", layersTree, {"title": "World base maps &#x1f5fa;", "type":"group"});
+const basemaps = new VnNode("basemaps", layersTree, {"title": '<font size="3">Base maps &#x1F30D;</font>', "type":"group"});
 const overlays = new VnNode("overlays", layersTree, {"type":"group"});
 
 export {VnNode, layersTree, basemaps, overlays};
