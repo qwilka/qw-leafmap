@@ -1,4 +1,5 @@
 // Leaflet fullHash plugin, modified by Qwilka
+// Additional parameter for config.
 (function(window) {
 	var HAS_HASHCHANGE = (function() {
 		var doc_mode = window.documentMode;

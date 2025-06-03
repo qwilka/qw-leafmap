@@ -107,10 +107,8 @@ var fallbackConfig = {
     "mapOptions": {
       "zoomControlPosition": "topright",
       "layerControl": true,
-      "layerTreeControl": false,
       "layerControlPosition": "topleft",
-      "attributionControlDefault": false,    
-      "attributionControlCustom": false, 
+      "attributionControl": true,    
       "attributionPosition": "bottomright",
       "attributionPrefix": "<a target=\"_blank\" href=\"https://qwilka.github.io/\">Qwilka</a>",
       "hash": true,
@@ -137,6 +135,7 @@ var fallbackConfig = {
         "id": "e1",
         "parent": "basemaps",
         "type": "tilemap",
+        "deactivate": false,
         "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         "selected": false,
         "options": {

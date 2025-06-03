@@ -25,6 +25,7 @@ class VnNode {
         }
         if (name) this.name = name;
         this.id = id;
+        this.layer = null; // default layer is null
 
         if (parent !== null) parent.add_child(this);
 
@@ -64,6 +65,14 @@ class VnNode {
 
     get style() {
         return this.#data.style;
+    }
+
+    get layer() {
+        return this.#data.layer;
+    }
+
+    set layer(obj) {
+        this.#data.layer = obj;
     }
 
 
@@ -190,7 +199,7 @@ class VnNode {
     to_layerTreeObj() {
         let layerTreeObj = {};
         layerTreeObj.label = this.title || this.name;
-        if (this.has_data("layer")) {
+        if (this.layer) {
             layerTreeObj.layer = this.layer;
         }
         layerTreeObj.children = [];

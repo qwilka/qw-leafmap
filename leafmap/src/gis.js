@@ -22,7 +22,7 @@ export const makeMap = (confData) => {
     let mapOpts = confData.mapOptions;
 
     const map = L.map('map', {
-        attributionControl: mapOpts.attributionControlDefault || false,
+        attributionControl: mapOpts.attributionControl===true || false,
         zoom: (mapOpts.zoom || 8),
         minZoom: (mapOpts.minZoom || 2),
         maxZoom: (mapOpts.maxZoom || 14),
@@ -34,7 +34,7 @@ export const makeMap = (confData) => {
     mapOpts.zoomControlPosition ? map.zoomControl.setPosition(mapOpts.zoomControlPosition) : map.zoomControl.setPosition('topright');
     
 
-    if (mapOpts.attributionControlCustom) {
+    if (mapOpts.attributionControl==="custom") {
         let attribut = L.control.attribution({ 
             position: (mapOpts.attributionPosition || 'bottomright'), 
             prefix: (mapOpts.attributionPrefix || false)
@@ -42,11 +42,19 @@ export const makeMap = (confData) => {
         attribut.addTo(map);
     }
 
+        // }).addTo(map);
+    var allMapLayers = {};
     if (confData.layers) {
+      let newnode=null;
       for (let ly of confData.layers) {
         let parentNode = layersTree.get_node_by_name(ly.parent);
         if (parentNode) {
-          new VnNode(ly.title || ly.name, parentNode, ly, null, ly.id);
+          newnode = new VnNode(ly.title || ly.name, parentNode, ly, null, ly.id);
+          newnode.layer = node2maplayer(newnode);
+          if (newnode.layer) {
+            allMapLayers[newnode.id] = newnode.layer;
+            if (newnode.selected)  map.addLayer(newnode.layer);
+          }           
         } else {
           console.warn("No parent node found for layer", ly.name);
         }
@@ -58,10 +66,9 @@ export const makeMap = (confData) => {
     // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     //     maxZoom: 19,
     //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    // }).addTo(map);
-    var allMapLayers = {};
+
     var layerCtl = null;
-    if (mapOpts.layerControl) {
+    if (mapOpts.layerControl===true) {
       // // VnNode, layersTree, baselayers, overlays
       // let layers = confData.layers;
       // for (let ly of layers) {
@@ -77,53 +84,56 @@ export const makeMap = (confData) => {
       for (let child of basemaps.get_child()) {
         // console.log("basemaps child ", child.name, child.get_data());
         if (child.get_data('deactivate')) continue;
-        let layer = node2maplayer(child);
-        if (!layer) continue;
-        baseL[child.name] = layer;
-        allMapLayers[child.id] = layer;
-        if (child.selected) {
-          map.addLayer(layer);
-        }
+        //let layer = node2maplayer(child);
+        if (!child.layer) continue;
+        baseL[child.name] = child.layer;
+        //allMapLayers[child.id] = child.layer;
+        // if (child.selected) {
+        //   map.addLayer(layer);
+        // }
       }       
 
       let overL = {};
       for (let child of overlays.get_child()) {
         // console.log("overlays child ", child.name, child.get_data());
         if (child.get_data('deactivate')) continue;
-        let layer = node2maplayer(child, map);
-        if (!layer) continue;
-        overL[child.name] = layer;
-        allMapLayers[child.id] = layer;
-        if (child.selected) {
-          map.addLayer(layer);
-        }
+        if (!child.layer) continue;
+        overL[child.name] = child.layer;
+        //allMapLayers[child.id] = layer;
+        // if (child.selected) {
+        //   map.addLayer(layer);
+        // }
       } 
       
-      layerCtl = L.control.layers(baseL, overL,{"hideSingleBase":true}).addTo(map);
+      layerCtl = L.control.layers(baseL, overL,{"hideSingleBase":true,
+        "collapsed": true, 
+        "position": mapOpts.layerControlPosition || 'topleft'
+      }).addTo(map);
       
 
-    } else if (mapOpts.layerTreeControl) {
+    } else if (mapOpts.layerControl==="tree") {
 
-      let baseL = {};
-      for (let _node of basemaps) {
-        if (_node.get_data('deactivate')) continue;
-        if (_node.type === "group") continue;
-        let layer = node2maplayer(_node, map);
-        if (!layer) continue;
-        _node.layer = layer;
-        allMapLayers[_node.id] = layer;
-        if (_node.selected) {
-          map.addLayer(layer);
-        }        
-      }
+      let baseL = basemaps.to_layerTreeObj().children;
+      console.log("baseL", baseL);
+      // for (let _node of basemaps) {
+      //   if (_node.get_data('deactivate')) continue;
+      //   if (_node.type === "group") continue;
+      //   let layer = node2maplayer(_node, map);
+      //   if (!layer) continue;
+      //   _node.layer = layer;
+      //   allMapLayers[_node.id] = layer;
+      //   if (_node.selected) {
+      //     map.addLayer(layer);
+      //   }        
+      // }
 
-      let overlayTree = [];
+      let overL = overlays.to_layerTreeObj().children;
 
-      layerCtl = L.control.layers.tree(baseTree, overlayTree, {
-        collapseAll: '<font color="#909090" size="2">(close all)</font>',
-        collapsed: true 
-      });
-      layerCtl.addTo(map);
+      // layerCtl = L.control.layers.tree(baseTree, overlayTree, {
+      //   collapseAll: '<font color="#909090" size="2">(close all)</font>',
+      //   collapsed: true 
+      // });
+      // layerCtl.addTo(map);
 
       // let ftree = confData["layerTree"];
       // if (!ftree) {
@@ -148,21 +158,22 @@ export const makeMap = (confData) => {
       //   }
       // }
 
-      // layerCtl = L.control.layers.tree(baseTree, overlayTree, {
-      //   collapseAll: '<font color="#909090" size="2">(close all)</font>',
-      //   collapsed: true 
-      // });
-      // layerCtl.addTo(map);
-      // //layerCtl.setPosition('topleft');   
+      layerCtl = L.control.layers.tree(baseL, overL, {
+        collapseAll: '<font color="#909090" size="2">(close all)</font>',
+        collapsed: true 
+      });
+      layerCtl.addTo(map);
+      layerCtl.setPosition(mapOpts.layerControlPosition || 'topleft');   
       // //mapOpts.layerControlPosition ? layerCtl.setPosition(mapOpts.layerControlPosition) : layerCtl.setPosition('topleft');
       // //layerCtl.collapseTree(false);
       // layerCtl.collapseTree(true); 
-    }  else {
-      let fallbackLayer = confData.layers[0];
-      L.tileLayer(fallbackLayer.url, fallbackLayer.layerOpts).addTo(map);
     }  
-    if (layerCtl) mapOpts.layerControlPosition ? 
-         layerCtl.setPosition(mapOpts.layerControlPosition) : layerCtl.setPosition('topleft');
+    // else {
+    //   let fallbackLayer = confData.layers[0];
+    //   L.tileLayer(fallbackLayer.url, fallbackLayer.layerOpts).addTo(map);
+    // }  
+    // if (layerCtl) mapOpts.layerControlPosition ? 
+    //      layerCtl.setPosition(mapOpts.layerControlPosition) : layerCtl.setPosition('topleft');
 
 
     if (mapOpts.hash) {
